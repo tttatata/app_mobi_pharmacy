@@ -1,4 +1,4 @@
-import 'package:app_mobi_pharmacy/features/authentication/controllers/onboarding_controller.dart';
+import 'package:app_mobi_pharmacy/features/authentication/controllers/onboarding/onboarding_controller.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/device/device_utility.dart';

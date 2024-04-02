@@ -5,6 +5,7 @@ import 'package:app_mobi_pharmacy/common/widgets/list_titles/user_profile_title.
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/address.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/profile.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/order/order.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.bag_tick,
                     title: 'My Orders',
                     subTitle: 'In-progress and complete orders',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const OrdersScreen()),
                   ),
                   TSettingsMenuTitle(
                     icon: Iconsax.bank,

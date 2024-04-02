@@ -20,7 +20,7 @@ class UserReviewCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundImage: AssetImage(TImages.userProfileImage1),
                 ),
                 const SizedBox(width: TSizes.spaceBtwItems),
@@ -37,24 +37,24 @@ class UserReviewCard extends StatelessWidget {
         //review
         Row(
           children: [
-            TRatingBarIndicator(rating: 4),
+            const TRatingBarIndicator(rating: 4),
             const SizedBox(width: TSizes.spaceBtwItems),
             Text('01/10/2013', style: Theme.of(context).textTheme.bodyMedium)
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
-        ReadMoreText(
+        const ReadMoreText(
           'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
           trimMode: TrimMode.Line,
           trimLines: 2,
           colorClickableText: Colors.pink,
           trimCollapsedText: '...Show more',
           trimExpandedText: ' show less',
-          moreStyle: const TextStyle(
+          moreStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: TColors.primary),
-          lessStyle: const TextStyle(
+          lessStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: TColors.primary),
@@ -82,18 +82,18 @@ class UserReviewCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
-                ReadMoreText(
+                const ReadMoreText(
                   'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
                   trimMode: TrimMode.Line,
                   trimLines: 2,
                   colorClickableText: Colors.pink,
                   trimCollapsedText: '...Show more',
                   trimExpandedText: ' show less',
-                  moreStyle: const TextStyle(
+                  moreStyle: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: TColors.primary),
-                  lessStyle: const TextStyle(
+                  lessStyle: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: TColors.primary),

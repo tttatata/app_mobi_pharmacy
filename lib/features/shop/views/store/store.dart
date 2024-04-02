@@ -5,11 +5,13 @@ import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/brand/all_brands.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/store/widgets/category_tab.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
@@ -60,7 +62,8 @@ class StoreScreen extends StatelessWidget {
                           ///feattured brand
                           TSetionHeading(
                             title: 'Featured Brands',
-                            onPressed: () {},
+                            onPressed: () =>
+                                Get.to(() => const AllBrandsScreen()),
                           ),
                           const SizedBox(height: TSizes.spaceBtwItems / 1.5),
                           TGidLayout(

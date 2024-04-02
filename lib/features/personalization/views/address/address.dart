@@ -1,5 +1,4 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
-import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/add_new_address.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/widgets/single_address.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
@@ -16,8 +15,8 @@ class UserAddressScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: TColors.primary,
-        onPressed: () => Get.to(() => AddNewAddressScreen()),
-        child: Icon(
+        onPressed: () => Get.to(() => const AddNewAddressScreen()),
+        child: const Icon(
           Iconsax.add,
           color: TColors.white,
         ),
@@ -29,7 +28,7 @@ class UserAddressScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(TSizes.defaultSpace),
           child: Column(

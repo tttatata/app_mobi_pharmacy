@@ -3,7 +3,6 @@ import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TSingleAddress extends StatelessWidget {
@@ -15,7 +14,7 @@ class TSingleAddress extends StatelessWidget {
     return TRoundedContainer(
       width: double.infinity,
       showBorder: true,
-      padding: EdgeInsets.all(TSizes.md),
+      padding: const EdgeInsets.all(TSizes.md),
       backgroundColor: selectedAddress
           ? TColors.primary.withOpacity(0.5)
           : Colors.transparent,
@@ -24,7 +23,7 @@ class TSingleAddress extends StatelessWidget {
           : dark
               ? TColors.darkGrey
               : TColors.grey,
-      margin: EdgeInsets.only(bottom: TSizes.spaceBtwItems),
+      margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
       child: Stack(
         children: [
           Positioned(
@@ -47,7 +46,7 @@ class TSingleAddress extends StatelessWidget {
               const SizedBox(
                 height: TSizes.sm / 2,
               ),
-              Text(
+              const Text(
                 '038888',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -55,7 +54,7 @@ class TSingleAddress extends StatelessWidget {
               const SizedBox(
                 height: TSizes.sm / 2,
               ),
-              Text(
+              const Text(
                 '55 quang trung p 11',
                 softWrap: true,
               ),

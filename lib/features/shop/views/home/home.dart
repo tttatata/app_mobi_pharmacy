@@ -3,12 +3,14 @@ import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/all_products/all_products.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/home_appbar.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/home_categories.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/promo_slider.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -72,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                     ///heading
                     TSetionHeading(
                       title: 'Popular products',
-                      onPressed: () {},
+                      onPressed: () => Get.to(() => const AllProducts()),
                     ),
                     const SizedBox(
                       height: TSizes.spaceBtwItems,

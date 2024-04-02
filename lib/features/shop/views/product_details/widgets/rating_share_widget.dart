@@ -15,7 +15,7 @@ class TRatingAndShare extends StatelessWidget {
         //ratting
         Row(
           children: [
-            Icon(
+            const Icon(
               Iconsax.star5,
               color: Colors.amber,
               size: 24,

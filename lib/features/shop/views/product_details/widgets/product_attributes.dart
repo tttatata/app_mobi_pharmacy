@@ -17,14 +17,14 @@ class ProductAttributes extends StatelessWidget {
     return Column(
       children: [
         TRoundedContainer(
-          padding: EdgeInsets.all(TSizes.md),
+          padding: const EdgeInsets.all(TSizes.md),
           backgroundColor: dark ? TColors.darkGrey : TColors.grey,
           child: Column(
             children: [
               //title prices tock
               Row(
                 children: [
-                  TSetionHeading(
+                  const TSetionHeading(
                     title: 'Variation',
                     showActionButton: false,
                   ),
@@ -90,7 +90,7 @@ class ProductAttributes extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TSetionHeading(title: 'Colors'),
+            const TSetionHeading(title: 'Colors'),
             const SizedBox(
               height: TSizes.spaceBtwItems / 2,
             ),
@@ -134,7 +134,7 @@ class ProductAttributes extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TSetionHeading(title: 'Size'),
+            const TSetionHeading(title: 'Size'),
             const SizedBox(
               height: TSizes.spaceBtwItems / 2,
             ),

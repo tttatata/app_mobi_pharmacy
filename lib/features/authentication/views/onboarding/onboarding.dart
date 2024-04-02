@@ -1,4 +1,4 @@
-import 'package:app_mobi_pharmacy/features/authentication/controllers/onboarding_controller.dart';
+import 'package:app_mobi_pharmacy/features/authentication/controllers/onboarding/onboarding_controller.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_page.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_skip.dart';

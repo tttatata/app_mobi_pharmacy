@@ -50,7 +50,7 @@ class TProductMetaData extends StatelessWidget {
         const SizedBox(
           width: TSizes.spaceBtwItems / 1.5,
         ),
-        ProductTitleText(
+        const ProductTitleText(
           title: 'product title 1 ',
           smallSize: true,
         ),
@@ -61,7 +61,7 @@ class TProductMetaData extends StatelessWidget {
         ///stack status
         Row(
           children: [
-            ProductTitleText(
+            const ProductTitleText(
               title: 'status ',
               smallSize: true,
             ),
