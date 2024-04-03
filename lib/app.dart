@@ -13,14 +13,15 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: const Scaffold(
-        backgroundColor: TColors.primary,
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        ),
-      ),
+      home: OnboardingScreen(),
+      // const Scaffold(
+      //   backgroundColor: TColors.primary,
+      //   body: Center(
+      //     child: CircularProgressIndicator(
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

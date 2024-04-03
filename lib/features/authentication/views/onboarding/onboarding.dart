@@ -1,4 +1,5 @@
 import 'package:app_mobi_pharmacy/features/authentication/controllers/onboarding/onboarding_controller.dart';
+import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_page.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_skip.dart';
@@ -6,11 +7,43 @@ import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets/onboarding_next_button.dart';
 
-class OnBoardingScreen extends StatelessWidget {
-  const OnBoardingScreen({super.key});
+class OnboardingScreen extends StatefulWidget {
+  @override
+  _OnboardingScreenState createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    checkFirstTime();
+  }
+
+  Future<void> checkFirstTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+    if (isFirstTime) {
+      // Hiển thị màn hình Onboarding
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+      );
+
+      // Sau khi hiển thị xong, đánh dấu là đã xem màn hình Onboarding
+      prefs.setBool('isFirstTime', false);
+    } else {
+      // Đã xem màn hình Onboarding trước đó, chuyển đến màn hình chính
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -12,14 +12,14 @@ class AuthenticationRepository extends GetxController {
   @override
   void onReady() {
     FlutterNativeSplash.remove();
-    screenRedirect();
-  }
+    //   screenRedirect();
+    // }
 
-  //funtion to show relevant screen
-  screenRedirect() async {
-    devicesStorage.writeIfNull('IsFirstTime', true);
-    devicesStorage.read('IsFirstTime') != true
-        ? Get.offAll(() => const LoginScreen())
-        : Get.offAll(const OnBoardingScreen());
+    //funtion to show relevant screen
+    // screenRedirect() async {
+    //   devicesStorage.writeIfNull('IsFirstTime', true);
+    //   devicesStorage.read('IsFirstTime') != true
+    //       ? Get.offAll(() => const LoginScreen())
+    //       : Get.offAll(const OnBoardingScreen());
   }
 }
