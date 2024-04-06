@@ -5,38 +5,51 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-//
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
-app.use("/", express.static("uploads"));
-app.use(bodyParser.urlencoded({ extended: true }));
 
-//config
+app.use("/test", (req, res) => {
+  res.send("Hello world!");
+});
+
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded({ extended: true, limit: "100mb" }));
+app.use(cookieParser());
+
+// config
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
-    path: "backend/config/.env",
+    path: "config/.env",
   });
 }
 
-//import routes
+// import routes
 const user = require("./controller/user");
-const employee = require("./controller/employee");
+const shop = require("./controller/shop");
 const product = require("./controller/product");
 const event = require("./controller/event");
+const coupon = require("./controller/coupounCode");
+const payment = require("./controller/payment");
+const order = require("./controller/order");
+const conversation = require("./controller/conversation");
+const message = require("./controller/message");
+const withdraw = require("./controller/withdraw");
 
-//tổ chức ứng dụng của mình thành các phần
-//(như user, employee, product, etc.) và quản lý chúng một cách dễ dàng thông qua các router riêng biệt.
 app.use("/api/v2/user", user);
-app.use("/api/v2/employee", employee);
+app.use("/api/v2/conversation", conversation);
+app.use("/api/v2/message", message);
+app.use("/api/v2/order", order);
+app.use("/api/v2/shop", shop);
 app.use("/api/v2/product", product);
 app.use("/api/v2/event", event);
+app.use("/api/v2/coupon", coupon);
+app.use("/api/v2/payment", payment);
+app.use("/api/v2/withdraw", withdraw);
 
-//Error Handling
 app.use(ErrorHandler);
+
 module.exports = app;

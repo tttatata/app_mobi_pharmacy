@@ -1,0 +1,41 @@
+import 'package:app_mobi_pharmacy/exceptions/firebase_auth_exceptions.dart';
+import 'package:app_mobi_pharmacy/exceptions/firebase_exceptions.dart';
+import 'package:app_mobi_pharmacy/exceptions/format_exceptions.dart';
+import 'package:app_mobi_pharmacy/exceptions/platform_exceptions.dart';
+import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
+import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/onboarding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:http/http.dart' as http;
+class UserRepository extends GetxController {
+  static UserRepository get instance => Get.find();
+
+
+//   ///Future<UsersCredential> registerWithEmailAndPassword(String email, String password)
+  Future<void> saveUserRecord(UserModel user) async {
+    try {
+      return 
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/signup'),
+        body: user.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'something went wrong.please try again';
+    }
+  }
+}

@@ -1,10 +1,9 @@
-// create token and saving that in cookies
+//Token lưu vào cookie
 const sendToken = (user, statusCode, res) => {
   const token = user.getJwtToken();
 
-  // Options for cookies
   const options = {
-    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), //day * hour, min, sec, milisec hết hạn sau 90 ngày
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     httpOnly: true,
     sameSite: "none",
     secure: true,

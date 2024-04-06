@@ -1,4 +1,4 @@
-import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/onboarding.dart';
+import 'package:app_mobi_pharmacy/bindings/general_bindings.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +13,15 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-      home: OnboardingScreen(),
-      // const Scaffold(
-      //   backgroundColor: TColors.primary,
-      //   body: Center(
-      //     child: CircularProgressIndicator(
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      // ),
+      initialBinding: GeneralBindings(),
+      home: const Scaffold(
+        backgroundColor: TColors.primary,
+        body: Center(
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

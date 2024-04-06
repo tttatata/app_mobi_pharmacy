@@ -11,13 +11,17 @@ class TTermsAndConditionCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final controller = SignupController2.instance;
     final dark = THelperFunctions.isDarkMode(context);
     return Row(
       children: [
-        SizedBox(
-            width: 25,
-            height: 24,
-            child: Checkbox(value: true, onChanged: (value) {})),
+        // SizedBox(
+        //     width: 25,
+        //     height: 24,
+        //     child: Obx(() => Checkbox(
+        //         value: controller.privatePolicy.value,
+        //         onChanged: (value) => controller.privatePolicy.value =
+        //             !controller.privatePolicy.value))),
         const SizedBox(width: TSizes.spaceBtwItems),
         Text.rich(TextSpan(children: [
           TextSpan(
@@ -31,8 +35,7 @@ class TTermsAndConditionCheckbox extends StatelessWidget {
                     decorationColor: dark ? TColors.white : TColors.primary,
                   )),
           TextSpan(
-              text: TTexts.and,
-              style: Theme.of(context).textTheme.bodySmall),
+              text: TTexts.and, style: Theme.of(context).textTheme.bodySmall),
           TextSpan(
               text: TTexts.termsOfUse,
               style: Theme.of(context).textTheme.bodyMedium!.apply(

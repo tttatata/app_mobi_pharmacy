@@ -1,62 +1,33 @@
 {
   "project_info": {
-    "project_number": "1051227046316",
-    "project_id": "angiday-d741b",
-    "storage_bucket": "angiday-d741b.appspot.com"
+    "project_number": "93011819765",
+    "project_id": "phamarciapp-498a0",
+    "storage_bucket": "phamarciapp-498a0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1051227046316:android:2d8420d28cc346d42ffa09",
+        "mobilesdk_app_id": "1:93011819765:android:133aa1de7e470eddbc19bc",
         "android_client_info": {
           "package_name": "com.example.app_mobi_pharmacy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1051227046316-qmg4jhms1gc5ek9ifrsm5ks1oru0vuht.apps.googleusercontent.com",
+          "client_id": "93011819765-0co5d5fp2proif3mm185co6rpvl8bpgr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDebNR6J9sPwSMlym2yPLjuQeNNbcLl0y4"
+          "current_key": "AIzaSyAyWqN0vUuiAk0ht2TUIKSpZjUdeEkMg-8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1051227046316-qmg4jhms1gc5ek9ifrsm5ks1oru0vuht.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1051227046316:android:e81708019e8cb4d22ffa09",
-        "android_client_info": {
-          "package_name": "com.example.onboarding"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1051227046316-qmg4jhms1gc5ek9ifrsm5ks1oru0vuht.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDebNR6J9sPwSMlym2yPLjuQeNNbcLl0y4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1051227046316-qmg4jhms1gc5ek9ifrsm5ks1oru0vuht.apps.googleusercontent.com",
+              "client_id": "93011819765-0co5d5fp2proif3mm185co6rpvl8bpgr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const coupounCodeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter your coupoun code name!"],
+    required: [true, "Vui lòng nhập tên mã giảm giá!"],
     unique: true,
   },
   value: {

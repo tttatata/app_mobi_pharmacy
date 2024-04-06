@@ -1,8 +1,10 @@
+
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/all_products/all_products.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/home_appbar.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/home_categories.dart';
@@ -12,12 +14,32 @@ import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+List<Product> products = [];
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: fetchProducts,
+      // ),
+      // body: ListView.builder(
+      //     itemCount: products.length,
+      //     itemBuilder: (context, index) {
+      //       final product = products[index];
+
+      //       return ListTile(
+      //         title: Text(product.images.public_id),
+      //         subtitle: Text(product.category),
+      //       );
+      //     }),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -34,6 +56,7 @@ class HomeScreen extends StatelessWidget {
                     text: 'Search in Store',
                   ),
                   //category
+
                   Padding(
                     padding: EdgeInsets.only(left: TSizes.defaultSpace),
                     child: Column(
@@ -90,4 +113,29 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  // void fetchProducts() async {
+  //   final uri = Uri.parse('$url/api/v2/product/get-all-products');
+  //   final res = await http.get(uri);
+  //   final body = res.body;
+  //   final json = jsonDecode(body);
+  //   final producta = json['products'] as List<dynamic>;
+  //   final tranformed = producta.map((e) {
+  //     final images = ImagesTitle(
+  //       public_id: e['images']['public_id'],
+  //       url: e['images']['url'],
+  //       id: e['images']['_id'],
+  //     );
+  //     return Product(
+  //       name: e['name'],
+  //       category: e['category'],
+  //       origin: e['origin'],
+  //       description: e['description'],
+  //       images: images,
+  //     );
+  //   }).toList();
+  //   setState(() {
+  //     products = tranformed;
+  //   });
+  // }
 }

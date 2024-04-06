@@ -34,13 +34,13 @@ const productSchema = new mongoose.Schema({
   },
   specifications: {
     type: String,
-    required: function() {
+    required: function () {
       return this.category !== "Thiết bị y tế";
     },
   },
   unit: {
     type: String,
-    required: function() {
+    required: function () {
       return this.category !== "Thiết bị y tế";
     },
   },
@@ -70,9 +70,18 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please enter your product stock!"],
   },
-  images: {
-    type: [String],
-  },
+  images: [
+    {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   reviews: [
     {
       user: {
@@ -96,11 +105,11 @@ const productSchema = new mongoose.Schema({
   ratings: {
     type: Number,
   },
-  employeeId: {
+  shopId: {
     type: String,
     required: true,
   },
-  employee: {
+  shop: {
     type: Object,
     required: true,
   },

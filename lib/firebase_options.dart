@@ -44,38 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA2vo84bcmY-Rl6uE9Z8znwtqA-yifBy44',
-    appId: '1:1051227046316:web:5f3697ecc14e01d92ffa09',
-    messagingSenderId: '1051227046316',
-    projectId: 'angiday-d741b',
-    authDomain: 'angiday-d741b.firebaseapp.com',
-    storageBucket: 'angiday-d741b.appspot.com',
-    measurementId: 'G-LR2H4FKH6C',
+    apiKey: 'AIzaSyCMqE0Uim5kS3pWUdeNTHzyQMVwc5TSxf8',
+    appId: '1:93011819765:web:b2993c6add1b1255bc19bc',
+    messagingSenderId: '93011819765',
+    projectId: 'phamarciapp-498a0',
+    authDomain: 'phamarciapp-498a0.firebaseapp.com',
+    storageBucket: 'phamarciapp-498a0.appspot.com',
+    measurementId: 'G-D89B8TGVX1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDebNR6J9sPwSMlym2yPLjuQeNNbcLl0y4',
-    appId: '1:1051227046316:android:2d8420d28cc346d42ffa09',
-    messagingSenderId: '1051227046316',
-    projectId: 'angiday-d741b',
-    storageBucket: 'angiday-d741b.appspot.com',
+    apiKey: 'AIzaSyAyWqN0vUuiAk0ht2TUIKSpZjUdeEkMg-8',
+    appId: '1:93011819765:android:133aa1de7e470eddbc19bc',
+    messagingSenderId: '93011819765',
+    projectId: 'phamarciapp-498a0',
+    storageBucket: 'phamarciapp-498a0.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDdANHaeP66XRtjDdzV9WuZbg3XszDEhsI',
-    appId: '1:1051227046316:ios:3250e81eca4163ce2ffa09',
-    messagingSenderId: '1051227046316',
-    projectId: 'angiday-d741b',
-    storageBucket: 'angiday-d741b.appspot.com',
+    apiKey: 'AIzaSyCQyG3MruWBMxkxIpkti3TQW3Vgb3kd8m0',
+    appId: '1:93011819765:ios:f1b04f6117df6bafbc19bc',
+    messagingSenderId: '93011819765',
+    projectId: 'phamarciapp-498a0',
+    storageBucket: 'phamarciapp-498a0.appspot.com',
+    iosClientId: '93011819765-7invve8elrhp6i7mf9u1blb98e8nqa1g.apps.googleusercontent.com',
     iosBundleId: 'com.example.appMobiPharmacy',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDdANHaeP66XRtjDdzV9WuZbg3XszDEhsI',
-    appId: '1:1051227046316:ios:dda752e02fc47acc2ffa09',
-    messagingSenderId: '1051227046316',
-    projectId: 'angiday-d741b',
-    storageBucket: 'angiday-d741b.appspot.com',
+    apiKey: 'AIzaSyCQyG3MruWBMxkxIpkti3TQW3Vgb3kd8m0',
+    appId: '1:93011819765:ios:394f08b6d8b382f8bc19bc',
+    messagingSenderId: '93011819765',
+    projectId: 'phamarciapp-498a0',
+    storageBucket: 'phamarciapp-498a0.appspot.com',
+    iosClientId: '93011819765-2qjkvj3kt4csshgjqvkhllah3p5stchc.apps.googleusercontent.com',
     iosBundleId: 'com.example.appMobiPharmacy.RunnerTests',
   );
 }

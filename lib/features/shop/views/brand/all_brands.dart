@@ -1,7 +1,6 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/brands/brand_card.dart';
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
-import 'package:app_mobi_pharmacy/common/widgets/products/sortable/sortable_products.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/brand/brand_products.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
@@ -35,7 +34,7 @@ class AllBrandsScreen extends StatelessWidget {
                   mainAxisExtent: 80,
                   itemBuilder: (context, index) => TBrandCard(
                         showBorder: true,
-                        onTap: () => Get.to(() => BrandProducts()),
+                        onTap: () => Get.to(() => const BrandProducts()),
                       ))
             ],
           ),

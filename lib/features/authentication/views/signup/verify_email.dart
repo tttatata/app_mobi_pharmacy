@@ -1,16 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:app_mobi_pharmacy/common/widgets/success_screen/success_screen.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
-  const VerifyEmailScreen({super.key});
-
+  const VerifyEmailScreen({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +47,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: TSizes.spaceBtwSections),
                 Text(
-                  "support@email.com",
+                  email,
                   style: Theme.of(context).textTheme.labelLarge,
                   textAlign: TextAlign.center,
                 ),
@@ -70,7 +75,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () => Get.to(() => const VerifyEmailScreen()),
+                    onPressed: () {},
                     child: const Text(TTexts.resendEmail),
                   ),
                 ),

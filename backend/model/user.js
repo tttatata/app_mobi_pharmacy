@@ -5,16 +5,16 @@ const jwt = require("jsonwebtoken");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter your name!"],
+    required: [true, "Tên người dùng không được để trống!"],
   },
   email: {
     type: String,
-    required: [true, "Please enter your email!"],
+    required: [true, "Email không được để trống!"],
   },
   password: {
     type: String,
-    required: [true, "Please enter your password"],
-    minLength: [4, "Password should be greater than 4 characters"],
+    required: [true, "Mật khẩu không được để trống!"],
+    minLength: [6, "Mật khẩu từ 6 ký tự trở lên!"],
     select: false,
   },
   phoneNumber: {
@@ -46,17 +46,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-  avatar: String,
-  // avatar: {
-  //   public_id: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   url: {
-  //     type: String,
-  //     required: true,
-  //   },
-  // },
+  avatar: {
+    public_id: {
+      type: String,
+      // required: true,
+    },
+    url: {
+      type: String,
+      // required: true,
+    },
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -81,7 +80,7 @@ userSchema.methods.getJwtToken = function () {
   });
 };
 
-// mã hóa password
+// compare password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

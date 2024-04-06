@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'widgets/onboarding_next_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -20,30 +22,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    checkFirstTime();
+    // checkFirstTime();
   }
 
-  Future<void> checkFirstTime() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isFirstTime = prefs.getBool('isFirstTime') ?? true;
+  // Future<void> checkFirstTime() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
-    if (isFirstTime) {
-      // Hiển thị màn hình Onboarding
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
-      );
+  //   if (isFirstTime) {
+  //     // Hiển thị màn hình Onboarding
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+  //     );
 
-      // Sau khi hiển thị xong, đánh dấu là đã xem màn hình Onboarding
-      prefs.setBool('isFirstTime', false);
-    } else {
-      // Đã xem màn hình Onboarding trước đó, chuyển đến màn hình chính
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    }
-  }
+  //     // Sau khi hiển thị xong, đánh dấu là đã xem màn hình Onboarding
+  //     prefs.setBool('isFirstTime', false);
+  //   } else {
+  //     // Đã xem màn hình Onboarding trước đó, chuyển đến màn hình chính
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const LoginScreen()),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

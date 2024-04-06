@@ -1,38 +1,85 @@
+import 'package:app_mobi_pharmacy/features/authentication/controllers/login/login_controller.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/password_configuration/forget_password.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/signup/signup.dart';
 import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
+import 'package:app_mobi_pharmacy/util/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-class TLoginForm extends StatelessWidget {
-  const TLoginForm({
-    super.key,
-  });
+enum Signin {
+  signin,
+}
+
+class TLoginForm extends StatefulWidget {
+  const TLoginForm({super.key});
+
+  @override
+  _SignFormState createState() => _SignFormState();
+}
+
+class _SignFormState extends State<TLoginForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+  final hidepassword = true.obs;
+
+  final List<String?> errors = [];
+  final LoginController _loginController = LoginController();
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+
+  //   _passwordController.dispose();
+
+  //   _emailController.dispose();
+  // }
+
+  void signInUser() {
+    _loginController.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: TSizes.spaceBtwSections),
         child: Column(
           children: [
             //email
-            
+
             TextFormField(
+              controller: _emailController,
+              validator: (value) => TValidator.validateEmail(value),
               decoration: const InputDecoration(
-                  prefixIcon: Icon(Iconsax.direct_right),
-                  labelText: TTexts.email),
+                  labelText: TTexts.email, prefixIcon: Icon(Iconsax.direct)),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields),
             //password
-            TextFormField(
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Iconsax.password_check),
-                labelText: TTexts.password,
-                suffixIcon: Icon(Iconsax.eye_slash),
+            Obx(
+              () => TextFormField(
+                controller: _passwordController,
+                validator: (value) => TValidator.validatePassword(value),
+                obscureText: hidepassword.value,
+                decoration: InputDecoration(
+                  labelText: TTexts.password,
+                  prefixIcon: const Icon(Iconsax.password_check),
+                  suffixIcon: IconButton(
+                    onPressed: () => hidepassword.value = !hidepassword.value,
+                    icon: Icon(
+                        hidepassword.value ? Iconsax.eye_slash : Iconsax.eye),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: TSizes.spaceBtwInputFields / 2),
@@ -61,7 +108,10 @@ class TLoginForm extends StatelessWidget {
             SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () => Get.to(() => const NavigationMenu()),
+                    onPressed: () {
+                      signInUser();
+                      // if all are valid then go to success screen
+                    },
                     child: const Text(TTexts.signIn))),
             const SizedBox(height: TSizes.spaceBtwSections),
 
