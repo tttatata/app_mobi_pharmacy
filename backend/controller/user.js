@@ -130,7 +130,6 @@ router.post(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email, password } = req.body;
-
       if (!email || !password) {
         return next(new ErrorHandler("Vui lòng điền đủ thông tin!", 400));
       }
