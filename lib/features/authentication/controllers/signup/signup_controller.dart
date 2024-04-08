@@ -9,7 +9,6 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 
 class SignUpController {
   String imageUrls = '';
@@ -27,15 +26,17 @@ class SignUpController {
       );
       imageUrls = resa.secureUrl;
 
-      UserModel user = UserModel(
+      User user = User(
           id: '',
           name: name,
           email: email,
           password: password,
-          phoneNumber: '',
-          address: [],
+          phoneNumber: 0,
+          addresses: [],
           role: '',
+          token: '',
           avatar: imageUrls);
+
       http.Response res = await http.post(
         Uri.parse('$url/api/v2/user/create-user'),
         body: user.toJson(),
@@ -46,16 +47,16 @@ class SignUpController {
       Get.to(() => VerifyEmailScreen(
             email: email,
           ));
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-            context,
-            'Account created! Login with the same credentials!',
-          );
-        },
-      );
+      // httpErrorHandle(
+      //   response: res,
+      //   context: context,
+      //   onSuccess: () {
+      //     showSnackBar(
+      //       context,
+      //       'Account created! Login with the same credentials!',
+      //     );
+      //   },
+      // );
     } catch (e) {
       showSnackBar(context, e.toString());
     }

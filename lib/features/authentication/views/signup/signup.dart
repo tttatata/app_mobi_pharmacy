@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
-
+  static const String routeName = "/sginup";
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);

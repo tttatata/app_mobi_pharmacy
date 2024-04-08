@@ -1,13 +1,13 @@
 const express = require("express");
-const User = require("../models/user");
+const User = require("../model/user");
 const bcryptjs = require("bcryptjs");
 const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const auth = require("../middlewares/auth");
+const auth = require("../middleware/auth2");
 
 
 // SIGN UP
-authRouter.post("/api/signup", async (req, res) => {
+authRouter.post("/signup", async (req, res) => {
     try {
         const { name, email, phone, password } = req.body;
 
@@ -40,11 +40,15 @@ authRouter.post("/api/signup", async (req, res) => {
 });
 ///signin
 //Excercise
-authRouter.post("/api/signin", async (req, res) => {
+authRouter.post("/signin", async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
+        if (!email || !password) {
+            return res
+                .status(400)
+                .json({ msg: "Roongx!" });
+        }
+        const user = await User.findOne({ email }).select("+password");
         if (!user) {
             return res
                 .status(400)
@@ -65,9 +69,9 @@ authRouter.post("/api/signin", async (req, res) => {
 authRouter.post("/tokenIsValid", async (req, res) => {
     try {
         const token = req.header("x-auth-token");
-        print(token);
+        console.log(token);
         if (!token) return res.json(false);
-        const verified = jwt.verify(token);
+        const verified = jwt.verify(token, "passwordKey");
         if (!verified) return res.json(false);
 
         const user = await User.findById(verified.id);

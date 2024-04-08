@@ -38,7 +38,9 @@ const order = require("./controller/order");
 const conversation = require("./controller/conversation");
 const message = require("./controller/message");
 const withdraw = require("./controller/withdraw");
+const auth = require("./controller/auth");
 
+app.use("/api/v2/auth", auth);
 app.use("/api/v2/user", user);
 app.use("/api/v2/conversation", conversation);
 app.use("/api/v2/message", message);

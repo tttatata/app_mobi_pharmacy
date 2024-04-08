@@ -1,5 +1,4 @@
 import 'package:app_mobi_pharmacy/features/authentication/controllers/onboarding/onboarding_controller.dart';
-import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_page.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/onboarding/widgets/onboarding_skip.dart';
@@ -7,7 +6,6 @@ import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'widgets/onboarding_next_button.dart';
 

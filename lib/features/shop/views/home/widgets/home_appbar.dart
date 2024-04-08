@@ -1,14 +1,17 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/cart/cart_menu_icon.dart';
+
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class THomeAppBar extends StatelessWidget {
   const THomeAppBar({
-    super.key,
+    super.key, required this.name,
   });
-
+  final String name;
   @override
   Widget build(BuildContext context) {
     return TAppBar(
@@ -20,7 +23,7 @@ class THomeAppBar extends StatelessWidget {
                   .textTheme
                   .labelMedium!
                   .apply(color: TColors.grey)),
-          Text(TTexts.homeAppbarSubTitle,
+          Text(name,
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall!

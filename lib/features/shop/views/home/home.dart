@@ -1,8 +1,9 @@
-
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
+
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/all_products/all_products.dart';
@@ -13,10 +14,11 @@ import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
+  static const String routeName = "/home";
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -26,20 +28,8 @@ List<Product> products = [];
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    var name = context.watch<UserProvider>().user.name;
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: fetchProducts,
-      // ),
-      // body: ListView.builder(
-      //     itemCount: products.length,
-      //     itemBuilder: (context, index) {
-      //       final product = products[index];
-
-      //       return ListTile(
-      //         title: Text(product.images.public_id),
-      //         subtitle: Text(product.category),
-      //       );
-      //     }),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,7 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   //appbar
-                  THomeAppBar(),
+                  THomeAppBar(
+                    name: name.toString(),
+                  ),
                   SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),

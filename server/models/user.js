@@ -29,10 +29,28 @@ const userSchema = mongoose.Schema({
         required: true,
         type: String,
     },
-    address: {
-        type: String,
-        default: "",
-    },
+    addresses: [
+        {
+            country: {
+                type: String,
+            },
+            city: {
+                type: String,
+            },
+            address1: {
+                type: String,
+            },
+            address2: {
+                type: String,
+            },
+            zipCode: {
+                type: Number,
+            },
+            addressType: {
+                type: String,
+            },
+        },
+    ],
 
     type: {
         type: String,

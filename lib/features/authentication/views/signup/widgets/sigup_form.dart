@@ -13,21 +13,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:image_picker/image_picker.dart';
-
 enum Signup {
   signup,
 }
 
 class TSignUpForm extends StatefulWidget {
-  const TSignUpForm({super.key});
+  const TSignUpForm({Key? key}) : super(key: key);
 
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<TSignUpForm> {
-  final picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
   final Signup _signup = Signup.signup;
   final hidepassword = true.obs;

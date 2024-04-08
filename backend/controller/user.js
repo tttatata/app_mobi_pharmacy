@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
-
+const bcryptjs = require("bcryptjs");
 // Đăng ký
 router.post("/create-user", async (req, res, next) => {
   try {
@@ -102,34 +102,14 @@ router.post(
   })
 );
 
-router.post("/api/signin", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ msg: "User with this email does not exist!" });
-    }
-
-    const isMatch = await bcryptjs.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ msg: "Incorrect password." });
-    }
-
-    const token = jwt.sign({ id: user._id }, "passwordKey");
-    res.json({ token, ...user._doc });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
 // Đăng nhập
+//Đăng nhập
 router.post(
   "/login-user",
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email, password } = req.body;
+
       if (!email || !password) {
         return next(new ErrorHandler("Vui lòng điền đủ thông tin!", 400));
       }
@@ -146,33 +126,58 @@ router.post(
         return next(new ErrorHandler("Sai mật khẩu", 400));
       }
 
-      sendToken(user, 201, res);
+      // sendToken(user, 200, res);
+
+      const token = jwt.sign({ id: user._id }, "passwordKey");
+      res.json({ token, ...user._doc });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
   })
 );
 
-router.get(
-  "/getuser",
-  isAuthenticated,
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const user = await User.findById(req.user.id);
+//Đăng nhập
+router.post("/tokenIsValid", catchAsyncErrors(async (req, res, next) => {
+  try {
+    const token = req.header("x-auth-token");
+    console.log(token);
+    if (!token) return res.json(false);
+    const verified = jwt.verify(token, "passwordKey");
+    if (!verified) return res.json(false);
 
-      if (!user) {
-        return next(new ErrorHandler("Người dùng không tồn tại", 400));
-      }
+    const user = await User.findById(verified.id);
+    if (!user) return res.json(false);
+    res.json(true);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}));
 
-      res.status(200).json({
-        success: true,
-        user,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
+// get user data
+router.get("/", isAuthenticated, catchAsyncErrors(async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({ ...user._doc, token: req.token });
+}));
+// router.post("/tokenIsValid", acatchAsyncErrors(async (req, res, next) => {
+//   try {
+//     const token = req.header("x-auth-token");
+//     if (!token) return res.json(false);
+//     const verified = jwt.verify(token, "passwordKey");
+//     if (!verified) return res.json(false);
+
+//     const user = await User.findById(verified.id);
+//     if (!user) return res.json(false);
+//     res.json(true);
+//   } catch (e) {
+//     res.status(500).json({ error: e.message });
+//   }
+// }));
+
+// // get user data
+// authRouter.get("/", auth, async (req, res) => {
+//   const user = await User.findById(req.user);
+//   res.json({ ...user._doc, token: req.token });
+// });
 
 // log out user
 router.get(

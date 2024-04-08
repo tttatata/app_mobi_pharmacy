@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:app_mobi_pharmacy/common/snackbar';
-import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
-import 'package:app_mobi_pharmacy/features/authentication/views/signup/verify_email.dart';
 
 import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
@@ -55,14 +52,15 @@ class SignupController2 extends GetxController {
                 'In order to create account , you must have to read and accept the privacy policy & term of use.');
         return;
       }
-      final user = UserModel(
+      User user = User(
           id: '',
-          name: userName.text.trim(),
-          email: email.text.trim(),
-          password: password.text.trim(),
-          phoneNumber: '',
-          address: [],
+          name: '',
+          email: '',
+          password: '',
+          phoneNumber: 0,
+          addresses: [],
           role: '',
+          token: '',
           avatar: '');
       // final UserCredential = await AuthenticationRepository.instance
       //     .registerWithEmailAndPassword(

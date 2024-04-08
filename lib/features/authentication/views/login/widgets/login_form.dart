@@ -1,7 +1,6 @@
 import 'package:app_mobi_pharmacy/features/authentication/controllers/login/login_controller.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/password_configuration/forget_password.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/signup/signup.dart';
-import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
 import 'package:app_mobi_pharmacy/util/validators/validation.dart';
@@ -14,13 +13,13 @@ enum Signin {
 }
 
 class TLoginForm extends StatefulWidget {
-  const TLoginForm({super.key});
-
+  const TLoginForm({Key? key}) : super(key: key);
   @override
   _SignFormState createState() => _SignFormState();
 }
 
 class _SignFormState extends State<TLoginForm> {
+  Signin _auth = Signin.signin;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passwordController = TextEditingController();
@@ -30,15 +29,6 @@ class _SignFormState extends State<TLoginForm> {
 
   final List<String?> errors = [];
   final LoginController _loginController = LoginController();
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-
-  //   _passwordController.dispose();
-
-  //   _emailController.dispose();
-  // }
 
   void signInUser() {
     _loginController.signInUser(
@@ -109,8 +99,10 @@ class _SignFormState extends State<TLoginForm> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      signInUser();
-                      // if all are valid then go to success screen
+                      if (_formKey.currentState!.validate()) {
+                        signInUser();
+                        // if all are valid then go to success screen
+                      }
                     },
                     child: const Text(TTexts.signIn))),
             const SizedBox(height: TSizes.spaceBtwSections),
@@ -119,7 +111,9 @@ class _SignFormState extends State<TLoginForm> {
             SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                    onPressed: () => Get.to(() => const SignupScreen()),
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignupScreen.routeName);
+                    },
                     child: const Text(TTexts.createAccount))),
           ],
         ),
