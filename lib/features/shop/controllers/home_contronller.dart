@@ -1,9 +1,54 @@
+import 'dart:convert';
+
+import 'package:app_mobi_pharmacy/common/snackbar';
+import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
+import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
+import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   static HomeController get instance => Get.find();
   final caroualCurrentIndex = 0.obs;
   void updatePageIndicator(index) {
     caroualCurrentIndex.value = index;
+  }
+
+  Future<List<Product>> fetchCategoryProducts({
+    required BuildContext context,
+  }) async {
+    print('Tstart');
+    List<Product> productList = [];
+    try {
+      http.Response res = await http
+          .get(Uri.parse('$url/api/v2/product/get-all-products'), headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+
+      print(jsonDecode(res.body)['products'].length);
+      ;
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(res.body)['products'].length; i++) {
+            productList.add(
+              Product.fromJson(
+                jsonDecode(res.body)['products'][i],
+              ),
+            );
+          }
+        },
+      );
+      // print(res.body);
+      print('danh sách');
+      print(productList);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return productList;
   }
 }

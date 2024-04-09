@@ -1,20 +1,25 @@
+import 'dart:convert';
+
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
-import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
+import 'package:app_mobi_pharmacy/features/shop/controllers/home_contronller.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/all_products/all_products.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/home_appbar.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/home_categories.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/promo_slider.dart';
+import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,13 +28,37 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-List<Product> products = [];
-
 class _HomeScreenState extends State<HomeScreen> {
+  List<dynamic>? productList;
+  final HomeController homeServices = HomeController();
+  @override
+  void initState() {
+    super.initState();
+    // fetchCategoryProducts();
+  }
+
+  // fetchCategoryProducts() async {
+  //   productList = await homeServices.fetchCategoryProducts(context: context);
+  //   setState(() {});
+  // }
+
   @override
   Widget build(BuildContext context) {
-    var name = context.watch<UserProvider>().user.name;
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: fetchUsers,
+      // ),
+      // body: ListView.builder(
+      //     itemCount: products.length,
+      //     itemBuilder: (context, index) {
+      //       final product = products[index];
+      //       final name = product['name'];
+      //       final images = product['images']['url'];
+      //       // final l = product['images']['url'];
+      //       return ListTile(
+      //         leading: CircleAvatar(),
+      //       );
+      //     }),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -37,9 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   //appbar
-                  THomeAppBar(
-                    name: name.toString(),
-                  ),
+                  THomeAppBar(),
                   SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),
@@ -106,28 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // void fetchProducts() async {
-  //   final uri = Uri.parse('$url/api/v2/product/get-all-products');
-  //   final res = await http.get(uri);
-  //   final body = res.body;
-  //   final json = jsonDecode(body);
-  //   final producta = json['products'] as List<dynamic>;
-  //   final tranformed = producta.map((e) {
-  //     final images = ImagesTitle(
-  //       public_id: e['images']['public_id'],
-  //       url: e['images']['url'],
-  //       id: e['images']['_id'],
-  //     );
-  //     return Product(
-  //       name: e['name'],
-  //       category: e['category'],
-  //       origin: e['origin'],
-  //       description: e['description'],
-  //       images: images,
-  //     );
-  //   }).toList();
-  //   setState(() {
-  //     products = tranformed;
-  //   });
-  // }
+  Future<void> fetch() async {
+    final uri = Uri.parse('$url/api/v2/product/get-all-products');
+    final res = await http.get(uri);
+    if (res.statusCode==2) {}
+  }
 }

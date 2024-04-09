@@ -1,5 +1,6 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/cart/cart_menu_icon.dart';
+import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
@@ -9,11 +10,12 @@ import 'package:provider/provider.dart';
 
 class THomeAppBar extends StatelessWidget {
   const THomeAppBar({
-    super.key, required this.name,
+    super.key,
   });
-  final String name;
+
   @override
   Widget build(BuildContext context) {
+    var name = context.watch<UserProvider>().user.name;
     return TAppBar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

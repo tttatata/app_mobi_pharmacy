@@ -1,6 +1,7 @@
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/signup/signup.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/home/widgets/category_deals_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -41,7 +42,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const LoginScreen(),
       );
-
+    case CategoryDealsScreen.routeName:
+      var category = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => CategoryDealsScreen(),
+      );
     default:
       return MaterialPageRoute(
         settings: routeSettings,

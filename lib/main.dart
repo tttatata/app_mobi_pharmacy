@@ -6,6 +6,7 @@ import 'package:app_mobi_pharmacy/data/repositories/authentication_repository.da
 import 'package:app_mobi_pharmacy/features/authentication/controllers/login/login_controller.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
+import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/routes.dart';
 import 'package:app_mobi_pharmacy/util/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const NavigationMenu()
           : const LoginScreen(),
     );
   }

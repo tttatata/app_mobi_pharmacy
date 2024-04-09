@@ -2,6 +2,7 @@ import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/list_titles/settings_menu_title.dart';
 import 'package:app_mobi_pharmacy/common/widgets/list_titles/user_profile_title.dart';
+import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/address.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/profile.dart';
@@ -11,12 +12,14 @@ import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var user = context.watch<UserProvider>().user;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
