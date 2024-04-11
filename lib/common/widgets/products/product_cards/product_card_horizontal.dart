@@ -4,6 +4,7 @@ import 'package:app_mobi_pharmacy/common/widgets/images/t_rounded_image.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_price_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_title_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/product_details.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
@@ -14,13 +15,19 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TProductCardHorizontal extends StatelessWidget {
-  const TProductCardHorizontal({super.key});
-
+  const TProductCardHorizontal({super.key, this.product});
+  final Product? product;
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          ProductDetailScreen.routeName,
+          arguments: product,
+        );
+      },
       child: Container(
         width: 310,
         padding: const EdgeInsets.all(1),
@@ -35,11 +42,13 @@ class TProductCardHorizontal extends StatelessWidget {
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 120,
                     width: 120,
                     child: TRoundedImage(
-                      imageUrl: TImages.productImage1,
+                      fit: BoxFit.contain,
+                      imageUrl: product!.images[0].url.toString(),
+                      isNetworkImage: true,
                       applyImageRadius: true,
                     ),
                   ),
@@ -75,10 +84,10 @@ class TProductCardHorizontal extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Column(
+                    Column(
                       children: [
                         ProductTitleText(
-                          title: 'product title 1 ',
+                          title: product!.name,
                           smallSize: true,
                         ),
                         SizedBox(
@@ -92,8 +101,8 @@ class TProductCardHorizontal extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //price
-                        const Flexible(
-                          child: TProductPriceText(price: '35.5'),
+                        Flexible(
+                          child: TProductPriceText( price: product!.sellPrice.toString()),
                         ),
                         Container(
                           decoration: const BoxDecoration(

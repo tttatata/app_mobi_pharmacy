@@ -4,6 +4,7 @@ import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/primar
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader_page.dart';
+import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_horizontal.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
 
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
@@ -114,6 +115,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: TSizes.spaceBtwItems,
                           ),
+                          // SizedBox(
+                          //     height: 150,
+                          //     child: productList!.length != 0
+                          //         ? ListView.separated(
+                          //             itemCount: productList!.length,
+                          //             scrollDirection: Axis.horizontal,
+                          //             separatorBuilder: (context, index) =>
+                          //                 SizedBox(width: TSizes.spaceBtwItems),
+                          //             itemBuilder: (context, index) {
+                          //               final product = productList![index];
+                          //               return TProductCardVertical(
+                          //                   product: product);
+                          //             })
+                          //         : Text(
+                          //             'Không có sản phẩm nào thuộc loại này !'))
                           TGidLayout(
                               itemCount: productList!.length,
                               itemBuilder: (context, index) {

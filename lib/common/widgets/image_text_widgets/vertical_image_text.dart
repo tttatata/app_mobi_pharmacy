@@ -2,6 +2,7 @@ import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class TVerticalImageText extends StatelessWidget {
   const TVerticalImageText({
@@ -23,42 +24,58 @@ class TVerticalImageText extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(right: TSizes.spaceBtwItems),
-        child: Column(
-          children: [
-            Container(
-              width: 56,
-              height: 56,
-              padding: const EdgeInsets.all(TSizes.sm),
-              decoration: BoxDecoration(
-                color: backgroundColor ??
-                    (THelperFunctions.isDarkMode(context)
-                        ? TColors.black
-                        : TColors.white),
-                borderRadius: BorderRadius.circular(100),
+        padding: const EdgeInsets.only(right: TSizes.spaceBtwItems / 2),
+        child: Container(
+          // color: Colors.amber,
+          width: 120,
+          height: 550,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: TSizes.spaceBtwItems,
               ),
-              child: Center(
-                child: Image(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                  color: dark ? TColors.light : TColors.dark,
+              Container(
+                width: 100,
+                height: 100,
+                padding: const EdgeInsets.all(TSizes.sm),
+                decoration: BoxDecoration(
+                  color: backgroundColor ??
+                      (THelperFunctions.isDarkMode(context)
+                          ? TColors.black
+                          : TColors.white),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Image(
+                      image: NetworkImage(image),
+                      fit: BoxFit.contain,
+                      // color: dark ? TColors.light : TColors.dark,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: TSizes.spaceBtwItems / 2,
-            ),
-            SizedBox(
-              width: 300,
-              height: 50,
-              child: Text(
-                title,
-              
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              const SizedBox(
+                height: TSizes.spaceBtwItems / 2,
               ),
-            )
-          ],
+              Flexible(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .apply(color: textColor),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(
+                height: TSizes.spaceBtwItems / 2,
+              ),
+            ],
+          ),
         ),
       ),
     );
