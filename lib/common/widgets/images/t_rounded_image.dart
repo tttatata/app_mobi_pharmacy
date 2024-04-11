@@ -23,7 +23,7 @@ class TRoundedImage extends StatelessWidget {
   final BoxBorder? border;
   final Color backgroundColor;
   final BoxFit? fit;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   final bool isNetworkImage;
   final VoidCallback? onPressed;
   final double borderRadius;

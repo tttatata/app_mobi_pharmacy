@@ -27,9 +27,11 @@ class TCategoryTabs extends StatelessWidget {
               onPressed: () {},
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
-            TGidLayout(
-                itemCount: 4,
-                itemBuilder: (_, index) => const TProductCardVertical())
+            // TGidLayout(
+            //     itemCount: 4,
+            //     itemBuilder: (_, index) => 
+            //     const TProductCardVertical()
+            //     )
           ],
         ),
       ),

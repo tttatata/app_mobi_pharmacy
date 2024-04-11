@@ -2,10 +2,10 @@
 import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
 
 class Reviews_Product {
-  final User user_id;
-  final int rating;
-  final String productId;
-  final DateTime createdAt;
+  final String? user_id;
+  final int? rating;
+  final String? productId;
+  final DateTime? createdAt;
   Reviews_Product({
     required this.user_id,
     required this.rating,
@@ -17,7 +17,7 @@ class Reviews_Product {
       user_id: json['user_id'],
       rating: json['rating'],
       productId: json['productId'],
-      createdAt: json['createdAt'],
+      createdAt: DateTime.parse(json['createdAt']),
     );
   }
 }

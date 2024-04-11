@@ -2,9 +2,11 @@ import 'package:app_mobi_pharmacy/common/styles/shadows.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/icons/t_circular_icon.dart';
 import 'package:app_mobi_pharmacy/common/widgets/images/t_rounded_image.dart';
+import 'package:app_mobi_pharmacy/common/widgets/provider/product_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_price_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_title_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/product_details.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
@@ -15,13 +17,24 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TProductCardVertical extends StatelessWidget {
-  const TProductCardVertical({super.key});
+  const TProductCardVertical({
+    super.key,
+    required this.product,
+  });
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+
     return GestureDetector(
-      onTap: () => Get.to(() => const ProductDetailScreen()),
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          ProductDetailScreen.routeName,
+          arguments: product,
+        );
+      },
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -33,12 +46,14 @@ class TProductCardVertical extends StatelessWidget {
           children: [
             TRoundedContainer(
               height: 180,
-              padding: const EdgeInsets.all(TSizes.sm),
+              padding: EdgeInsets.all(TSizes.sm),
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(
                 children: [
-                  const TRoundedImage(
-                    imageUrl: TImages.productImage1,
+                  TRoundedImage(
+                    fit: BoxFit.contain,
+                    imageUrl: product.images[0].url.toString(),
+                    isNetworkImage: true,
                     applyImageRadius: true,
                   ),
                   Positioned(
@@ -55,7 +70,7 @@ class TProductCardVertical extends StatelessWidget {
                               .apply(color: TColors.black)),
                     ),
                   ),
-                  const Positioned(
+                  Positioned(
                     top: 0,
                     right: 0,
                     child: TCircularIcon(
@@ -72,7 +87,7 @@ class TProductCardVertical extends StatelessWidget {
 
             ///detail
             ///
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: TSizes.sm),
               child: SizedBox(
                 width: double.infinity,
@@ -80,7 +95,7 @@ class TProductCardVertical extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ProductTitleText(
-                      title: 'product title 1 ',
+                      title: product.name,
                       smallSize: true,
                     ),
                     SizedBox(
@@ -91,14 +106,16 @@ class TProductCardVertical extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(
+              height: TSizes.spaceBtwItems / 2,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //price
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(left: TSizes.sm),
-                  child: TProductPriceText(price: '35.5'),
+                  child: TProductPriceText(price: product.sellPrice.toString()),
                 ),
                 Container(
                   decoration: const BoxDecoration(

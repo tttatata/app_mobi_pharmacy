@@ -5,7 +5,7 @@ class ProductTitleText extends StatelessWidget {
     super.key,
     required this.title,
     this.smallSize = false,
-    this.maxLines = 2,
+    this.maxLines = 4,
     this.textAlign = TextAlign.left,
   });
   final String title;
@@ -17,9 +17,9 @@ class ProductTitleText extends StatelessWidget {
     return Text(
       title,
       style: smallSize
-          ? Theme.of(context).textTheme.labelLarge
+          ? TextStyle(fontSize: 9, backgroundColor: Colors.black12)
           : Theme.of(context).textTheme.titleSmall,
-      overflow: TextOverflow.ellipsis,
+      overflow: TextOverflow.clip,
       maxLines: maxLines,
       textAlign: textAlign,
     );

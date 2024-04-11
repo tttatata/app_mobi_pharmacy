@@ -1,4 +1,5 @@
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/product_attributes.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/product_detail_image_slider.dart';
@@ -12,83 +13,106 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 
-class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+class ProductDetailScreen extends StatefulWidget {
+  static const String routeName = '/product-details';
+  final Product product;
+  const ProductDetailScreen({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      bottomNavigationBar: const TBottomAddToCart(),
+      bottomNavigationBar: TBottomAddToCart(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ///products image slider
-            const TProductImageSlider(),
+            TProductImageSlider(),
 
             ///////product detailer
             Padding(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                   right: TSizes.defaultSpace,
                   left: TSizes.defaultSpace,
                   bottom: TSizes.defaultSpace),
               child: Column(
                 children: [
                   //ratting and shearing
-                  const TRatingAndShare(),
+
                   //price title stock brand
-                  const TProductMetaData(),
+                  TProductMetaData(
+                    price: widget.product.originalPrice.toString(),
+                  ),
+                  SizedBox(
+                    height: TSizes.spaceBtwSections,
+                  ),
                   //Attribute
-                  const ProductAttributes(),
-                  const SizedBox(
+                  ProductAttributes(),
+                  SizedBox(
+                    height: TSizes.spaceBtwSections,
+                  ),
+                  TRatingAndShare(),
+                  SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),
                   //checkout
                   SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                          onPressed: () {}, child: const Text('Checkout'))),
+                          onPressed: () {}, child: Text('Checkout'))),
 
-                  const TSetionHeading(
+                  TSetionHeading(
                     title: 'Desription',
                     showActionButton: false,
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: TSizes.spaceBtwItems,
                   ),
-                  const ReadMoreText(
+                  ReadMoreText(
                     'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
                     trimMode: TrimMode.Line,
                     trimLines: 2,
                     colorClickableText: Colors.pink,
                     trimCollapsedText: '...Show more',
                     trimExpandedText: ' show less',
-                    moreStyle: TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle: TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w800),
+                    moreStyle:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    lessStyle:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
-                  const Divider(),
-                  const SizedBox(
+                  Divider(),
+                  SizedBox(
                     height: TSizes.spaceBtwItems,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const TSetionHeading(
+                      TSetionHeading(
                         title: 'Reviewes ( 199)',
                         showActionButton: false,
                       ),
                       IconButton(
-                          onPressed: () =>
-                              Get.to(() => const ProductReviewsScreen()),
-                          icon: const Icon(
+                          onPressed: () => Get.to(() => ProductReviewsScreen()),
+                          icon: Icon(
                             Iconsax.arrow_right_3,
                             size: 18,
                           ))
                     ],
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),
                 ],

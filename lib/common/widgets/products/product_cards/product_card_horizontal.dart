@@ -20,7 +20,7 @@ class TProductCardHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: () => Get.to(() => const ProductDetailScreen()),
+      onTap: () {},
       child: Container(
         width: 310,
         padding: const EdgeInsets.all(1),

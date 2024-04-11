@@ -11,8 +11,8 @@ import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class TProductMetaData extends StatelessWidget {
-  const TProductMetaData({super.key});
-
+  const TProductMetaData({super.key, required this.price});
+  final String price;
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
@@ -34,7 +34,7 @@ class TProductMetaData extends StatelessWidget {
           width: TSizes.spaceBtwItems,
         ),
         Text(
-          '\$250',
+          price,
           style: Theme.of(context)
               .textTheme
               .titleSmall!
@@ -83,7 +83,7 @@ class TProductMetaData extends StatelessWidget {
         Row(
           children: [
             TCircularImage(
-              image: TImages.shoeIcon,
+              image: TImages.category1,
               width: 32,
               height: 32,
               overlayColor: darkMode ? TColors.white : TColors.black,

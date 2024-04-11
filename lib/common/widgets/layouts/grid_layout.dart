@@ -5,7 +5,7 @@ class TGidLayout extends StatelessWidget {
   const TGidLayout({
     super.key,
     required this.itemCount,
-    this.mainAxisExtent = 288,
+    this.mainAxisExtent = 320,
     required this.itemBuilder,
   });
   final int itemCount;

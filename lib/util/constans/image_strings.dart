@@ -13,6 +13,29 @@ class TImages {
   static const String facebook = "assets/logos/facebook-icon.png";
 
   // -- Category Icons
+  static const String category1 =
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/quangcao/2018/01/25/suckhoedoisong.vn-_Tin_thng-_Thng_o.jpg";
+  static const String category2 =
+      "https://thanhnien.mediacdn.vn/Uploaded/dieutrang-qc/2021_10_22/mai-han-duoc-my-pham-2-4439.png";
+  static const String category3 =
+      "https://s-imgcdn.tapchicongthuong.vn/tcct-media/23/1/21/cham-soc-ca-nhan-thien-nhien.jpg";
+  static const String category4 =
+      "https://timo.vn/wp-content/uploads/mua-bao-hiem-cham-soc-suc-khoe-toan-cau.png";
+
+  static const String category5 =
+      "https://cdnmedia.baotintuc.vn/Upload/r2ZmuVn2vsFEWUzMUAXAg/files/2023/11/Thu-tuc-tieu-huy-thuoc-tan-duoc-da-het-han-su-dung-1.jpg";
+  static const String category6 =
+      "https://hips.hearstapps.com/hmg-prod/images/close-up-of-stack-gifts-on-table-against-blue-royalty-free-image-1676327737.jpg?crop=0.668xw:1.00xh;0,0&resize=640:*";
+  static const String category7 =
+      "https://bota.vn/wp-content/uploads/2018/11/bg3.jpg";
+
+  static const String category8 =
+      "https://product.hstatic.net/200000736563/product/upload_0ca81b253d09412f901c19f2d5928a52_master.jpg";
+  static const String categor9 =
+      "https://nhapkhautrungquoc.vn/wp-content/uploads/2021/07/Trang-thiet-bi-y-te-nhap-khau-Trung-Quoc.jpg";
+  static const String category10 =
+      "https://openend.vn/wp-content/uploads/2022/01/chuong-trinh-khuyen-mai-trong-kinh-doanh-scaled.jpg";
+
   static const String sportIcon =
       "assets/icons/categories/icons8-bowling-64.png";
   static const String clothIcon =

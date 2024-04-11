@@ -1,6 +1,8 @@
 import 'package:app_mobi_pharmacy/common/widgets/image_text_widgets/vertical_image_text.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Categories.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/sub_category/sub_category.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,12 +17,13 @@ class THomeCategories extends StatelessWidget {
       height: 80,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: 6,
+        itemCount: category.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, index) {
+          final item = category[index];
           return TVerticalImageText(
-            image: TImages.shoeIcon,
-            title: 'Shoes',
+            image: item.imageUrl,
+            title: item.title,
             onTap: () => Get.to(() => const SubCategoriesScreen()),
           );
         },

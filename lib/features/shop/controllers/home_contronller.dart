@@ -20,7 +20,6 @@ class HomeController extends GetxController {
   Future<List<Product>> fetchCategoryProducts({
     required BuildContext context,
   }) async {
-    print('Tstart');
     List<Product> productList = [];
     try {
       http.Response res = await http
@@ -28,24 +27,23 @@ class HomeController extends GetxController {
         'Content-Type': 'application/json; charset=UTF-8',
       });
 
-      print(jsonDecode(res.body)['products'].length);
-      ;
       httpErrorHandle(
         response: res,
         context: context,
         onSuccess: () {
+          print(productList);
           for (int i = 0; i < jsonDecode(res.body)['products'].length; i++) {
             productList.add(
               Product.fromJson(
-                jsonDecode(res.body)['products'][i],
+                jsonEncode(
+                  jsonDecode(res.body)['products'][i],
+                ),
               ),
             );
           }
+        
         },
       );
-      // print(res.body);
-      print('danh sách');
-      print(productList);
     } catch (e) {
       showSnackBar(context, e.toString());
     }

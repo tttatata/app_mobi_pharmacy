@@ -24,10 +24,12 @@ class TSortableProducts extends StatelessWidget {
         const SizedBox(
           height: TSizes.spaceBtwSections,
         ),
-        TGidLayout(
-          itemCount: 4,
-          itemBuilder: (_, index) => const TProductCardVertical(),
-        ),
+        // TGidLayout(
+        //   itemCount: 4,
+        //   itemBuilder: (_, index) => const TProductCardVertical(
+        //     product: null,
+        //   ),
+        // ),
       ],
     );
   }
