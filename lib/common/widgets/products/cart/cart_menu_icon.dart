@@ -1,8 +1,10 @@
+import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/cart/cart.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class TCartCounterIcon extends StatelessWidget {
   const TCartCounterIcon({
@@ -14,6 +16,7 @@ class TCartCounterIcon extends StatelessWidget {
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserProvider>().user.cart!.length;
     return Stack(
       children: [
         IconButton(
@@ -30,7 +33,7 @@ class TCartCounterIcon extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                '2',
+                user.toString(),
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!

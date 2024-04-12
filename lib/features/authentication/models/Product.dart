@@ -62,7 +62,7 @@ class Product {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      '_id': id,
       'name': name,
       'description': description,
       'category': category,
@@ -90,8 +90,11 @@ class Product {
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
+    if (map['_id'] == null || map['_id'].isEmpty) {
+      throw Exception('Product ID is missing');
+    }
     return Product(
-      id: map['id'] ?? '',
+      id: map['_id'],
       name: map['name'] ?? '',
       description: map['description'] ?? '',
       category: map['category'] ?? '',

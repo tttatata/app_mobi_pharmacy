@@ -3,6 +3,7 @@ import 'package:app_mobi_pharmacy/common/widgets/images/t_circular_image.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_price_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_title_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/t_brand_title_text_with_verified_icon.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/enums.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
@@ -11,8 +12,8 @@ import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class TProductMetaData extends StatelessWidget {
-  const TProductMetaData({super.key, required this.price});
-  final String price;
+  const TProductMetaData({super.key, required this.product});
+  final Product product;
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
@@ -33,67 +34,108 @@ class TProductMetaData extends StatelessWidget {
         const SizedBox(
           width: TSizes.spaceBtwItems,
         ),
-        Text(
-          price,
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall!
-              .apply(decoration: TextDecoration.lineThrough),
+        ProductTitleText(
+          title: product.name.toString(),
+          smallSize: false,
         ),
         const SizedBox(
-          width: TSizes.spaceBtwItems,
+          height: TSizes.spaceBtwItems / 1,
         ),
-        const TProductPriceText(
-          price: '35.5',
-          isLarge: true,
-        ),
-        const SizedBox(
-          width: TSizes.spaceBtwItems / 1.5,
-        ),
-        const ProductTitleText(
-          title: 'product title 1 ',
-          smallSize: true,
-        ),
-        const SizedBox(
-          width: TSizes.spaceBtwItems / 1.5,
-        ),
-
-        ///stack status
         Row(
           children: [
+            TCircularImage(
+              isNetworkImage: true,
+              image: product.category.toString(),
+              width: 32,
+              height: 32,
+              overlayColor: darkMode ? TColors.white : TColors.black,
+            ),
             const ProductTitleText(
-              title: 'status ',
-              smallSize: true,
+              title: 'Loại sản phẩm:',
+              smallSize: false,
+            ),
+            const SizedBox(
+              width: TSizes.spaceBtwItems,
+            ),
+            TBrandTitleWithVerifiedIcon(
+              title: product.category.toString(),
+              brandTextSize: TextSizes.medium,
+            )
+          ],
+        ),
+        const SizedBox(
+          height: TSizes.spaceBtwItems / 1,
+        ),
+        Row(
+          children: [
+            TProductPriceText(
+              price: product.sellPrice.toString(),
+              isLarge: true,
             ),
             const SizedBox(
               width: TSizes.spaceBtwItems,
             ),
             Text(
-              'in Stock',
-              style: Theme.of(context).textTheme.titleMedium,
+              product.originalPrice.toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .apply(decoration: TextDecoration.lineThrough),
+            ),
+            const SizedBox(
+              width: TSizes.spaceBtwItems / 1.5,
             ),
           ],
         ),
-
         const SizedBox(
-          width: TSizes.spaceBtwItems / 1.5,
+          height: TSizes.spaceBtwItems / 1,
+        ),
+
+        ///stack status
+        Column(
+          children: [
+            Row(
+              children: [
+                Column(
+                  children: [
+                    const ProductTitleText(
+                      title: 'Còn lại:',
+                      smallSize: false,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: TSizes.spaceBtwItems / 2,
+                ),
+                Text(
+                  product.stock.toString() + "\ttồn kho",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    const ProductTitleText(
+                      title: 'Đã bán:',
+                      smallSize: false,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: TSizes.spaceBtwItems / 2,
+                ),
+                Text(
+                  product.sold_out.toString() + "\tsản phẩm",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+          ],
         ),
 
         ///brand
-        Row(
-          children: [
-            TCircularImage(
-              image: TImages.category1,
-              width: 32,
-              height: 32,
-              overlayColor: darkMode ? TColors.white : TColors.black,
-            ),
-            const TBrandTitleWithVerifiedIcon(
-              title: 'Nike',
-              brandTextSize: TextSizes.medium,
-            )
-          ],
-        )
       ],
     );
   }

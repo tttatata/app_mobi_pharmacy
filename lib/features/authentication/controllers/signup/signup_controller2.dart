@@ -61,7 +61,8 @@ class SignupController2 extends GetxController {
           addresses: [],
           role: '',
           token: '',
-          avatar: '');
+          avatar: '',
+          cart: []);
       // final UserCredential = await AuthenticationRepository.instance
       //     .registerWithEmailAndPassword(
       //         email.text.trim(), password.text.trim());

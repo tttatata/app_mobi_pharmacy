@@ -134,6 +134,24 @@ router.get(
     }
   })
 );
+router.get(
+  "/search-product/:name",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const products = await Product.find({
+        name: { $regex: req.params.name, $options: "i" },
+      });
+
+
+      res.status(200).json({
+        success: true,
+        products,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
 // Đánh giá người dùng
 router.put(
   "/create-new-review",

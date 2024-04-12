@@ -19,10 +19,6 @@ class THomeCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      
-      
-      
-      
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: Categories.categoryImages.length,

@@ -16,7 +16,7 @@ class TCartItems extends StatelessWidget {
             const SizedBox(height: TSizes.spaceBtwSections),
         itemBuilder: (_, index) => Column(
               children: [
-                const TCartItem(),
+                TCartItem(index: index),
                 if (showAddRemoveButtons)
                   const SizedBox(height: TSizes.spaceBtwItems),
 

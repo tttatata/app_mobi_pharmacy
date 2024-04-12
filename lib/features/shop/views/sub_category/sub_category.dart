@@ -59,14 +59,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                 padding: const EdgeInsets.all(TSizes.defaultSpace),
                 child: Column(
                   children: [
-                    // TRoundedImage(
-                    //   width: double.infinity,
-                    //   imageUrl: TImages.promoBanner3,
-                    //   applyImageRadius: true,
-                    // ),
-                    // SizedBox(height: TSizes.spaceBtwSections),
-
-                    ///sub category
+                   
                     TGidLayout(
                         itemCount: productList!.length,
                         itemBuilder: (context, index) {

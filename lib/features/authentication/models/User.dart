@@ -1,123 +1,3 @@
-// // ignore_for_file: public_member_api_docs, sort_constructors_first
-// // import 'dart:convert';
-// // import 'dart:html';
-
-// // class UserModel {
-// //   final String id;
-// //   final String name;
-// //   final String email;
-// //   final String password;
-// //   final String phone;
-// //   final String address;
-// //   final String type;
-// //   final String token;
-
-// //   UserModel({
-// //     required this.id,
-// //     required this.name,
-// //     required this.email,
-// //     required this.password,
-// //     required this.phone,
-// //     required this.address,
-// //     required this.type,
-// //     required this.token,
-// //   });
-// //   static UserModel empty() => UserModel(
-// //       id: '',
-// //       name: '',
-// //       email: '',
-// //       password: '',
-// //       phone: '',
-// //       address: '',
-// //       type: '',
-// //       token: '');
-
-// //   Map<String, dynamic> toJson() {
-// //     return <String, dynamic>{
-// //       'id': id,
-// //       'name': name,
-// //       'email': email,
-// //       'password': password,
-// //       'phone': phone,
-// //       'address': address,
-// //       'type': type,
-// //       'token': token,
-// //     };
-// //   }
-// // factory UserModel.fromSnapshot(DocumentSnapshot<Map<String ,dynamic>> document){
-
-// //   if(document.data()!=null){
-// //     final data = document.data()!;
-// //     return UserModel(id: document.id, name: data['name'], email: data['email'], password: data['email'], phone: data['email'], address: address, type: type, token: token)
-// // }
-
-// // }
-// // ignore_for_file: public_member_api_docs, sort_constructors_first
-// import 'dart:convert';
-
-// import 'package:app_mobi_pharmacy/features/authentication/models/Address.dart';
-
-// class UserModel {
-//   final String id;
-//   final String name;
-//   final String email;
-//   final String password;
-//   final String phoneNumber;
-//   final List<Address>? address;
-//   final String role;
-//   final String avatar;
-//   final String token;
-//   UserModel({
-//     required this.id,
-//     required this.name,
-//     required this.email,
-//     required this.password,
-//     required this.phoneNumber,
-//     this.address,
-//     required this.role,
-//     required this.avatar,
-//     required this.token,
-//   });
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'avatar': avatar,
-//       'email': email,
-//       'password': password,
-//       'phone': phoneNumber,
-//       'address': address,
-//       'token': token,
-//       'role': role,
-//     };
-//   }
-
-//   factory UserModel.fromMap(Map<String, dynamic> map) {
-//     return UserModel(
-//       id: map['_id'] ?? '',
-//       name: map['name'] ?? '',
-//       email: map['email'] ?? '',
-//       password: map['password'] ?? '',
-//       avatar: map['avatar'] ?? '',
-//       phoneNumber: map['phoneNumber'] ?? '',
-//       token: map['token'] ?? '',
-//       role: map['role'] ?? '',
-//       address: map['address'] != null
-//           ? List<Address>.from(
-//               map['address']?.map(
-//                 (x) => Address.fromMap(x),
-//               ),
-//             )
-//           : null,
-//     );
-//   }
-
-//   String toJson() => json.encode(toMap());
-
-//   factory UserModel.fromJson(String source) =>
-//       UserModel.fromMap(json.decode(source));
-// }
 import 'dart:convert';
 
 import 'package:app_mobi_pharmacy/features/authentication/models/Address.dart';
@@ -128,10 +8,11 @@ class User {
   final String email;
   final String password;
   final int phoneNumber;
-  final List<dynamic> addresses;
+  final List<dynamic>? addresses;
   final String role;
-  final dynamic avatar;
+  final String? avatar;
   final String token;
+  final List<dynamic>? cart;
 
   User({
     required this.id,
@@ -143,11 +24,12 @@ class User {
     required this.role,
     required this.token,
     required this.avatar,
+    required this.cart,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      '_id': id,
       'name': name,
       'email': email,
       'password': password,
@@ -156,6 +38,7 @@ class User {
       'role': role,
       'avatar': avatar,
       'token': token,
+      'cart': cart,
     };
   }
 
@@ -173,7 +56,14 @@ class User {
         ),
       ),
       role: map['role'],
-      avatar: map['avatar'],
+      avatar: map['avatar'] != null ? map['avatar']['url'] : null,
+      cart: map['cart'] != null
+          ? List<Map<String, dynamic>>.from(
+              map['cart']?.map(
+                (x) => Map<String, dynamic>.from(x),
+              ),
+            )
+          : [],
     );
   }
 
@@ -188,8 +78,9 @@ class User {
     int? phoneNumber,
     List<dynamic>? addresses,
     String? role,
-    dynamic? avatar,
+    String? avatar,
     String? token,
+    List<dynamic>? cart,
   }) {
     return User(
       id: id ?? this.id,
@@ -201,69 +92,34 @@ class User {
       role: role ?? this.role,
       avatar: avatar ?? this.avatar,
       token: token ?? this.token,
+      cart: cart ?? this.cart,
     );
   }
 }
-// class Address {
-//   final String country;
-//   final String city;
-//   final String address1;
-//   final String address2;
-//   final int zipCode;
-//   final String addressType;
 
-//   Address({
-//     required this.country,
-//     required this.city,
-//     required this.address1,
-//     required this.address2,
-//     required this.zipCode,
-//     required this.addressType,
-//   });
+class Avatar_user {
+  final String public_id;
+  final String url;
+  Avatar_user({
+    required this.public_id,
+    required this.url,
+  });
+  Map<String, dynamic> toMap() {
+    return {
+      ' public_id': public_id,
+      'url': url,
+    };
+  }
 
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'country': country,
-//       'city': city,
-//       'address1': address1,
-//       'address2': address2,
-//       'zipCode': zipCode,
-//       'addressType': addressType,
-//     };
-//   }
+  factory Avatar_user.fromMap(Map<String, dynamic> map) {
+    return Avatar_user(
+      public_id: map['public_id'] ?? '',
+      url: map['url'] ?? '',
+    );
+  }
 
-//   factory Address.fromMap(Map<String, dynamic> map) {
-//     return Address(
-//       country: map['country'],
-//       city: map['city'],
-//       address1: map['address1'],
-//       address2: map['address2'],
-//       zipCode: map['zipCode'],
-//       addressType: map['addressType'],
-//     );
-//   }
-// }
+  String toJson() => json.encode(toMap());
 
-// class Avatar {
-//   final String publicId;
-//   final String url;
-
-//   Avatar({
-//     required this.publicId,
-//     required this.url,
-//   });
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'publicId': publicId,
-//       'url': url,
-//     };
-//   }
-
-//   factory Avatar.fromMap(Map<String, dynamic> map) {
-//     return Avatar(
-//       publicId: map['publicId'],
-//       url: map['url'],
-//     );
-//   }
-// }
+  factory Avatar_user.fromJson(String source) =>
+      Avatar_user.fromMap(json.decode(source));
+}

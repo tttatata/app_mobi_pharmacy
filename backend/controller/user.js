@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../model/user");
+const Product = require("../model/product");
 const router = express.Router();
 const cloudinary = require("cloudinary");
 const ErrorHandler = require("../utils/ErrorHandler");

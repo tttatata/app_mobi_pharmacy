@@ -17,6 +17,7 @@ dependencies:
 
   # Utility Packages
   http: ^1.2.1
+
   intl: ^0.18.1
   logger: ^2.0.1
   url_launcher: ^6.1.12
@@ -43,7 +44,7 @@ dependencies:
   lottie: ^3.1.0
   firebase_auth: ^4.19.0
   appwrite: ^12.0.1
-  # cloud_firestore: ^4.16.0
+  badges: ^3.1.2
 
 
  

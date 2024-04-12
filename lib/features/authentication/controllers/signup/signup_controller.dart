@@ -35,7 +35,8 @@ class SignUpController {
           addresses: [],
           role: '',
           token: '',
-          avatar: imageUrls);
+          avatar: imageUrls,
+          cart: []);
 
       http.Response res = await http.post(
         Uri.parse('$url/api/v2/user/create-user'),

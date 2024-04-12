@@ -1,9 +1,9 @@
-
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/signup/signup.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/product_details.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/search/search_product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/sub_category/sub_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -40,6 +40,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => SubCategoriesScreen(
           category: category,
+        ),
+      );
+    case SearchScreen.routeName:
+      var searchQuery = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => SearchScreen(
+          searchQuery: searchQuery,
         ),
       );
     case SignupScreen.routeName:

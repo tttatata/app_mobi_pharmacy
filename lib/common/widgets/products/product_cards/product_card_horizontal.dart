@@ -93,16 +93,18 @@ class TProductCardHorizontal extends StatelessWidget {
                         SizedBox(
                           height: TSizes.spaceBtwItems / 2,
                         ),
-                        TBrandTitleWithVerifiedIcon(title: 'title brands'),
                       ],
                     ),
+                    TBrandTitleWithVerifiedIcon(
+                        title: product!.category.toString()),
                     const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //price
                         Flexible(
-                          child: TProductPriceText( price: product!.sellPrice.toString()),
+                          child: TProductPriceText(
+                              price: product!.sellPrice.toString()),
                         ),
                         Container(
                           decoration: const BoxDecoration(
