@@ -5,6 +5,7 @@ import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
+import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,50 @@ import 'package:provider/provider.dart';
 class LoginController {
   // sign in user
   // sign in user
+  // void signInUser({
+  //   required BuildContext context,
+  //   required String email,
+  //   required String password,
+  // }) async {
+  //   try {
+  //     http.Response res = await http.post(
+  //       Uri.parse('$url/api/v2/auth/signin'),
+  //       body: jsonEncode({
+  //         'email': email,
+  //         'password': password,
+  //       }),
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json',
+  //       },
+  //     );
+
+  //     httpErrorHandle(
+  //       response: res,
+  //       context: context,
+  //       onSuccess: () async {
+  //         SharedPreferences prefs = await SharedPreferences.getInstance();
+  //         Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+  //         await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+  //         final userProvider = context.read<UserProvider>().user.token;
+
+  //         if (userProvider.isNotEmpty) {
+  //           Navigator.pushNamedAndRemoveUntil(
+  //             context,
+  //             NavigationMenu.routeName,
+  //             (route) => false,
+  //           );
+  //         }
+  //       },
+  //     );
+
+  //     final userProvider = context.read<UserProvider>();
+  //     print(userProvider.toString());
+
+  //     // Truy cập giá trị mà không rebuild widget
+  //   } catch (e) {
+  //     showSnackBar(context, e.toString());
+  //   }
+  // }
   void signInUser({
     required BuildContext context,
     required String email,
@@ -24,7 +69,8 @@ class LoginController {
   }) async {
     try {
       http.Response res = await http.post(
-        Uri.parse('$url/api/v2/auth/signin'),
+        Uri.parse(
+            '$url/api/v2/auth/signin'), // Thay thế với URL backend của bạn
         body: jsonEncode({
           'email': email,
           'password': password,
@@ -33,31 +79,38 @@ class LoginController {
           'Content-Type': 'application/json',
         },
       );
+      print(res.statusCode);
+      print(res.body);
+      if (res.statusCode == 200) {
+        // if (res.headers['set-cookie'] != null) {
+        //   // Lưu cookies
+        //   String rawCookies = res.headers['set-cookie']!;
+        //   // Xử lý và lưu cookies ở đây
+        // }
+        // Lưu trữ token nhận được vào SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String token = jsonDecode(res.body)['token'];
+        print(token);
+        await prefs.setString('x-auth-token', token);
 
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          final userProvider = context.read<UserProvider>().user.token;
-
-          if (userProvider.isNotEmpty) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              HomeScreen.routeName,
-              (route) => false,
-            );
-          }
-        },
-      );
-
-      final userProvider = context.read<UserProvider>();
-      print(userProvider.toString());
-
-      // Truy cập giá trị mà không rebuild widget
+        // Cập nhật thông tin người dùng trong UserProvider
+        Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+        final userProvider = context.read<UserProvider>().user.token;
+        // Chuyển đến HomeScreen nếu đăng nhập thành công
+        if (userProvider.isNotEmpty) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            NavigationMenu.routeName,
+            (route) => false,
+          );
+        }
+      } else {
+        // Xử lý các trường hợp lỗi khác nhau dựa trên statusCode
+        String errorMessage = jsonDecode(res.body)['message'];
+        showSnackBar(context, errorMessage);
+      }
     } catch (e) {
+      // Hiển thị thông báo lỗi nếu có vấn đề khi giao tiếp với server
       showSnackBar(context, e.toString());
     }
   }

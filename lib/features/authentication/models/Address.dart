@@ -17,23 +17,6 @@ class Address {
     required this.zipCode,
     required this.addressType,
   });
-  Address copyWith({
-    String? country,
-    String? city,
-    String? address1,
-    String? address2,
-    int? zipCode,
-    String? addressType,
-  }) {
-    return Address(
-      country: country ?? this.country,
-      city: city ?? this.city,
-      address1: address1 ?? this.address1,
-      address2: address2 ?? this.address2,
-      zipCode: zipCode ?? this.zipCode,
-      addressType: addressType ?? this.addressType,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

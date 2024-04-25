@@ -125,12 +125,12 @@ class TProductCardVertical extends StatelessWidget {
                       bottomRight: Radius.circular(TSizes.productImageRadius),
                     ),
                   ),
-                  child: const SizedBox(
-                    width: TSizes.iconLg * 1.2,
-                    height: TSizes.iconLg * 1.2,
-                    child:
-                        Center(child: Icon(Iconsax.add, color: TColors.white)),
-                  ),
+                  // child: const SizedBox(
+                  //   width: TSizes.iconLg * 1.2,
+                  //   height: TSizes.iconLg * 1.2,
+                  //   child:
+                  //       Center(child: Icon(Iconsax.add, color: TColors.white)),
+                  // ),
                 )
               ],
             ),

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class NavigationMenu extends StatelessWidget {
+  static const String routeName = "/actual-home";
   const NavigationMenu({
     super.key,
   });
@@ -35,8 +36,8 @@ class NavigationMenu extends StatelessWidget {
               label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Iconsax.shop),
-              label: 'Store',
+              icon: Icon(Iconsax.category),
+              label: 'Category',
             ),
             NavigationDestination(
               icon: Icon(Iconsax.heart),

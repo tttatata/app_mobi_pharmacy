@@ -4,6 +4,7 @@ import 'package:app_mobi_pharmacy/common/widgets/list_titles/settings_menu_title
 import 'package:app_mobi_pharmacy/common/widgets/list_titles/user_profile_title.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
+import 'package:app_mobi_pharmacy/features/personalization/controllers/settings_controller.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/address.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/profile.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/order/order.dart';
@@ -56,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.safe_home,
                     title: 'My Addresses',
                     subTitle: 'Set shopping delivery address',
-                    onTap: () => Get.to(() => const UserAddressScreen()),
+                    onTap: () => Get.to(() => UserAddressScreen()),
                   ),
                   TSettingsMenuTitle(
                     icon: Iconsax.shopping_cart,
@@ -142,7 +143,7 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () => SettingServices().logOut(context),
                       child: const Text('Log out'),
                     ),
                   ),

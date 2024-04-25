@@ -99,10 +99,10 @@ class _SignFormState extends State<TLoginForm> {
                 width: double.infinity,
                 child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        signInUser();
-                        // if all are valid then go to success screen
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      signInUser();
+                      // if all are valid then go to success screen
+                      // }
                     },
                     child: const Text(TTexts.signIn))),
             const SizedBox(height: TSizes.spaceBtwSections),

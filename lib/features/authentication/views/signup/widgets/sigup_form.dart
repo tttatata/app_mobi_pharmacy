@@ -35,6 +35,7 @@ class _SignUpFormState extends State<TSignUpForm> {
   final SignUpController _signUpController = SignUpController();
   File? images;
   bool remember = false;
+  String? currentImagePath;
   final List<String?> errors = [];
 
   void signUpUser() {
@@ -51,9 +52,25 @@ class _SignUpFormState extends State<TSignUpForm> {
     var res = await pickImages();
     setState(() {
       images = res;
+      if (images != null) {
+        currentImagePath = images!.path; // Lưu đường dẫn hình ảnh
+        // Kiểm tra đường dẫn hình ảnh sau khi chọn
+        checkImagePath(currentImagePath!);
+      }
     });
 
     print('images:$images');
+  }
+
+  void checkImagePath(String imagePath) {
+    final file = File(imagePath);
+    print('Kiểm tra đường dẫn hình ảnh: $imagePath');
+    if (file.existsSync()) {
+      print('Hình ảnh tồn tại.');
+    } else {
+      print(
+          'Hình ảnh không tồn tại. Kiểm tra lại đường dẫn hoặc quyền truy cập.');
+    }
   }
 
   @override
@@ -68,15 +85,80 @@ class _SignUpFormState extends State<TSignUpForm> {
             width: double.infinity,
             child: Column(
               children: [
-                const TCircularImage(
-                  image: TImages.user,
-                  width: 80,
-                  height: 80,
-                ),
-                ElevatedButton(
-                  onPressed: selectImages,
-                  child: const Text('Change Profile Picture'),
-                ),
+                images != null
+                    ? // Kiểm tra nếu có hình ảnh đã chọn
+                    Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          ClipOval(
+                            child: Image.file(
+                              images!,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(
+                                8.0), // Điều chỉnh khoảng cách của icon so với góc
+                            child: InkWell(
+                              onTap:
+                                  selectImages, // Gọi hàm selectImages khi nút được nhấn
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Màu nền cho nút icon
+                                  shape: BoxShape
+                                      .circle, // Tạo hình tròn cho nút icon
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt, // Sử dụng icon camera
+                                  size: 24.0, // Kích thước của icon
+                                  color: Colors.blue, // Màu sắc của icon
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          TCircularImage(
+                            image: TImages
+                                .user, // Sử dụng hình ảnh đã chọn hoặc hình ảnh mặc định
+                            isNetworkImage:
+                                false, // Đặt là false vì hình ảnh không phải từ mạng
+                            width: 100,
+                            height: 100,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(
+                                8.0), // Điều chỉnh khoảng cách của icon so với góc
+                            child: InkWell(
+                              onTap:
+                                  selectImages, // Gọi hàm selectImages khi nút được nhấn
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Màu nền cho nút icon
+                                  shape: BoxShape
+                                      .circle, // Tạo hình tròn cho nút icon
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt, // Sử dụng icon camera
+                                  size: 24.0, // Kích thước của icon
+                                  color: Colors.blue, // Màu sắc của icon
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+
+                // const SizedBox(height: TSizes.spaceBtwInputFields),
+                // ElevatedButton(
+                //   onPressed: selectImages,
+                //   child: Text('Change Profile Picture'),
+                // ),
               ],
             ),
           ),

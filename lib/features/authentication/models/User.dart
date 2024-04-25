@@ -4,16 +4,16 @@ import 'package:app_mobi_pharmacy/features/authentication/models/Address.dart';
 
 class User {
   final String id;
-  final String name;
+  String name;
   final String email;
-  final String password;
-  final int phoneNumber;
-  final List<dynamic>? addresses;
+  String password;
+  int phoneNumber;
+  List<dynamic> addresses;
   final String role;
-  final String? avatar;
-  final String token;
-  final List<dynamic>? cart;
-
+  Avatar_user? avatar;
+  String token;
+  List<dynamic>? cart;
+  // Thêm thuộc tính đối tượng cho phương thức thanh toán
   User({
     required this.id,
     required this.name,
@@ -23,7 +23,7 @@ class User {
     required this.addresses,
     required this.role,
     required this.token,
-    required this.avatar,
+    this.avatar,
     required this.cart,
   });
 
@@ -56,7 +56,7 @@ class User {
         ),
       ),
       role: map['role'],
-      avatar: map['avatar'] != null ? map['avatar']['url'] : null,
+      avatar: map['avatar'] != null ? Avatar_user.fromMap(map['avatar']) : null,
       cart: map['cart'] != null
           ? List<Map<String, dynamic>>.from(
               map['cart']?.map(
@@ -69,7 +69,7 @@ class User {
 
   String toJson() => json.encode(toMap());
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
-
+//Đảm bảo rằng bạn cũng cập nhật phương thức copyWith để có thể tạo bản sao của đối tượng User với các thuộc tính mới được thay đổi:
   User copyWith({
     String? id,
     String? name,
@@ -78,7 +78,7 @@ class User {
     int? phoneNumber,
     List<dynamic>? addresses,
     String? role,
-    String? avatar,
+    Avatar_user? avatar,
     String? token,
     List<dynamic>? cart,
   }) {

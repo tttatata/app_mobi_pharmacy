@@ -1,4 +1,5 @@
 import 'package:app_mobi_pharmacy/common/styles/spacing_styles.dart';
+import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/login_signup/form_divider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/login_signup/social_buttons.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/widgets/login_form.dart';
@@ -17,23 +18,30 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Padding(
-        padding: TSpacingStyle.paddingWithAppBarHeight,
-        child: Column(
-          children: [
-            ///logo , title subtitle
-            const TLoginHeader(),
-            const TLoginForm(),
-            //Vivider
-            TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
-            const SizedBox(height: TSizes.spaceBtwSections),
-
-            ///fotter
-            const TSocialButtons()
-          ],
+        appBar: TAppBar(
+          showBackArrow: true,
+          title: Text(
+            'Login',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
-      ),
-    ));
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: TSpacingStyle.paddingWithAppBarHeight,
+            child: Column(
+              children: [
+                ///logo , title subtitle
+                const TLoginHeader(),
+                const TLoginForm(),
+                //Vivider
+                TFormDivider(dividerText: TTexts.orSignInWith.capitalize!),
+                const SizedBox(height: TSizes.spaceBtwSections),
+
+                ///fotter
+                const TSocialButtons()
+              ],
+            ),
+          ),
+        ));
   }
 }

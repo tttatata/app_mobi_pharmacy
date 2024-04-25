@@ -52,36 +52,36 @@ class SignupController2 extends GetxController {
                 'In order to create account , you must have to read and accept the privacy policy & term of use.');
         return;
       }
-      User user = User(
-          id: '',
-          name: '',
-          email: '',
-          password: '',
-          phoneNumber: 0,
-          addresses: [],
-          role: '',
-          token: '',
-          avatar: '',
-          cart: []);
+      // User user = User(
+      //     id: '',
+      //     name: '',
+      //     email: '',
+      //     password: '',
+      //     phoneNumber: 0,
+      //     addresses: [],
+      //     role: '',
+      //     token: '',
+      //     avatar: '',
+      //     cart: []);
       // final UserCredential = await AuthenticationRepository.instance
       //     .registerWithEmailAndPassword(
       //         email.text.trim(), password.text.trim());
-      http.Response res = await http.post(
-        Uri.parse('$url/api/v2/user/create-user'),
-        body: jsonEncode(<String, String>{
-          'id': '',
-          'name': user.name,
-          'email': user.email,
-          'password': user.password,
-          'phoneNumber': '',
-          'addrees': user.name,
-          'role': '',
-          'avatar': '',
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
+      // http.Response res = await http.post(
+      //   Uri.parse('$url/api/v2/user/create-user'),
+      // body: jsonEncode(<String, String>{
+      //   'id': '',
+      //   'name': user.name,
+      //   'email': user.email,
+      //   'password': user.password,
+      //   'phoneNumber': '',
+      //   'addrees': user.name,
+      //   'role': '',
+      //   'avatar': '',
+      // }),
+      //   headers: <String, String>{
+      //     'Content-Type': 'application/json; charset=UTF-8',
+      //   },
+      // );
       // httpErrorHandle(
       //   response: res,
       //   context: context,

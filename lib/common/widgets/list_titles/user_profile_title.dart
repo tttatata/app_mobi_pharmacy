@@ -16,11 +16,14 @@ class TUSerProfileTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().user;
     return ListTile(
-      leading: const TCircularImage(
-        image: TImages.user,
+      leading: TCircularImage(
+        image: user.avatar!.url.isEmpty
+            ? TImages.user
+            : user.avatar!.url.toString(),
+        isNetworkImage: user.avatar!.url.isEmpty ? false : true,
         height: 50,
         width: 50,
-        padding: 0,
+        padding: 5,
       ),
       title: Text(user.name,
           style: Theme.of(context)

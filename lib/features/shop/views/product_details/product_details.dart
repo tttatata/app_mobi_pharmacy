@@ -1,7 +1,9 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/icons/t_circular_icon.dart';
+import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
+import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/shop/controllers/product_details.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/bottom_add_to_cart.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/product_attributes.dart';
@@ -15,6 +17,7 @@ import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -45,8 +48,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
+  void GotoLogin() {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      LoginScreen.routeName,
+      (route) => true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userchecked =
+        Provider.of<UserProvider>(context).user.token.isNotEmpty;
     if (widget.product.id == null) {
       print('Product ID is null');
     } else {
@@ -62,58 +75,94 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: TSizes.defaultSpace, vertical: TSizes.defaultSpace / 2),
-        decoration: BoxDecoration(
-          color: darkMode ? TColors.darkGrey : TColors.light,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(TSizes.cardRadiusLg),
-            topRight: Radius.circular(TSizes.cardRadiusLg),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const TCircularIcon(
-                  icon: Iconsax.minus,
-                  backgroundColor: TColors.darkGrey,
-                  width: 40,
-                  height: 40,
-                  color: TColors.white,
+      bottomNavigationBar: userchecked
+          ? Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TSizes.defaultSpace,
+                  vertical: TSizes.defaultSpace / 2),
+              decoration: BoxDecoration(
+                color: darkMode ? TColors.darkGrey : TColors.light,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(TSizes.cardRadiusLg),
+                  topRight: Radius.circular(TSizes.cardRadiusLg),
                 ),
-                const SizedBox(
-                  width: TSizes.spaceBtwItems,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const TCircularIcon(
+                        icon: Iconsax.minus,
+                        backgroundColor: TColors.darkGrey,
+                        width: 40,
+                        height: 40,
+                        color: TColors.white,
+                      ),
+                      const SizedBox(
+                        width: TSizes.spaceBtwItems,
+                      ),
+                      Text(
+                        '2',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      const SizedBox(
+                        width: TSizes.spaceBtwItems,
+                      ),
+                      const TCircularIcon(
+                        icon: Iconsax.add,
+                        backgroundColor: TColors.black,
+                        width: 40,
+                        height: 40,
+                        color: TColors.white,
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: addToCart,
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(TSizes.md),
+                        backgroundColor: TColors.black,
+                        side: const BorderSide(color: TColors.black)),
+                    child: const Text('Add to cart'),
+                  ),
+                ],
+              ),
+            )
+          : Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TSizes.defaultSpace,
+                  vertical: TSizes.defaultSpace / 2),
+              decoration: BoxDecoration(
+                color: darkMode ? TColors.darkGrey : TColors.light,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(TSizes.cardRadiusLg),
+                  topRight: Radius.circular(TSizes.cardRadiusLg),
                 ),
-                Text(
-                  '2',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                const SizedBox(
-                  width: TSizes.spaceBtwItems,
-                ),
-                const TCircularIcon(
-                  icon: Iconsax.add,
-                  backgroundColor: TColors.black,
-                  width: 40,
-                  height: 40,
-                  color: TColors.white,
-                ),
-              ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'vui lòng đăng nhập để tiếp tục',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  const SizedBox(
+                    width: TSizes.spaceBtwItems,
+                  ),
+                  TextButton(
+                    onPressed: GotoLogin,
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(TSizes.md),
+                        backgroundColor:
+                            const Color.fromARGB(255, 255, 255, 255),
+                        side: const BorderSide(
+                            color: Color.fromARGB(255, 255, 15, 15))),
+                    child: const Text('Login'),
+                  ),
+                ],
+              ),
             ),
-            ElevatedButton(
-              onPressed: addToCart,
-              style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(TSizes.md),
-                  backgroundColor: TColors.black,
-                  side: const BorderSide(color: TColors.black)),
-              child: const Text('Add to cart'),
-            ),
-          ],
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

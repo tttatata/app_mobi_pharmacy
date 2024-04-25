@@ -38,11 +38,11 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   capped_progress_indicator: ^0.0.2
   shared_preferences: ^2.2.2
-  firebase_core: ^2.27.2
+
   provider: ^6.1.2
   connectivity_plus: ^5.0.1
   lottie: ^3.1.0
-  firebase_auth: ^4.19.0
+
   appwrite: ^12.0.1
   badges: ^3.1.2
 
@@ -51,6 +51,9 @@ dependencies:
   cloudinary_public: ^0.23.1
   file_picker: ^8.0.0+1
   localstorage: ^5.0.0
+  flutter_stripe: ^3.2.0
+  flutter_bloc: ^8.0.1
+  equatable: ^2.0.3
   
   #--------------- ./ PACKAGES END ------------------#
 

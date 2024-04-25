@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_mobi_pharmacy/common/snackbar';
@@ -35,12 +36,21 @@ class SignUpController {
           addresses: [],
           role: '',
           token: '',
-          avatar: imageUrls,
+          avatar: null,
           cart: []);
 
       http.Response res = await http.post(
         Uri.parse('$url/api/v2/user/create-user'),
-        body: user.toJson(),
+        // body: user.toJson(),
+        body: jsonEncode(<String, String>{
+          'id': '',
+          'name': user.name,
+          'email': user.email,
+          'password': user.password,
+          'phoneNumber': '',
+          'addrees': '',
+          'avatar': imageUrls,
+        }),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

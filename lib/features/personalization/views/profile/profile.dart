@@ -1,4 +1,5 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
+import 'package:app_mobi_pharmacy/common/widgets/dialog/edit_phonenumber_dialog.dart';
 import 'package:app_mobi_pharmacy/common/widgets/images/t_circular_image.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
@@ -9,15 +10,27 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().user;
+    print(user.name);
     String message = user.phoneNumber == 0
         ? 'Bạn chưa nhập số điện thoại'
         : user.phoneNumber.toString();
+    void _updatePhoneNumber(int newPhoneNumber) {
+      setState(() {
+        user.phoneNumber = newPhoneNumber;
+      });
+    }
+
     return Scaffold(
       appBar: const TAppBar(
         showBackArrow: true,
@@ -32,10 +45,13 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const TCircularImage(
-                      image: TImages.user,
-                      width: 80,
-                      height: 80,
+                    TCircularImage(
+                      image: user.avatar!.url.isEmpty
+                          ? TImages.user
+                          : user.avatar!.url.toString(),
+                      isNetworkImage: user.avatar!.url.isEmpty ? false : true,
+                      width: 120,
+                      height: 120,
                     ),
                     TextButton(
                       onPressed: () {},
@@ -84,11 +100,20 @@ class ProfileScreen extends StatelessWidget {
               ),
               ProfileMenu(
                 title: 'Phone Number',
-                value: user.phoneNumber == 0
-                    ? 'Bạn chưa nhập số điện thoại'
-                    : user.phoneNumber.toString(),
-                onPressed: () {},
+                value: message,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return EditPhoneNumberDialog(
+                        initialPhoneNumber: user.phoneNumber,
+                        onPhoneNumberSaved: _updatePhoneNumber,
+                      );
+                    },
+                  );
+                },
               ),
+
               ProfileMenu(
                 title: 'Gender',
                 value: 'Male',
