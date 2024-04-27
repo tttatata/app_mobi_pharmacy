@@ -1,3 +1,4 @@
+import 'package:app_mobi_pharmacy/util/formatters/formatter.dart';
 import 'package:flutter/material.dart';
 
 class TProductPriceText extends StatelessWidget {
@@ -15,7 +16,7 @@ class TProductPriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      price.toString(),
+      TFormatter.formatCurrency(double.parse(price)),
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       style: isLarge

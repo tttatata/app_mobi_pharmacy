@@ -22,7 +22,7 @@ class TBrandTitle extends StatelessWidget {
         maxLines: maxLines,
         textAlign: textAlign,
         style: brandTextSize == TextSizes.small
-            ? Theme.of(context).textTheme.labelMedium!.apply(color: color)
+            ? Theme.of(context).textTheme.labelSmall!.apply(color: color)
             : brandTextSize == TextSizes.medium
                 ? Theme.of(context).textTheme.bodyLarge!.apply(color: color)
                 : brandTextSize == TextSizes.large

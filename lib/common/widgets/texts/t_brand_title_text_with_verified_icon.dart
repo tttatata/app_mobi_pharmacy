@@ -33,6 +33,7 @@ class TBrandTitleWithVerifiedIcon extends StatelessWidget {
             maxLines: maxLines,
             textAlign: textAlign,
             brandTextSize: brandTextSize,
+      
           ),
         ),
         const SizedBox(

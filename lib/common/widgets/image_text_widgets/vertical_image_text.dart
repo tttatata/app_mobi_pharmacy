@@ -42,7 +42,7 @@ class TVerticalImageText extends StatelessWidget {
                   color: backgroundColor ??
                       (THelperFunctions.isDarkMode(context)
                           ? TColors.black
-                          : TColors.white),
+                          : Color.fromARGB(255, 102, 133, 236)),
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Center(
@@ -66,7 +66,7 @@ class TVerticalImageText extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
-                      .apply(color: textColor),
+                      .apply(color: Color.fromARGB(255, 2, 13, 158)),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

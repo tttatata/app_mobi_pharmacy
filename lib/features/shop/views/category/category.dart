@@ -8,7 +8,7 @@ import 'package:app_mobi_pharmacy/common/widgets/products/cart/cart_menu_icon.da
 import 'package:app_mobi_pharmacy/common/widgets/products/productrow/t_row_product_category.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/brand/all_brands.dart';
-import 'package:app_mobi_pharmacy/features/shop/views/store/widgets/category_tab.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/category/widgets/category_tab.dart';
 import 'package:app_mobi_pharmacy/util/constans/category.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';

@@ -4,6 +4,7 @@ import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader_page.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_horizontal.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:app_mobi_pharmacy/common/widgets/products/sortable/sortable_products.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
@@ -35,6 +36,7 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
   }
 
   fetchCategoryProducts() async {
+    await Future.delayed(Duration(seconds: 2)); // Đợi ít nhất 2 giây
     productList = await subCategoryController.fetchCategoryProducts(
       context: context,
       category: widget.category,
@@ -53,59 +55,29 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
         ),
       ),
       body: productList == null
-          ? const Loader()
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(TSizes.defaultSpace),
-                child: Column(
-                  children: [
-                   
-                    TGidLayout(
-                        itemCount: productList!.length,
-                        itemBuilder: (context, index) {
-                          final product = productList![index];
-                          return TProductCardVertical(product: product);
-                          // child: TProductCardVertical(
-                          //     name: productList![index].name)
-
-                          //    onTap: () {
-                          //   Navigator.pushNamed(ơ
-                          //     context,
-                          //     ProductDetailScreen.routeName,
-                          //     arguments: product,
-                          //   );
-                          // },
-                        }),
-                    // Column(
-                    //   children: [
-                    //     TSetionHeading(
-                    //       title: widget.category,
-                    //       showActionButton:
-                    //           productList!.length != 0 ? true : false,
-                    //       onPressed: () {},
-                    //     ),
-                    //     SizedBox(height: TSizes.spaceBtwItems / 2),
-                    //     SizedBox(
-                    //         height: 120,
-                    //         child: productList!.length != 0
-                    //             ? ListView.separated(
-                    //                 itemCount: productList!.length,
-                    //                 scrollDirection: Axis.horizontal,
-                    //                 separatorBuilder: (context, index) =>
-                    //                     SizedBox(width: TSizes.spaceBtwItems),
-                    //                 itemBuilder: (context, index) {
-                    //                   final product = productList![index];
-                    //                   return TProductCardHorizontal(
-                    //                       product: product);
-                    //                 })
-                    //             : Text(
-                    //                 'Không có sản phẩm nào thuộc loại này !'))
-                    //   ],
-                    // )
-                  ],
+          ? Center(
+              child:
+                  CircularProgressIndicator()) // Hiển thị loader khi productList đang null
+          : productList!.isEmpty
+              ? Center(
+                  child: Text(
+                      'Không có sản phẩm loại này')) // Hiển thị thông báo khi không có sản phẩm
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(TSizes.defaultSpace),
+                    child: Column(
+                      children: [
+                        TSortableProducts(),
+                        TGidLayout(
+                            itemCount: productList!.length,
+                            itemBuilder: (context, index) {
+                              final product = productList![index];
+                              return TProductCardVertical(product: product);
+                            }),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
     );
   }
 }

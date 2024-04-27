@@ -4,9 +4,13 @@ import 'package:app_mobi_pharmacy/common/snackbar';
 import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
+import 'package:app_mobi_pharmacy/common/widgets/success_screen/success_screen.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
+import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
+import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,7 +19,7 @@ class CheckOutServices {
     required BuildContext context,
     required List<Map<String, dynamic>> cartItems,
     required int totalAmount,
-    required String paynment,
+    required String payment,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
@@ -34,14 +38,25 @@ class CheckOutServices {
           'cart': cartItems,
           'shippingAddress': userProvider.selectedAddress,
           'totalPrice': totalAmount,
-          'paymentInfo': {'type': paynment},
+          'paymentInfo': {'type': payment},
         }),
       );
       print(jsonDecode(res.body));
       if (jsonDecode(res.body)['success'] == true)
-        TLoaders.succesSnackbar(
-          title: 'Đặt hàng thành công',
-          message: 'Đơn hàng của bạn đã được lên đơn và chờ phê duyệt.',
+        // TLoaders.succesSnackbar(
+        //   title: 'Đặt hàng thành công',
+        //   message: 'Đơn hàng của bạn đã được lên đơn và chờ phê duyệt.',
+        // );
+        
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SuccesScreen(
+                    image: TImages.successfulPaymentIcon,
+                    title: 'Payment Success!',
+                    subtitle: 'Your item will be shipped soon!',
+                    onPressed: () => Get.offAll(() => const NavigationMenu()),
+                  )),
         );
     } catch (e) {
       showSnackBar(context, e.toString());

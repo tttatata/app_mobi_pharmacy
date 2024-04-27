@@ -16,7 +16,7 @@ dependencies:
     sdk: flutter
 
   # Utility Packages
-  http: ^1.2.1
+  http: ^0.13.5
 
   intl: ^0.18.1
   logger: ^2.0.1
@@ -41,7 +41,7 @@ dependencies:
 
   provider: ^6.1.2
   connectivity_plus: ^5.0.1
-  lottie: ^3.1.0
+  lottie: ^3.0.0
 
   appwrite: ^12.0.1
   badges: ^3.1.2
@@ -54,6 +54,14 @@ dependencies:
   flutter_stripe: ^3.2.0
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
+  flutter_paypal_checkout: ^1.0.1
+
+  timeago: ^3.6.1
+  flutter_timer_countdown: ^1.0.7
+  flutter_countdown_timer: ^4.1.0
+  jiffy: ^6.2.1
+
+
   
   #--------------- ./ PACKAGES END ------------------#
 

@@ -1,6 +1,6 @@
 import 'package:app_mobi_pharmacy/features/personalization/views/settings/settings.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
-import 'package:app_mobi_pharmacy/features/shop/views/store/store.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/category/category.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/wishlist/wishlist.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';

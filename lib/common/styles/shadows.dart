@@ -2,16 +2,21 @@ import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:flutter/material.dart';
 
 class TShadowStyle {
-  static final verticalProductShadow = BoxShadow(
-    color: TColors.darkGrey.withOpacity(0.1),
-    blurRadius: 50,
-    spreadRadius: 7,
-    offset: const Offset(0, 2),
-  );
-  static final horizontalProductShadow = BoxShadow(
-    color: TColors.darkGrey.withOpacity(0.1),
-    blurRadius: 50,
-    spreadRadius: 7,
-    offset: const Offset(0, 2),
-  );
+  static BoxShadow verticalProductShadow() {
+    return BoxShadow(
+      color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+      blurRadius: 4,
+      spreadRadius: 1,
+      offset: Offset(0, 3),
+    );
+  }
+
+  static BoxShadow horizontalProductShadow() {
+    return BoxShadow(
+      color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+      blurRadius: 4,
+      spreadRadius: 1,
+      offset: Offset(0, 3),
+    );
+  }
 }

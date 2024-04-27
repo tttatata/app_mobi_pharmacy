@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:app_mobi_pharmacy/features/shop/controllers/checkout_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
@@ -6,39 +8,67 @@ import 'package:http/http.dart' as http;
 
 class PaymentController extends GetxController {
   Map<String, dynamic>? paymentIntentData;
-
-  Future<void> makePayment(
-      {required String amount, required String currency}) async {
+  final CheckOutServices _checkOutServices = CheckOutServices();
+  Future<void> makePayment({
+    required String currency,
+    required List<Map<String, dynamic>> cartItems,
+    required int totalAmount,
+    required String payment,
+    required BuildContext context,
+  }) async {
     try {
-      paymentIntentData = await createPaymentIntent(amount, currency);
+      paymentIntentData =
+          await createPaymentIntent(totalAmount.toString(), currency);
       if (paymentIntentData != null) {
         await Stripe.instance.initPaymentSheet(
             paymentSheetParameters: SetupPaymentSheetParameters(
           applePay: true,
           googlePay: true,
           testEnv: true,
-          merchantCountryCode: 'US',
+          merchantCountryCode: 'VND',
           merchantDisplayName: 'Prospects',
           customerId: paymentIntentData!['customer'],
           paymentIntentClientSecret: paymentIntentData!['client_secret'],
           customerEphemeralKeySecret: paymentIntentData!['ephemeralKey'],
         ));
-        displayPaymentSheet();
+        // Truyền các biến cần thiết vào hàm displayPaymentSheet
+        displayPaymentSheet(
+          context: context,
+          cartItems: cartItems,
+          totalAmount: totalAmount,
+          payment: payment,
+        );
       }
     } catch (e, s) {
       print('exception:$e$s');
     }
   }
 
-  displayPaymentSheet() async {
+  displayPaymentSheet({
+    required BuildContext context,
+    required List<Map<String, dynamic>> cartItems,
+    required int totalAmount,
+    required String payment,
+  }) async {
     try {
       await Stripe.instance.presentPaymentSheet();
-      Get.snackbar('Payment', 'Payment Successful',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          margin: const EdgeInsets.all(10),
-          duration: const Duration(seconds: 2));
+      // Tạo một thể hiện của CheckOutServices
+      CheckOutServices checkOutServices = CheckOutServices();
+
+      // Gọi hàm createneworder từ lớp CheckOutServices
+      checkOutServices.createneworder(
+        context: context,
+        cartItems: cartItems,
+        totalAmount: totalAmount,
+        payment: payment,
+      );
+
+      // Get.snackbar('Payment', 'Payment Successful',
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.green,
+      //     colorText: Colors.white,
+      //     margin: const EdgeInsets.all(10),
+      //     duration: const Duration(seconds: 2));
     } on Exception catch (e) {
       if (e is StripeException) {
         print("Error from Stripe: ${e.error.localizedMessage}");
@@ -73,7 +103,7 @@ class PaymentController extends GetxController {
   }
 
   calculateAmount(String amount) {
-    final a = (int.parse(amount)) * 100;
+    final a = (int.parse(amount));
     return a.toString();
   }
 }

@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-String url = 'http://192.168.1.17:8000';
+String url = 'http://192.168.1.14:8000';
 // Example
 const String tSecretAPIKey = "cwt_live_b2da6ds3df3e785v8ddc59198f7615ba";
 const stripePublishableKey =

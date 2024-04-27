@@ -18,6 +18,7 @@ import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
+import 'package:app_mobi_pharmacy/util/formatters/formatter.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ import 'package:provider/provider.dart';
 // main.dart
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
@@ -62,7 +64,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           return AlertDialog(
             title: Text('Xác nhận Đơn Hàng'),
             content: Text(
-                'Bạn có chắc chắn muốn đặt hàng với tổng số tiền là \$${_totalAmount.toString()} không?'),
+                'Bạn có chắc chắn muốn đặt hàng với tổng số tiền là ${TFormatter.formatCurrency(_totalAmount.toDouble())} không?'),
             actions: <Widget>[
               TextButton(
                 child: Text('Hủy'),
@@ -79,7 +81,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       context: context,
                       cartItems: _cartItems,
                       totalAmount: _totalAmount,
-                      paynment: "Cash On Delivery");
+                      payment: "Cash On Delivery");
                 },
               ),
             ],
@@ -96,7 +98,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           return AlertDialog(
             title: Text('Xác nhận Đơn Hàng'),
             content: Text(
-                'Bạn có chắc chắn muốn đặt hàng với tổng số tiền là \$${_totalAmount.toString()} không?'),
+                'Bạn có chắc chắn muốn đặt hàng với tổng số tiền là ${TFormatter.formatCurrency(_totalAmount.toDouble())} không?'),
             actions: <Widget>[
               TextButton(
                 child: Text('Hủy'),
@@ -107,8 +109,108 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
               TextButton(
                 child: Text('Xác nhận'),
-                onPressed: () =>
-                    paymentController.makePayment(amount: '5', currency: 'USD'),
+                onPressed: () {
+                  paymentController.makePayment(
+                      context: context,
+                      totalAmount: _totalAmount.toInt(),
+                      currency: 'VND',
+                      cartItems: _cartItems,
+                      payment: "Cash On Visa");
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    if (Provider.of<UserProvider>(context, listen: false)
+            .selectedPaymentMethod?['paymentMethod'] ==
+        'PayPal') {
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text('Xác nhận Đơn Hàng'),
+            content: Text(
+                'Bạn có chắc chắn muốn đặt hàng với tổng số tiền là ${TFormatter.formatCurrency(_totalAmount.toDouble())} không?'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Hủy'),
+                onPressed: () {
+                  Navigator.of(dialogContext)
+                      .pop(); // Đóng hộp thoại khi người dùng chọn hủy
+                },
+              ),
+              TextButton(
+                child: Text('Xác nhận'),
+                onPressed: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => PaypalCheckout(
+                      sandboxMode: true,
+                      clientId: "",
+                      secretKey: "",
+                      returnURL: "success.snippetcoder.com",
+                      cancelURL: "cancel.snippetcoder.com",
+                      transactions: const [
+                        {
+                          "amount": {
+                            "total": '70',
+                            "currency": "USD",
+                            "details": {
+                              "subtotal": '70',
+                              "shipping": '0',
+                              "shipping_discount": 0
+                            }
+                          },
+                          "description": "The payment transaction description.",
+                          // "payment_options": {
+                          //   "allowed_payment_method":
+                          //       "INSTANT_FUNDING_SOURCE"
+                          // },
+                          "item_list": {
+                            "items": [
+                              {
+                                "name": "Apple",
+                                "quantity": 4,
+                                "price": '5',
+                                "currency": "USD"
+                              },
+                              {
+                                "name": "Pineapple",
+                                "quantity": 5,
+                                "price": '10',
+                                "currency": "USD"
+                              }
+                            ],
+
+                            // shipping address is not required though
+                            //   "shipping_address": {
+                            //     "recipient_name": "Raman Singh",
+                            //     "line1": "Delhi",
+                            //     "line2": "",
+                            //     "city": "Delhi",
+                            //     "country_code": "IN",
+                            //     "postal_code": "11001",
+                            //     "phone": "+00000000",
+                            //     "state": "Texas"
+                            //  },
+                          }
+                        }
+                      ],
+                      note: "Contact us for any questions on your order.",
+                      onSuccess: (Map params) async {
+                        print("onSuccess: $params");
+                      },
+                      onError: (error) {
+                        print("onError: $error");
+                        Navigator.pop(context);
+                      },
+                      onCancel: () {
+                        print('cancelled:');
+                      },
+                    ),
+                  ));
+                },
               ),
             ],
           );
@@ -194,13 +296,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
           onPressed: () => _handleCheckoutButtonPressed(context),
-          // onPressed: () => Get.to(() => SuccesScreen(
-          //       image: TImages.successfulPaymentIcon,
-          //       title: 'Payment Success!',
-          //       subtitle: 'Your item will be shipped soon!',
-          //       onPressed: () => Get.offAll(() => const NavigationMenu()),
-          //     )),
-          child: const Text('Checkout \$256.0'),
+          child: Text(
+            TFormatter.formatCurrency(_totalAmount.toDouble()),
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:app_mobi_pharmacy/util/constans/text_strings.dart';
 import 'package:flutter/material.dart';
 
 class TSetionHeading extends StatelessWidget {
@@ -6,7 +7,7 @@ class TSetionHeading extends StatelessWidget {
     this.textColor,
     this.showActionButton = true,
     required this.title,
-    this.buttonTitle = 'View all',
+    this.buttonTitle = TTexts.viewall,
     this.onPressed,
   });
   final Color? textColor;
