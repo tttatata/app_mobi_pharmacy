@@ -31,7 +31,6 @@ class TCartItems extends StatelessWidget {
       // Cập nhật thông tin sản phẩm với quantity mới
       e['product']['qty'] = e['quantity'].toString();
       cartItems.add(e['product']); // Thêm thông tin sản phẩm vào danh sách
-     
     });
     // Gọi callback với thông tin giỏ hàng đã cập nhật
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -1,3 +1,4 @@
+import 'package:app_mobi_pharmacy/chatSreen.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/settings/settings.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/category/category.dart';
@@ -47,6 +48,11 @@ class NavigationMenu extends StatelessWidget {
               icon: Icon(Iconsax.user),
               label: 'Profile',
             ),
+            // Thêm icon chat vào navigation bar
+            NavigationDestination(
+              icon: Icon(Iconsax.message),
+              label: 'Chat',
+            ),
           ],
         ),
       ),
@@ -62,5 +68,6 @@ class NavigationController extends GetxController {
     const StoreScreen(),
     const FavouriteScreen(),
     const SettingsScreen(),
+    const ChatScreen(), // Thêm ChatScreen vào danh sách màn hình
   ];
 }

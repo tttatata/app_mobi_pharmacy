@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:app_mobi_pharmacy/common/snackbar';
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/cart/coupon_widgets.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/success_screen/success_screen.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Coupon.dart';
 import 'package:app_mobi_pharmacy/features/shop/controllers/checkout_controller.dart';
 import 'package:app_mobi_pharmacy/features/shop/controllers/paymentcontroller.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/cart/widgents/cart_items.dart';
@@ -15,17 +18,20 @@ import 'package:app_mobi_pharmacy/features/shop/views/checkout/widgets/billing_u
 import 'package:app_mobi_pharmacy/features/shop/views/checkout/widgets/card.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/checkout/widgets/paymentmethod.dart';
 import 'package:app_mobi_pharmacy/navigation_menu.dart';
+import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/formatters/formatter.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 // main.dart
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class CheckoutScreen extends StatefulWidget {
@@ -37,6 +43,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final paymentController = Get.put(PaymentController());
+  Coupon? appliedCoupon; //
   List<Map<String, dynamic>> _cartItems = [];
   Map<String, dynamic>? paymentIntent;
   int _totalAmount = 0;
@@ -47,12 +54,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
-  void _updateTotalAmount(int amount) {
-    // Phương thức để cập nhật tổng tiền
-    setState(() {
-      _totalAmount = amount;
-    });
+void _applyCoupon(Coupon coupon) {
+  if (_totalAmount >= coupon.minAmount) {
+    // Tính giá trị giảm giá dựa trên phần trăm của tổng tiền
+    double discountPercent = coupon.value / 100;
+    double discountValue = _totalAmount * discountPercent;
+
+    // Đảm bảo rằng giá trị giảm giá không vượt quá maxAmount của coupon
+    if (coupon.maxAmount != null && discountValue > coupon.maxAmount) {
+      discountValue = coupon.maxAmount;
+    }
+
+    // Cập nhật tổng tiền sau khi áp dụng giảm giá
+    _updateTotalAmount(_totalAmount - discountValue.round());
+  } else {
+    // Nếu tổng tiền không đủ điều kiện tối thiểu, hiển thị thông báo
+    showSnackBar(context, 'Total amount does not meet the minimum requirement for the coupon.');
   }
+}
+
+void _updateTotalAmount(int newAmount) {
+  setState(() {
+    _totalAmount = newAmount;
+  });
+}
 
   void _handleCheckoutButtonPressed(BuildContext context) async {
     if (Provider.of<UserProvider>(context, listen: false)
@@ -142,76 +167,66 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 },
               ),
               TextButton(
-                child: Text('Xác nhận'),
-                onPressed: () async {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => PaypalCheckout(
-                      sandboxMode: true,
-                      clientId: "",
-                      secretKey: "",
-                      returnURL: "success.snippetcoder.com",
-                      cancelURL: "cancel.snippetcoder.com",
-                      transactions: const [
-                        {
-                          "amount": {
-                            "total": '70',
-                            "currency": "USD",
-                            "details": {
-                              "subtotal": '70',
-                              "shipping": '0',
-                              "shipping_discount": 0
-                            }
-                          },
-                          "description": "The payment transaction description.",
-                          // "payment_options": {
-                          //   "allowed_payment_method":
-                          //       "INSTANT_FUNDING_SOURCE"
-                          // },
-                          "item_list": {
-                            "items": [
-                              {
-                                "name": "Apple",
-                                "quantity": 4,
-                                "price": '5',
-                                "currency": "USD"
+                  child: Text('Xác nhận'),
+                  onPressed: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => UsePaypal(
+                          sandboxMode: true,
+                          clientId:
+                              "AdyWwYhIBpVEXxPnfHj31osJ3uAuag8ZjLJ1DoqPIBA-CSiD91hpErkUXxxYFLYuIYeKcmqpxYTyqKqu",
+                          secretKey:
+                              "EH3vo4MivtwR1h1hJYm7QVYQgM-J_4U_AflsHYIuCWWTbSZfXxSF_EY-5GR1OuGXXCCQ0HXknmercyCU",
+                          returnURL: "https://samplesite.com/return",
+                          cancelURL: "https://samplesite.com/cancel",
+                          transactions: const [
+                            {
+                              "amount": {
+                                "total": '10.12',
+                                "currency": "USD",
+                                "details": {
+                                  "subtotal": '10.12',
+                                  "shipping": '0',
+                                  "shipping_discount": "0"
+                                }
                               },
-                              {
-                                "name": "Pineapple",
-                                "quantity": 5,
-                                "price": '10',
-                                "currency": "USD"
-                              }
-                            ],
+                              "description":
+                                  "The payment transaction description.",
+                              "item_list": {
+                                "items": [
+                                  {
+                                    "name": "A demo product",
+                                    "quantity": 1,
+                                    "price": '10.12',
+                                    "currency": "USD"
+                                  }
+                                ],
 
-                            // shipping address is not required though
-                            //   "shipping_address": {
-                            //     "recipient_name": "Raman Singh",
-                            //     "line1": "Delhi",
-                            //     "line2": "",
-                            //     "city": "Delhi",
-                            //     "country_code": "IN",
-                            //     "postal_code": "11001",
-                            //     "phone": "+00000000",
-                            //     "state": "Texas"
-                            //  },
-                          }
-                        }
-                      ],
-                      note: "Contact us for any questions on your order.",
-                      onSuccess: (Map params) async {
-                        print("onSuccess: $params");
-                      },
-                      onError: (error) {
-                        print("onError: $error");
-                        Navigator.pop(context);
-                      },
-                      onCancel: () {
-                        print('cancelled:');
-                      },
-                    ),
-                  ));
-                },
-              ),
+                                // shipping address is not required though
+                                "shipping_address": {
+                                  "recipient_name": "Jane Foster",
+                                  "line1": "Travis County",
+                                  "line2": "",
+                                  "city": "Austin",
+                                  "country_code": "US",
+                                  "postal_code": "73301",
+                                  "phone": "+00000000",
+                                  "state": "Texas"
+                                },
+                              }
+                            }
+                          ],
+                          note: "Contact us for any questions on your order.",
+                          onSuccess: (Map params) async {
+                            print("onSuccess: $params");
+                          },
+                          onError: (error) {
+                            print("onError: $error");
+                          },
+                          onCancel: (params) {
+                            print('cancelled: $params');
+                          }),
+                    ));
+                  }),
             ],
           );
         },
@@ -228,7 +243,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       appBar: TAppBar(
         showBackArrow: true,
         title: Text(
-          'Cart',
+          'Đặt hàng',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -244,7 +259,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const SizedBox(height: TSizes.spaceBtwSections),
 
               ///coupon text file
-              const TCouponCode(),
+              TCouponCode(onCouponApplied: _applyCoupon), //
               const SizedBox(height: TSizes.spaceBtwSections),
               TRoundedContainer(
                 padding: const EdgeInsets.all(TSizes.md),

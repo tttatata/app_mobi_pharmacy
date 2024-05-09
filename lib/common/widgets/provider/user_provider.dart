@@ -15,7 +15,8 @@ class UserProvider extends ChangeNotifier {
       role: '',
       token: '',
       avatar: null,
-      cart: []);
+      cart: [],
+      wishList: []);
   User get user => _user;
   void setUser(String user) {
     _user = User.fromJson(user);

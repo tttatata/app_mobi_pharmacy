@@ -5,7 +5,7 @@ import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/search
 
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader_page.dart';
-import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_horizontal.dart';
+import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_event_card_horizontal.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
 
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         itemBuilder: (context, index) {
                                           final product =
                                               productSaleList?[index];
-                                          return TProductCardHorizontal(
+                                          return TProductEventCardHorizontal(
                                             productEvent: product,
                                             isIconSale: true,
                                           );

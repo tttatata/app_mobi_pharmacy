@@ -16,11 +16,10 @@ class ProductTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 90,
-      color: Colors.black12,
       child: Text(
         title,
         style: smallSize
-            ? TextStyle(fontSize: 12, backgroundColor: Colors.black12)
+            ? TextStyle(fontSize: 12)
             : Theme.of(context).textTheme.titleSmall,
         overflow: TextOverflow.ellipsis,
         maxLines: maxLines,

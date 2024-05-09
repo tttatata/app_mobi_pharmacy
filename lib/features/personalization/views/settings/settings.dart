@@ -7,7 +7,11 @@ import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/personalization/controllers/settings_controller.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/address.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/profile.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/cart/cart.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/order/order.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/product_reviews/product_reviews.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/review/Reviews.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/wishlist/wishlist.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
@@ -55,15 +59,15 @@ class SettingsScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems),
                   TSettingsMenuTitle(
                     icon: Iconsax.safe_home,
-                    title: 'My Addresses',
-                    subTitle: 'Set shopping delivery address',
+                    title: 'Danh sách địa chỉ của bạn',
+                    subTitle: 'Địa chỉ giao hàng để giao hàng',
                     onTap: () => Get.to(() => UserAddressScreen()),
                   ),
                   TSettingsMenuTitle(
                     icon: Iconsax.shopping_cart,
-                    title: 'My Cart',
-                    subTitle: 'Add, remove products and move to checkout',
-                    onTap: () {},
+                    title: 'Giỏ hàng',
+                    subTitle: 'Danh sách sản phẩm bạn đã thêm vào giỏ hàng ',
+                    onTap: () => Get.to(() => const CartScreen()),
                   ),
                   TSettingsMenuTitle(
                     icon: Iconsax.bag_tick,
@@ -78,16 +82,22 @@ class SettingsScreen extends StatelessWidget {
                     onTap: () {},
                   ),
                   TSettingsMenuTitle(
-                    icon: Iconsax.discount_shape,
-                    title: 'My Coupons',
+                    icon: Iconsax.star,
+                    title: 'Đánh giá sản phẩm',
                     subTitle: 'List of all the discounted coupons',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const ReviewsScreen()),
                   ),
                   TSettingsMenuTitle(
                     icon: Iconsax.notification,
                     title: 'Notifications',
                     subTitle: 'Set any kind of notifications message',
                     onTap: () {},
+                  ),
+                  TSettingsMenuTitle(
+                    icon: Iconsax.heart5,
+                    title: 'Danh sách yêu thích',
+                    subTitle: 'Sản phẩm bạn đã thêm vào danh sách yêu thích',
+                    onTap: () => Get.to(() => const FavouriteScreen()),
                   ),
                   TSettingsMenuTitle(
                     icon: Iconsax.security_card,

@@ -14,21 +14,22 @@ class TRowProductCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(TSizes.defaultSpace),
-      child: Column(
-        children: [
-          TSetionHeading(
-            title: category,
-            onPressed: () {},
-          ),
-          SizedBox(height: TSizes.spaceBtwItems / 2),
-
-          ///ĐANG LỖI Ở ROWPRODUCTCATEGORY
-          RowProductCateggory(
-            category: category,
-          )
-        ],
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(TSizes.defaultSpace / 2),
+        child: Column(
+          children: [
+            TSetionHeading(
+              title: category,
+              onPressed: () {},
+            ),
+            SizedBox(height: TSizes.spaceBtwItems / 2),
+            RowProductCateggory(
+              category: category,
+            ),
+            SizedBox(height: TSizes.spaceBtwItems / 2),
+          ],
+        ),
       ),
     );
   }

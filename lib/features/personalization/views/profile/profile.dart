@@ -3,6 +3,9 @@ import 'package:app_mobi_pharmacy/common/widgets/dialog/edit_phonenumber_dialog.
 import 'package:app_mobi_pharmacy/common/widgets/images/t_circular_image.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
+import 'package:app_mobi_pharmacy/features/personalization/controllers/profile_controller.dart';
+import 'package:app_mobi_pharmacy/features/personalization/views/profile/widgets/change_password_user_dialog.dart';
+import 'package:app_mobi_pharmacy/features/personalization/views/profile/widgets/edit_user_information_dialog.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/widgets/profile_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
@@ -18,6 +21,25 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final UserController _userController =
+      UserController(); // Tạo instance của UserController
+
+  void _onUpdateSuccess() {
+    // Hành động sau khi cập nhật thành công
+    Navigator.pop(context); // Đóng dialog hoặc trở về màn hình trước
+  }
+
+  void _updateUserInformation(Map<String, dynamic> userData) {
+    // Gọi hàm updateUser từ UserController
+    _userController.updateUser(
+      context: context,
+
+      userData: userData, // Dữ liệu cập nhật cho người dùng
+      onSuccessfulUpdate:
+          _onUpdateSuccess, // Callback sau khi cập nhật thành công
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().user;
@@ -70,23 +92,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
               ProfileMenu(
-                title: 'Name',
+                title: 'Tên',
                 value: user.name,
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return EditUserInformationDialog(
+                        title: 'tên',
+                        currentValue: user.name,
+                        onInformationSaved: (String newName) {
+                          // Cập nhật tên của người dùng
+                          _updateUserInformation({'name': newName});
+                        },
+                      );
+                    },
+                  );
+                },
               ),
-              ProfileMenu(
-                title: 'Username',
-                value: user.name.toUpperCase(),
-                onPressed: () {},
-              ),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              const Divider(),
-              const SizedBox(height: TSizes.spaceBtwItems),
-              //heading
-              const TSetionHeading(
-                title: 'Personal Information',
-                showActionButton: false,
-              ),
+
               ProfileMenu(
                 icon: Iconsax.copy,
                 title: 'User ID',
@@ -100,37 +124,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               ProfileMenu(
                 title: 'Phone Number',
-                value: message,
+                value: user.phoneNumber.toString(),
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return EditPhoneNumberDialog(
                         initialPhoneNumber: user.phoneNumber,
-                        onPhoneNumberSaved: _updatePhoneNumber,
+                        onPhoneNumberSaved: (int newPhoneNumber) {
+                          // Cập nhật số điện thoại của người dùng
+                          _updateUserInformation(
+                              {'phoneNumber': newPhoneNumber});
+                        },
                       );
                     },
                   );
                 },
               ),
 
-              ProfileMenu(
-                title: 'Gender',
-                value: 'Male',
-                onPressed: () {},
-              ),
-              ProfileMenu(
-                title: 'Date of birth',
-                value: '12/10/2001',
-                onPressed: () {},
-              ),
-              const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ChangePasswordDialog(
+                          onPasswordChanged: (String currentPassword,
+                              String newPassword,
+                              String confirmNewPassword) async {
+                            // Kiểm tra xem mật khẩu hiện tại có đúng không
+                            // Nếu đúng, gọi API hoặc phương thức để cập nhật mật khẩu của người dùng
+                            // Nếu không, hiển thị thông báo lỗi
+                            if (await _userController.validateCurrentPassword(
+                                context, currentPassword)) {
+                              if (newPassword == confirmNewPassword) {
+                                _userController.updateUser(
+                                  context: context,
+                                  userData: {
+                                    'password': newPassword,
+                                  }, // Dữ liệu cập nhật mật khẩu
+                                  onSuccessfulUpdate:
+                                      _onUpdateSuccess, // Callback sau khi cập nhật thành công
+                                );
+                              } else {
+                                // Hiển thị thông báo lỗi mật khẩu mới không khớp
+                              }
+                            } else {
+                              // Hiển thị thông báo lỗi mật khẩu hiện tại không đúng
+                            }
+                          },
+                        );
+                      },
+                    );
+                  },
                   child: const Text(
-                    'Close Account',
+                    'Đổi mật khẩu đăng nhập', // Update the text here
                     style: TextStyle(color: Colors.red),
                   ),
                 ),

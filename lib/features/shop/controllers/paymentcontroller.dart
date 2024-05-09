@@ -1,7 +1,14 @@
 import 'dart:convert';
 
+import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
+import 'package:app_mobi_pharmacy/common/widgets/success_screen/success_screen.dart';
 import 'package:app_mobi_pharmacy/features/shop/controllers/checkout_controller.dart';
+import 'package:app_mobi_pharmacy/main.dart';
+import 'package:app_mobi_pharmacy/navigation_menu.dart';
+import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
+import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -106,4 +113,88 @@ class PaymentController extends GetxController {
     final a = (int.parse(amount));
     return a.toString();
   }
+  /////
+  ///
+
+  // ... các phương thức và biến đã có ...
+
+  // Future<void> handlePayPalPayment({
+  //   required BuildContext context,
+  //   required List<Map<String, dynamic>> cartItems,
+  //   required int totalAmount,
+  //   // Thêm các tham số khác nếu cần
+  // }) async {
+  //   // Tạo một giao dịch PayPal với thông tin cần thiết
+  //   navigatorKey.currentState?.push(
+  //     MaterialPageRoute(
+  //       builder: (BuildContext context) => UsePaypal(
+  //           sandboxMode: true,
+  //           clientId:
+  //               "AW1TdvpSGbIM5iP4HJNI5TyTmwpY9Gv9dYw8_8yW5lYIbCqf326vrkrp0ce9TAqjEGMHiV3OqJM_aRT0",
+  //           secretKey:
+  //               "EHHtTDjnmTZATYBPiGzZC_AZUfMpMAzj2VZUeqlFUrRJA_C0pQNCxDccB5qoRQSEdcOnnKQhycuOWdP9",
+  //           returnURL: "https://samplesite.com/return",
+  //           cancelURL: "https://samplesite.com/cancel",
+  //           transactions: const [
+  //             {
+  //               "amount": {
+  //                 "total": "10.12",
+  //                 "currency": "USD",
+  //                 "details": {
+  //                   "subtotal": "10.12",
+  //                   "shipping": "0",
+  //                   "shipping_discount": "0"
+  //                 }
+  //               },
+  //               "description": "The payment transaction description.",
+  //               "item_list": {
+  //                 "items": [
+  //                   {
+  //                     "name": "A demo product",
+  //                     "quantity": 1,
+  //                     "price": "10.12",
+  //                     "currency": "USD"
+  //                   }
+  //                 ],
+  //                 "shipping_address": {
+  //                   "recipient_name": "Jane Foster",
+  //                   "line1": "Travis County",
+  //                   "line2": "",
+  //                   "city": "Austin",
+  //                   "country_code": "US",
+  //                   "postal_code": "73301",
+  //                   "phone": "+00000000",
+  //                   "state": "Texas"
+  //                 }
+  //               }
+  //             }
+  //           ],
+  //           note: "Contact us for any questions on your order.",
+  //           onSuccess: (Map params) async {
+  //             navigatorKey.currentState?.pop();
+  //             // Đóng dialog hiện tại nếu có
+  //             navigatorKey.currentState?.push(
+  //               MaterialPageRoute(
+  //                 builder: (context) => SuccesScreen(
+  //                   image: TImages.successfulPaymentIcon,
+  //                   title: 'Payment Success!',
+  //                   subtitle: 'Your item will be shipped soon!',
+  //                   onPressed: () {
+  //                     // Sử dụng Get.offAll để chuyển hướng người dùng và xóa tất cả các màn hình trước đó
+  //                     Get.offAll(() => NavigationMenu());
+  //                   },
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //           onError: (error) {
+  //             print("onError: $error");
+  //           },
+  //           onCancel: (params) {
+  //             print('cancelled: $params');
+  //           }),
+  //     ),
+  //   );
+  //   // ... các phương thức khác ...
+  // }
 }

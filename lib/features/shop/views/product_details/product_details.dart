@@ -1,6 +1,7 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/icons/t_circular_icon.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
+import 'package:app_mobi_pharmacy/common/widgets/texts/product_price_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
@@ -60,11 +61,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final userchecked =
         Provider.of<UserProvider>(context).user.token.isNotEmpty;
-    if (widget.product.id == null) {
-      print('Product ID is null');
-    } else {
-      print('Product ID: ${widget.product.id}');
-    }
 
     final darkMode = THelperFunctions.isDarkMode(context);
     return Scaffold(
@@ -92,29 +88,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      const TCircularIcon(
-                        icon: Iconsax.minus,
-                        backgroundColor: TColors.darkGrey,
-                        width: 40,
-                        height: 40,
-                        color: TColors.white,
-                      ),
-                      const SizedBox(
-                        width: TSizes.spaceBtwItems,
-                      ),
-                      Text(
-                        '2',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(
-                        width: TSizes.spaceBtwItems,
-                      ),
-                      const TCircularIcon(
-                        icon: Iconsax.add,
-                        backgroundColor: TColors.black,
-                        width: 40,
-                        height: 40,
-                        color: TColors.white,
+                      TProductPriceText(
+                        price: widget.product.sellPrice.toString(),
+                        isLarge: false,
                       ),
                     ],
                   ),
@@ -122,9 +98,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     onPressed: addToCart,
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(TSizes.md),
+                        backgroundColor: const Color.fromARGB(255, 250, 31, 31),
+                        side: const BorderSide(color: TColors.black)),
+                    child: const Text('Đặt hàng'),
+                  ),
+                  ElevatedButton(
+                    onPressed: addToCart,
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(TSizes.md),
                         backgroundColor: TColors.black,
                         side: const BorderSide(color: TColors.black)),
-                    child: const Text('Add to cart'),
+                    child: const Text('Thêm vào giỏ '),
                   ),
                 ],
               ),
@@ -198,10 +182,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     height: TSizes.spaceBtwSections,
                   ),
                   //checkout
-                  SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          onPressed: () {}, child: Text('Checkout'))),
 
                   TSetionHeading(
                     title: 'Desription',

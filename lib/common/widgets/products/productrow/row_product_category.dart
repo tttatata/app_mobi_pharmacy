@@ -1,4 +1,5 @@
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_horizontal.dart';
+import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_event_card_horizontal.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/shop/controllers/store_controller.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
@@ -41,20 +42,23 @@ class _RowProductCateggoryscreenState extends State<RowProductCateggory> {
       return Center(child: CircularProgressIndicator());
     }
 
-    return SizedBox(
-        height: 150,
-        child: productList!.length != 0
-            ? ListView.separated(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: productList!.length,
-                scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) =>
-                    SizedBox(width: TSizes.spaceBtwItems),
-                itemBuilder: (context, index) {
-                  final product = productList?[index];
-                  return TProductCardHorizontal(product: product);
-                })
-            : Text('Không có sản phẩm nào thuộc loại này'));
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: SizedBox(
+          height: 360,
+          child: productList!.length != 0
+              ? ListView.separated(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: productList!.length,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) =>
+                      SizedBox(width: TSizes.spaceBtwItems),
+                  itemBuilder: (context, index) {
+                    final product = productList?[index];
+                    return TProductCardHorizontal(product: product);
+                  })
+              : Center(child: Text('Không có sản phẩm nào thuộc loại này'))),
+    );
   }
 }

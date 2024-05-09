@@ -26,7 +26,7 @@ class CartScreen extends StatelessWidget {
       appBar: TAppBar(
         showBackArrow: true,
         title: Text(
-          'Cart',
+          'Giỏ hàng',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),

@@ -69,48 +69,9 @@ class HomeController extends GetxController {
           ),
         );
       }
-      // httpErrorHandle(
-      //   response: res,
-      //   context: context,
-      //   onSuccess: () {
-      //     for (int i = 0; i < jsonDecode(res.body)['events'].length; i++) {
-      //       productSaleList.add(
-      //         Product.fromJson(
-      //           jsonEncode(
-      //             jsonDecode(res.body)['events'][i],
-      //           ),
-      //         ),
-      //       );
-      //     }
-      //   },
-      // );
     } catch (e) {
       showSnackBar(context, e.toString());
     }
     return productSaleList;
   }
-//   Future<List<dynamic>> fetchSaleProducts({
-//   required BuildContext context,
-// }) async {
-//   List<dynamic> productSaleList = [];
-//   try {
-//     http.Response res = await http.get(
-//       Uri.parse('$url/api/v2/event/get-all-events'),
-//       headers: {'Content-Type': 'application/json; charset=UTF-8'},
-//     );
-//     print(jsonDecode(res.body)['events']);
-//     for (int i = 0; i < jsonDecode(res.body)['events'].length; i++) {
-//       productSaleList.add(
-//         Product.fromJson(
-//           jsonEncode(
-//             jsonDecode(res.body)['events'][i],
-//           ),
-//         ),
-//       );
-//     }
-//   } catch (e) {
-//     // Xử lý lỗi nếu cần
-//   }
-//   return productSaleList;
-// }
 }

@@ -15,6 +15,10 @@ void httpErrorHandle({
       onSuccess();
 
       break;
+    case 201:
+      onSuccess();
+
+      break;
     case 400:
       TLoaders.warningSnackbar(title: jsonDecode(response.body)['message']);
       break;

@@ -48,7 +48,8 @@ class _CartProductState extends State<TCartItem> {
     final productCart = context.watch<UserProvider>().user.cart![widget.index];
     final product = Product.fromMap(productCart['product']);
     final quantity = productCart['quantity'];
-    return Row(
+    return 
+    Row(
       children: [
         TRoundedImage(
           isNetworkImage: true,
@@ -76,7 +77,7 @@ class _CartProductState extends State<TCartItem> {
               ),
               TBrandTitleWithVerifiedIcon(title: product.category.toString()),
               TProductPriceText(
-                price: TFormatter.formatCurrency(product.sellPrice!.toDouble()),
+                price: product!.sellPrice!.toString(),
                 isLarge: false,
               ),
               Row(

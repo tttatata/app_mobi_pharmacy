@@ -139,6 +139,7 @@ router.post(
 // get user data
 router.get("/", isAuthenticated, catchAsyncErrors(async (req, res) => {
   const user = await User.findById(req.user);
+  print(user);
   res.json({ ...user._doc, token: req.token });
 }));
 // router.post("/tokenIsValid", acatchAsyncErrors(async (req, res, next) => {

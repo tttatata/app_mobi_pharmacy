@@ -21,8 +21,7 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    DefaultTabController(
+    return DefaultTabController(
       length: 5,
       child: Scaffold(
         appBar: TAppBar(
@@ -51,23 +50,23 @@ class StoreScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),
-              SizedBox(
-                height: 800,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (_, index) {
-                    return TRowProductCategory(
-                        category: Categories.categoryImages[index]['title']!);
-                  },
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 650,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 10,
+                    itemBuilder: (_, index) {
+                      return TRowProductCategory(
+                          category: Categories.categoryImages[index]['title']!);
+                    },
+                  ),
                 ),
               )
-
-           
             ],
           ),
         ),
-      
       ),
     );
   }

@@ -13,6 +13,7 @@ class User {
   Avatar_user? avatar;
   String token;
   List<dynamic>? cart;
+  List<dynamic>? wishList;
   // Thêm thuộc tính đối tượng cho phương thức thanh toán
   User({
     required this.id,
@@ -25,6 +26,7 @@ class User {
     required this.token,
     this.avatar,
     required this.cart,
+    required this.wishList,
   });
 
   Map<String, dynamic> toMap() {
@@ -39,6 +41,7 @@ class User {
       'avatar': avatar,
       'token': token,
       'cart': cart,
+      'wishList': wishList,
     };
   }
 
@@ -64,6 +67,13 @@ class User {
               ),
             )
           : [],
+      wishList: map['wishList'] != null
+          ? List<Map<String, dynamic>>.from(
+              map['wishList']?.map(
+                (x) => Map<String, dynamic>.from(x),
+              ),
+            )
+          : [],
     );
   }
 
@@ -81,6 +91,7 @@ class User {
     Avatar_user? avatar,
     String? token,
     List<dynamic>? cart,
+    List<dynamic>? wishList,
   }) {
     return User(
       id: id ?? this.id,
@@ -93,6 +104,7 @@ class User {
       avatar: avatar ?? this.avatar,
       token: token ?? this.token,
       cart: cart ?? this.cart,
+      wishList: wishList ?? this.wishList,
     );
   }
 }

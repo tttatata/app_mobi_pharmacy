@@ -66,6 +66,12 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  wishList: [
+    {
+      product: productSchema,
+
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now(),

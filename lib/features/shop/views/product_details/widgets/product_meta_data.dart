@@ -43,16 +43,9 @@ class TProductMetaData extends StatelessWidget {
         ),
         Row(
           children: [
-            TCircularImage(
-              isNetworkImage: true,
-              image: product.category.toString(),
-              width: 32,
-              height: 32,
-              overlayColor: darkMode ? TColors.white : TColors.black,
-            ),
-            const ProductTitleText(
+            TBrandTitleWithVerifiedIcon(
               title: 'Loại sản phẩm:',
-              smallSize: false,
+              brandTextSize: TextSizes.medium,
             ),
             const SizedBox(
               width: TSizes.spaceBtwItems,
@@ -96,38 +89,19 @@ class TProductMetaData extends StatelessWidget {
           children: [
             Row(
               children: [
-                Column(
-                  children: [
-                    const ProductTitleText(
-                      title: 'Còn lại:',
-                      smallSize: false,
-                    ),
-                  ],
-                ),
                 const SizedBox(
                   width: TSizes.spaceBtwItems / 2,
                 ),
                 Text(
-                  product.stock.toString() + "\ttồn kho",
+                  "Tồn Kho: ${product.stock.toString()}\ttồn kho",
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
             Row(
               children: [
-                Column(
-                  children: [
-                    const ProductTitleText(
-                      title: 'Đã bán:',
-                      smallSize: false,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: TSizes.spaceBtwItems / 2,
-                ),
                 Text(
-                  product.sold_out.toString() + "\tsản phẩm",
+                  "Đã bán: ${product.sold_out.toString()}\tsản phẩm",
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],

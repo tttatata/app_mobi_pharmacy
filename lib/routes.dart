@@ -1,7 +1,9 @@
+import 'package:app_mobi_pharmacy/features/authentication/models/Order.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/signup/signup.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/order/widgets/orders_detail.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/product_details.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/search/search_product.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/sub_category/sub_category.dart';
@@ -51,6 +53,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => ProductDetailScreen(
           product: product,
+        ),
+      );
+    case OrderDetailScreen.routeName:
+      var order = routeSettings.arguments as Order;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => OrderDetailScreen(
+          order: order,
         ),
       );
     case NavigationMenu.routeName:

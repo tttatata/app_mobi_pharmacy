@@ -2,7 +2,7 @@ import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/images/t_rounded_image.dart';
 import 'package:app_mobi_pharmacy/common/widgets/layouts/grid_layout.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader_page.dart';
-import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_horizontal.dart';
+import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_event_card_horizontal.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/sortable/sortable_products.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/section_heading.dart';
@@ -67,13 +67,10 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                     padding: const EdgeInsets.all(TSizes.defaultSpace),
                     child: Column(
                       children: [
-                        TSortableProducts(),
-                        TGidLayout(
-                            itemCount: productList!.length,
-                            itemBuilder: (context, index) {
-                              final product = productList![index];
-                              return TProductCardVertical(product: product);
-                            }),
+                        TSortableProducts(
+                          productList: productList,
+                          // subCategoryController: subCategoryController,
+                        ),
                       ],
                     ),
                   ),

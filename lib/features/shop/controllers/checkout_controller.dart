@@ -5,6 +5,8 @@ import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
 import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/success_screen/success_screen.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Coupon.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Order.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
 import 'package:app_mobi_pharmacy/navigation_menu.dart';
 import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
@@ -43,11 +45,6 @@ class CheckOutServices {
       );
       print(jsonDecode(res.body));
       if (jsonDecode(res.body)['success'] == true)
-        // TLoaders.succesSnackbar(
-        //   title: 'Đặt hàng thành công',
-        //   message: 'Đơn hàng của bạn đã được lên đơn và chờ phê duyệt.',
-        // );
-        
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -61,5 +58,38 @@ class CheckOutServices {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+  Future<Coupon?> fetchCoupon({
+    required BuildContext context,
+    required String couponname,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    Coupon? coupon; // Khai báo biến để lưu trữ coupon
+
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$url/api/v2/coupon/get-coupon-value/${couponname}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          var data = jsonDecode(res.body);
+          if (data['couponCode'] != null && data['couponCode'].isNotEmpty) {
+            // Giả sử rằng 'couponCode' là một đối tượng và không phải là một danh sách
+            coupon = Coupon.fromJson(jsonEncode(data['couponCode']));
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return coupon; // Trả về coupon hoặc ném lỗi nếu không tìm thấy
   }
 }

@@ -16,52 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class LoginController {
-  // sign in user
-  // sign in user
-  // void signInUser({
-  //   required BuildContext context,
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     http.Response res = await http.post(
-  //       Uri.parse('$url/api/v2/auth/signin'),
-  //       body: jsonEncode({
-  //         'email': email,
-  //         'password': password,
-  //       }),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json',
-  //       },
-  //     );
-
-  //     httpErrorHandle(
-  //       response: res,
-  //       context: context,
-  //       onSuccess: () async {
-  //         SharedPreferences prefs = await SharedPreferences.getInstance();
-  //         Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-  //         await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-  //         final userProvider = context.read<UserProvider>().user.token;
-
-  //         if (userProvider.isNotEmpty) {
-  //           Navigator.pushNamedAndRemoveUntil(
-  //             context,
-  //             NavigationMenu.routeName,
-  //             (route) => false,
-  //           );
-  //         }
-  //       },
-  //     );
-
-  //     final userProvider = context.read<UserProvider>();
-  //     print(userProvider.toString());
-
-  //     // Truy cập giá trị mà không rebuild widget
-  //   } catch (e) {
-  //     showSnackBar(context, e.toString());
-  //   }
-  // }
   void signInUser({
     required BuildContext context,
     required String email,
@@ -82,11 +36,6 @@ class LoginController {
       print(res.statusCode);
       print(res.body);
       if (res.statusCode == 200) {
-        // if (res.headers['set-cookie'] != null) {
-        //   // Lưu cookies
-        //   String rawCookies = res.headers['set-cookie']!;
-        //   // Xử lý và lưu cookies ở đây
-        // }
         // Lưu trữ token nhận được vào SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String token = jsonDecode(res.body)['token'];

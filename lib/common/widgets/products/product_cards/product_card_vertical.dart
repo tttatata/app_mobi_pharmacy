@@ -30,9 +30,7 @@ class TProductCardVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     int sumRate = 0;
-    product.reviews?.forEach((e) {
-      
-    });
+    product.reviews?.forEach((e) {});
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -137,63 +135,59 @@ class TProductCardVertical extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //price
-                        Container(
-                          color: Colors.black26,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: TSizes.sm),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment
-                                  .start, // Aligns children to the end (right side)
-                              children: [
-                                TProductPriceText(
-                                    price: product.sellPrice.toString()),
-                                const SizedBox(
-                                  height: TSizes.spaceBtwItems / 2,
-                                ),
-                                Row(
-                                  children: [
-                                    TProductSoldText(
-                                        sold: product.sold_out.toString()),
-                                    const SizedBox(
-                                      width: TSizes.spaceBtwItems,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Iconsax.star5,
-                                          color: Colors.amber,
-                                          size: 18,
+                        Padding(
+                          padding: EdgeInsets.only(left: TSizes.sm),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment
+                                .start, // Aligns children to the end (right side)
+                            children: [
+                              TProductPriceText(
+                                  price: product.sellPrice.toString()),
+                              const SizedBox(
+                                height: TSizes.spaceBtwItems / 2,
+                              ),
+                              Row(
+                                children: [
+                                  TProductSoldText(
+                                      sold: product.sold_out.toString()),
+                                  const SizedBox(
+                                    width: TSizes.spaceBtwItems,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Iconsax.star5,
+                                        color: Colors.amber,
+                                        size: 18,
+                                      ),
+                                      Text.rich(
+                                        TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: '5.0',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(fontSize: 12)),
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                    text:
+                                                        '( ${product.reviews!.length.toString()} )',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!
+                                                        .copyWith(fontSize: 8)),
+                                              ],
+                                            )
+                                          ],
                                         ),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                  text: '5.0',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge!
-                                                      .copyWith(fontSize: 12)),
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                      text:
-                                                          '( ${product.reviews!.length.toString()} )',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyLarge!
-                                                          .copyWith(
-                                                              fontSize: 8)),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                         // Other widgets...
