@@ -33,7 +33,7 @@ class _AllProductsState extends State<AllProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TAppBar(
-        title: Text('Popular Products'),
+        title: Text('Sản phẩm phổ biến'),
         showBackArrow: true,
       ),
       body: productList == null

@@ -7,10 +7,15 @@ import 'package:app_mobi_pharmacy/features/shop/views/review/widget/reviewList.d
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TReviewTabs extends StatelessWidget {
   final String reviewStatus;
-  const TReviewTabs({super.key, required this.reviewStatus});
+
+  const TReviewTabs({
+    super.key,
+    required this.reviewStatus,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,9 @@ class TReviewTabs extends StatelessWidget {
         padding: EdgeInsets.all(TSizes.defaultSpace),
         child: Column(
           children: [
-            TReviewListItems(), // Truyền orderStatus vào đây
+            TReviewListItems(
+              reviewStatus: reviewStatus,
+            ), // Truyền orderStatus vào đây
             SizedBox(height: TSizes.spaceBtwItems),
           ],
         ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app_mobi_pharmacy/common/snackbar';
 import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
+import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
@@ -37,6 +38,10 @@ class ProductDetailsServices extends GetxController {
           User user =
               userProvider.user.copyWith(cart: jsonDecode(res.body)['cart']);
           userProvider.setUserFromModel(user);
+          TLoaders.succesSnackbar(
+            title: 'Thêm sản phẩm vào giỏ thành công',
+            message: 'Thông tin của giỏ hàng của bạn đã được cập nhật.',
+          );
         },
       );
     } catch (e) {

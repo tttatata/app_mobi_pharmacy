@@ -38,10 +38,10 @@ class UserController {
         onSuccess: () {
           // Cập nhật thông tin người dùng trong provider sau khi cập nhật thành công
           User user = userProvider.user.copyWith(
-            // name: jsonDecode(res.body)['name'],
-            // password: jsonDecode(res.body)['password'],
+            name: jsonDecode(res.body)['name'],
+            password: jsonDecode(res.body)['password'],
             phoneNumber: jsonDecode(res.body)['phoneNumber'],
-            avatar: jsonDecode(res.body)['avatar'],
+            // avatar: jsonDecode(res.body)['avatar'],
           );
           userProvider.setUserFromModel(user);
           TLoaders.succesSnackbar(
@@ -57,24 +57,49 @@ class UserController {
     }
   }
 
-  // Phương thức kiểm tra mật khẩu hiện tại có đúng không
-  // Phương thức kiểm tra mật khẩu hiện tại có đúng không
-  Future<bool> validateCurrentPassword(
-      BuildContext context, String currentPassword) async {
+  void updatePasswordUser({
+    required BuildContext context,
+// ID của người dùng cần cập nhật
+    required String oldpassword, // Dữ liệu cập nhật cho người dùng
+    required String newpassword, //
+    required VoidCallback onSuccessfulUpdate,
+  }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    String storedHashedPassword =
-        userProvider.user.password; // Mật khẩu đã mã hóa từ userProvider
+    print(newpassword);
+    try {
+      http.Response res = await http.post(
+        Uri.parse(
+            '$url/api/v2/auth/update-password'), // Endpoint cập nhật thông tin người dùng
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token, // Token của người dùng
+        },
+        body: json.encode({
+          'oldpassword': oldpassword,
+          'newpassword': newpassword,
+        }),
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          // Cập nhật thông tin người dùng trong provider sau khi cập nhật thành công
+          User user = userProvider.user.copyWith(
+            password: jsonDecode(res.body)['password'],
 
-    // Kiểm tra xem storedHashedPassword có phải là chuỗi rỗng hay không
-    if (storedHashedPassword.isEmpty) {
-      // Nếu rỗng, hiển thị lỗi hoặc xử lý tương ứng
-      print('Lỗi: Mật khẩu đã mã hóa không được để trống.');
-      return false;
+            // avatar: jsonDecode(res.body)['avatar'],
+          );
+          userProvider.setUserFromModel(user);
+          TLoaders.succesSnackbar(
+            title: 'Cập nhật thông tin thành công',
+            message: 'Thông tin của bạn đã được cập nhật.',
+          );
+          // onSuccessfulUpdate();
+        },
+      );
+    } catch (e) {
+      // Xử lý lỗi từ phía client
+      showSnackBar(context, e.toString());
     }
-
-    // So sánh mật khẩu nhập vào với mật khẩu đã mã hóa
-    bool isMatch = await BCrypt.checkpw(currentPassword, storedHashedPassword);
-    print(isMatch);
-    return isMatch;
   }
 }

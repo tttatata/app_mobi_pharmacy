@@ -1,4 +1,3 @@
-import 'package:app_mobi_pharmacy/app.dart';
 import 'package:app_mobi_pharmacy/bindings/general_bindings.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
 
@@ -48,16 +47,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        themeMode: ThemeMode.system,
-        theme: TAppTheme.lightTheme,
-        darkTheme: TAppTheme.darkTheme,
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: (settings) => generateRoute(settings),
-        home:
-            //  Provider.of<UserProvider>(context).user.token.isNotEmpty
-            //     ?
-            NavigationMenu()
-        // : const LoginScreen(),
-        );
+      themeMode: ThemeMode.system,
+      theme: TAppTheme.lightTheme,
+      darkTheme: TAppTheme.darkTheme,
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: (settings) => generateRoute(settings),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? NavigationMenu()
+          : NavigationMenu(),
+    );
   }
 }

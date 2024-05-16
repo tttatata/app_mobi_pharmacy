@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
-  List items = [];
   // note
   @override
   Widget build(BuildContext context) {

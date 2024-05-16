@@ -2,20 +2,23 @@
 import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
 
 class Reviews_Product {
-  final String? user_id;
+  final dynamic? user;
   final int? rating;
+  final String? comment;
   final String? productId;
   final DateTime? createdAt;
   Reviews_Product({
-    required this.user_id,
+    required this.user,
     required this.rating,
+    required this.comment,
     required this.productId,
     required this.createdAt,
   });
   factory Reviews_Product.fromMap(Map<String, dynamic> json) {
     return Reviews_Product(
-      user_id: json['user_id'],
+      user: json['user'],
       rating: json['rating'],
+      comment: json['comment'],
       productId: json['productId'],
       createdAt: DateTime.parse(json['createdAt']),
     );

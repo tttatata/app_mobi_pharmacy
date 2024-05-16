@@ -1,14 +1,33 @@
+import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TRatingAndShare extends StatelessWidget {
+  final Product product;
   const TRatingAndShare({
     super.key,
+    required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
+    double sumRatings = 0;
+    int totalReviews = 0;
+
+    // Tính toán đánh giá trung bình
+    double averageRating = 0; // Khai báo biến ở đây để có thể sử dụng sau này
+
+    if (product.reviews != null && product.reviews!.isNotEmpty) {
+      product.reviews!.forEach((review) {
+        sumRatings += review.rating ?? 0;
+        totalReviews++;
+      });
+
+      if (totalReviews > 0) {
+        averageRating = sumRatings / totalReviews;
+      }
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -27,9 +46,11 @@ class TRatingAndShare extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                      text: '5.0',
+                      text: averageRating.toStringAsFixed(1),
                       style: Theme.of(context).textTheme.bodyLarge),
-                  const TextSpan(text: '(199)')
+                  TextSpan(
+                    text: '( ${product.reviews!.length.toString()} )',
+                  )
                 ],
               ),
             )

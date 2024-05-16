@@ -296,6 +296,32 @@ authRouter.post("/update-address", auth, async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 });
+authRouter.delete("/delete-address", auth, async (req, res) => {
+    try {
+        // Tìm người dùng bằng ID từ JWT
+        let user = await User.findById(req.user);
+
+        // Lấy ID của địa chỉ cần xóa từ req.body
+        const { addressId } = req.body;
+
+        // Kiểm tra xem địa chỉ cần xóa có tồn tại không
+        const addressIndex = user.addresses.findIndex(address => address._id.toString() === addressId);
+        if (addressIndex === -1) {
+            return res.status(404).json({ message: 'Địa chỉ không tồn tại.' });
+        }
+
+        // Xóa địa chỉ khỏi mảng addresses
+        user.addresses.splice(addressIndex, 1);
+
+        // Lưu người dùng
+        user = await user.save();
+
+        // Phản hồi với thông tin người dùng đã cập nhật
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 authRouter.post("/update-user", auth, async (req, res) => {
     try {
         // Tìm người dùng bằng ID từ JWT
@@ -314,12 +340,6 @@ authRouter.post("/update-user", auth, async (req, res) => {
         user.avatar = avatar || user.avatar;
 
 
-        // Kiểm tra thông tin đầy đủ
-        // const fields = ['name', 'password', 'phoneNumber', 'avatar'];
-        // const isComplete = fields.every(field => user[field]);
-        // if (!isComplete) {
-        //     return res.status(400).json({ message: 'Vui lòng nhập đầy đủ thông tin người dùng.' });
-        // }
 
         // Lưu người dùng
         user = await user.save();
@@ -330,7 +350,36 @@ authRouter.post("/update-user", auth, async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 });
+authRouter.post("/update-password", auth, async (req, res) => {
+    try {
+        // Tìm người dùng bằng ID từ JWT
+        let user = await User.findById(req.user).select("+password");
+        const { oldpassword, newpassword } = req.body;
+        console.log(oldpassword); console.log(newpassword)
+        console.log(user)
 
+        const isPasswordValid = await user.comparePassword(oldpassword);
+        console.log(isPasswordValid);
+        // Lấy thông tin cần cập nhật từ req.body
+
+
+        // Kiểm tra nếu oldpassword khớp với mật khẩu hiện tại của người dùng
+        if (isPasswordValid) {
+            // Cập nhật mật khẩu mới
+            user.password = newpassword;
+        } else {
+            return res.status(400).json({ message: "Mật khẩu hiện tại không đúng" });
+        }
+
+        // Lưu người dùng
+        user = await user.save();
+
+        // Phản hồi với thông tin người dùng đã cập nhật
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 authRouter.post("/create-order", auth, async (req, res) => {
     try {
         // Tìm người dùng bằng ID từ JWT
@@ -440,7 +489,7 @@ authRouter.post('/products/:productId/review', auth, async (req, res, next) => {
         'cart._id': productId, 'status': 'Đã giao hàng'
     });
     const useradd = {
-        _id: user._id.toString(),
+        _id: req.user.toString(),
         name: user.name,
         email: user.email,
         role: user.role,
@@ -458,7 +507,7 @@ authRouter.post('/products/:productId/review', auth, async (req, res, next) => {
 
     // Kiểm tra xem người dùng đã đánh giá sản phẩm này trong một đơn hàng nào chưa
     const product = await Product.findById(productId);
-    const hasReviewed = product.reviews.some(review => review.user._id === userId);
+    const hasReviewed = product.reviews.some(review => review.user && review.user._id === userId);
 
     // Nếu người dùng đã mua sản phẩm và chưa đánh giá
     if (orders.length == 1 && !hasReviewed) {
@@ -483,30 +532,35 @@ authRouter.post('/products/:productId/review', auth, async (req, res, next) => {
         res.status(403).send('Bạn không thể đánh giá sản phẩm mà bạn chưa mua.');
     }
 });// Phương thức mới để lấy danh sách sản phẩm chưa được đánh giá
-authRouter.get('/user/unreviewed-products', auth, async (req, res, next) => {
+authRouter.get('/unreviewed-products', auth, async (req, res, next) => {
 
 
     try {
+
         // Tìm tất cả đơn hàng "Đã giao hàng" của người dùng
         const deliveredOrders = await Order.find({
             'user._id': req.user,
-            'status': 'Đang chờ xác nhận'
+            'status': 'Đã giao hàng'
         }).populate('cart.product');
-        console.log(deliveredOrders)
+        // console.log(deliveredOrders)
+        // console.log(req.user)
         // Tạo một mảng để lưu trữ các sản phẩm chưa được đánh giá
         let unreviewedProducts = [];
-
+        let addedProductIds = new Set(); //
         // Duyệt qua từng đơn hàng
         for (let order of deliveredOrders) {
             // Duyệt qua từng sản phẩm trong giỏ hàng của đơn hàng
             for (let item of order.cart) {
                 // Kiểm tra xem sản phẩm đã được đánh giá chưa
                 const product = await Product.findById(item._id);
-                const hasReviewed = product.reviews.some(review => review.user._id === req.user);
+                const hasReviewed = product.reviews.some(review => review.user && review.user._id == req.user);
 
                 // Nếu sản phẩm chưa được đánh giá, thêm vào mảng unreviewedProducts
-                if (!hasReviewed) {
+                if (!hasReviewed
+                    && !addedProductIds.has(product._id)
+                ) {
                     unreviewedProducts.push(product);
+                    addedProductIds.add(product._id.toString()); // Thêm ID sản phẩm vào Set để tránh thêm lại
                 }
             }
         }
@@ -515,6 +569,41 @@ authRouter.get('/user/unreviewed-products', auth, async (req, res, next) => {
         res.status(200).json(unreviewedProducts);
     } catch (error) {
         console.error('Error fetching unreviewed products:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+authRouter.get('/reviewed-products', auth, async (req, res, next) => {
+    try {
+        // Tìm tất cả đơn hàng "Đã giao hàng" của người dùng
+        const deliveredOrders = await Order.find({
+            'user._id': req.user,
+            'status': 'Đã giao hàng'
+        }).populate('cart.product');
+
+        // Tạo một mảng để lưu trữ các sản phẩm đã được đánh giá
+        let reviewedProducts = [];
+        let addedProductIds = new Set(); // Sử dụng Set để tránh trùng lặp sản phẩm
+
+        // Duyệt qua từng đơn hàng
+        for (let order of deliveredOrders) {
+            // Duyệt qua từng sản phẩm trong giỏ hàng của đơn hàng
+            for (let item of order.cart) {
+                // Kiểm tra xem sản phẩm đã được đánh giá bởi người dùng này chưa
+                const product = await Product.findById(item._id);
+                const hasReviewed = product.reviews.some(review => review.user && review.user._id === req.user);
+
+                // Nếu sản phẩm đã được đánh giá, thêm vào mảng reviewedProducts
+                if (hasReviewed && !addedProductIds.has(product._id.toString())) {
+                    reviewedProducts.push(product);
+                    addedProductIds.add(product._id.toString()); // Thêm ID sản phẩm vào Set
+                }
+            }
+        }
+
+        // Trả về danh sách sản phẩm đã được đánh giá
+        res.status(200).json(reviewedProducts);
+    } catch (error) {
+        console.error('Error fetching reviewed products:', error);
         res.status(500).send('Internal Server Error');
     }
 });

@@ -1,3 +1,4 @@
+import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/login_signup/form_divider.dart';
 import 'package:app_mobi_pharmacy/common/widgets/login_signup/social_buttons.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/signup/widgets/sigup_form.dart';
@@ -14,7 +15,13 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-        appBar: AppBar(),
+        appBar: TAppBar(
+          showBackArrow: true,
+          title: Text(
+            'Đăng ký tài khoản',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(TSizes.defaultSpace),
@@ -22,10 +29,7 @@ class SignupScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 //title
-                Text(
-                  TTexts.signupTitle,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
+
                 const SizedBox(height: TSizes.spaceBtwItems),
                 //form
                 const TSignUpForm(),

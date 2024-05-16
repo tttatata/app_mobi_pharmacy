@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_mobi_pharmacy/common/snackbar';
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/dialog/edit_phonenumber_dialog.dart';
 import 'package:app_mobi_pharmacy/common/widgets/images/t_circular_image.dart';
@@ -7,6 +10,7 @@ import 'package:app_mobi_pharmacy/features/personalization/controllers/profile_c
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/widgets/change_password_user_dialog.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/widgets/edit_user_information_dialog.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/profile/widgets/profile_menu.dart';
+import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +27,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final UserController _userController =
       UserController(); // Tạo instance của UserController
-
+  File? images;
+  String? currentImagePath;
   void _onUpdateSuccess() {
     // Hành động sau khi cập nhật thành công
     Navigator.pop(context); // Đóng dialog hoặc trở về màn hình trước
@@ -40,6 +45,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  void selectImages() async {
+    var res = await pickImages();
+    setState(() {
+      images = res;
+      if (images != null) {
+        currentImagePath = images!.path; // Lưu đường dẫn hình ảnh
+        // Kiểm tra đường dẫn hình ảnh sau khi chọn
+        checkImagePath(currentImagePath!);
+      }
+    });
+
+    print('images:$images');
+  }
+
+  void checkImagePath(String imagePath) {
+    final file = File(imagePath);
+    print('Kiểm tra đường dẫn hình ảnh: $imagePath');
+    if (file.existsSync()) {
+      print('Hình ảnh tồn tại.');
+    } else {
+      print(
+          'Hình ảnh không tồn tại. Kiểm tra lại đường dẫn hoặc quyền truy cập.');
+    }
+  }
+
+  // ... các định nghĩa trước đó của bạn
   @override
   Widget build(BuildContext context) {
     var user = context.watch<UserProvider>().user;
@@ -76,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 120,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: selectImages,
                       child: const Text('Change Profile Picture'),
                     ),
                   ],
@@ -124,7 +155,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               ProfileMenu(
                 title: 'Phone Number',
-                value: user.phoneNumber.toString(),
+                value: user.phoneNumber == 0
+                    ? 'Chưa thêm số điện thoại'
+                    : user.phoneNumber.toString(),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -153,25 +186,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onPasswordChanged: (String currentPassword,
                               String newPassword,
                               String confirmNewPassword) async {
-                            // Kiểm tra xem mật khẩu hiện tại có đúng không
-                            // Nếu đúng, gọi API hoặc phương thức để cập nhật mật khẩu của người dùng
-                            // Nếu không, hiển thị thông báo lỗi
-                            if (await _userController.validateCurrentPassword(
-                                context, currentPassword)) {
+                            {
                               if (newPassword == confirmNewPassword) {
-                                _userController.updateUser(
+                                // Gọi API hoặc phương thức để cập nhật mật khẩu của người dùng
+                                _userController.updatePasswordUser(
                                   context: context,
-                                  userData: {
-                                    'password': newPassword,
-                                  }, // Dữ liệu cập nhật mật khẩu
+                                  newpassword: newPassword,
+                                  oldpassword:
+                                      currentPassword, // Dữ liệu cập nhật cho người dùng
                                   onSuccessfulUpdate:
                                       _onUpdateSuccess, // Callback sau khi cập nhật thành công
                                 );
                               } else {
-                                // Hiển thị thông báo lỗi mật khẩu mới không khớp
+                                showSnackBar(
+                                    context, 'Mật khẩu mới không khớp.');
                               }
-                            } else {
-                              // Hiển thị thông báo lỗi mật khẩu hiện tại không đúng
                             }
                           },
                         );
@@ -179,7 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   },
                   child: const Text(
-                    'Đổi mật khẩu đăng nhập', // Update the text here
+                    'Đổi mật khẩu đăng nhập',
                     style: TextStyle(color: Colors.red),
                   ),
                 ),

@@ -20,9 +20,10 @@ class CheckOutServices {
   void createneworder({
     required BuildContext context,
     required List<Map<String, dynamic>> cartItems,
-    required int totalAmount,
+    required double totalAmount,
     required String payment,
   }) async {
+    print(totalAmount);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     // final addressselect = Provider.of<UserProvider>(context).selectedAddress;
@@ -87,6 +88,7 @@ class CheckOutServices {
           }
         },
       );
+      print(coupon);
     } catch (e) {
       showSnackBar(context, e.toString());
     }

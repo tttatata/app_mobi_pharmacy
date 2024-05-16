@@ -2,7 +2,7 @@ import 'package:app_mobi_pharmacy/common/styles/shadows.dart';
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:app_mobi_pharmacy/common/widgets/icons/t_circular_icon.dart';
 import 'package:app_mobi_pharmacy/common/widgets/images/t_rounded_image.dart';
-import 'package:app_mobi_pharmacy/common/widgets/provider/product_provider.dart';
+
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_price_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/product_title_text.dart';
 import 'package:app_mobi_pharmacy/common/widgets/texts/sold_stock.dart';
@@ -29,8 +29,22 @@ class TProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    int sumRate = 0;
-    product.reviews?.forEach((e) {});
+    double sumRatings = 0;
+    int totalReviews = 0;
+
+    // Tính toán đánh giá trung bình
+    double averageRating = 0; // Khai báo biến ở đây để có thể sử dụng sau này
+
+    if (product.reviews != null && product.reviews!.isNotEmpty) {
+      product.reviews!.forEach((review) {
+        sumRatings += review.rating ?? 0;
+        totalReviews++;
+      });
+
+      if (totalReviews > 0) {
+        averageRating = sumRatings / totalReviews;
+      }
+    }
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -79,16 +93,6 @@ class TProductCardVertical extends StatelessWidget {
                           )
                         : Text(''),
                   ),
-                  Positioned(
-                    top: -10,
-                    right: -10,
-                    child: TCircularIcon(
-                      onPressed: () {},
-                      icon: Iconsax.heart, //icon chưa chọn
-                      //  Iconsax.heart,//icon đã chọn
-                      color: Color.fromARGB(255, 255, 0, 0),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -164,7 +168,8 @@ class TProductCardVertical extends StatelessWidget {
                                         TextSpan(
                                           children: [
                                             TextSpan(
-                                                text: '5.0',
+                                                text: averageRating
+                                                    .toStringAsFixed(1),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyLarge!

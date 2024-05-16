@@ -32,7 +32,7 @@ class TBillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Subtotal',
+              'Sản phẩm',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
@@ -48,11 +48,11 @@ class TBillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Shipping Fee',
+              'Chi phí giao hàng',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '6',
+              TFormatter.formatCurrency(15000),
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
@@ -64,12 +64,18 @@ class TBillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Tax Fee',
-              style: Theme.of(context).textTheme.bodyMedium,
+              'Giá giảm',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .apply(color: Colors.red),
             ),
             Text(
-              '6',
-              style: Theme.of(context).textTheme.labelLarge,
+              '-',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .apply(color: Colors.red),
             ),
           ],
         ),
@@ -80,11 +86,11 @@ class TBillingAmountSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Order Total',
+              'Tổng tiền',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              TFormatter.formatCurrency(sum.toDouble()),
+              TFormatter.formatCurrency(sum.toDouble() + 15000),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],

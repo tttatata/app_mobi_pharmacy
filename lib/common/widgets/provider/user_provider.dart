@@ -33,6 +33,24 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearUserData() {
+    if (_user != null) {
+      _user = User(
+          id: '',
+          name: '',
+          email: '',
+          password: '',
+          phoneNumber: 0,
+          addresses: [],
+          role: '',
+          token: '',
+          avatar: null,
+          cart: [],
+          wishList: []); // Xóa dữ liệu người dùng
+      notifyListeners();
+    }
+  }
+
   // xử lý địa chỉ khi chọn địa chỉ
   Map<String, dynamic>? _selectedAddress;
   Map<String, dynamic>? get selectedAddress => _selectedAddress;

@@ -1,15 +1,19 @@
 import 'package:app_mobi_pharmacy/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:app_mobi_pharmacy/common/widgets/images/t_circular_image.dart';
 import 'package:app_mobi_pharmacy/common/widgets/products/ratings/rating_indicator.dart';
+import 'package:app_mobi_pharmacy/features/authentication/models/Product_Reviews.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 
 class UserReviewCard extends StatelessWidget {
-  const UserReviewCard({super.key});
+  final Reviews_Product review;
 
+  const UserReviewCard({super.key, required this.review});
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
@@ -20,12 +24,19 @@ class UserReviewCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage(TImages.userProfileImage1),
+                TCircularImage(
+                  image: review.user['avatar']?.isEmpty ?? true
+                      ? TImages.user
+                      : review.user['avatar']['url'].toString(),
+                  isNetworkImage:
+                      review.user['avatar']?.isEmpty ?? true ? false : true,
+                  height: 50,
+                  width: 50,
+                  padding: 5,
                 ),
                 const SizedBox(width: TSizes.spaceBtwItems),
                 Text(
-                  'thomas',
+                  review.user['name'],
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
@@ -37,71 +48,38 @@ class UserReviewCard extends StatelessWidget {
         //review
         Row(
           children: [
-            const TRatingBarIndicator(rating: 4),
-            const SizedBox(width: TSizes.spaceBtwItems),
-            Text('01/10/2013', style: Theme.of(context).textTheme.bodyMedium)
+            TRatingBarIndicator(rating: review.rating!.toDouble()),
+            SizedBox(width: TSizes.spaceBtwItems),
+            Text(DateFormat('HH:mm dd/MM/yyyy').format(review.createdAt!),
+                style: Theme.of(context).textTheme.bodyMedium)
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
-        const ReadMoreText(
-          'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-          trimMode: TrimMode.Line,
-          trimLines: 2,
-          colorClickableText: Colors.pink,
-          trimCollapsedText: '...Show more',
-          trimExpandedText: ' show less',
-          moreStyle: TextStyle(
+        Align(
+          alignment: Alignment.centerLeft,
+          child: ReadMoreText(
+            review.comment.toString(),
+            trimMode: TrimMode.Line,
+            trimLines: 2,
+            colorClickableText: Colors.pink,
+            trimCollapsedText: '...Xem thêm',
+            trimExpandedText: ' show less',
+            moreStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: TColors.primary),
-          lessStyle: TextStyle(
+              color: TColors.primary,
+            ),
+            lessStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: TColors.primary),
+              color: TColors.primary,
+            ),
+          ),
         ),
         const SizedBox(height: TSizes.spaceBtwItems),
 
         /// company review
-        TRoundedContainer(
-          backgroundColor: dark ? TColors.darkerGrey : TColors.grey,
-          child: Padding(
-            padding: const EdgeInsets.all(TSizes.md),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Store',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      '10/12/2023',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                const ReadMoreText(
-                  'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-                  trimMode: TrimMode.Line,
-                  trimLines: 2,
-                  colorClickableText: Colors.pink,
-                  trimCollapsedText: '...Show more',
-                  trimExpandedText: ' show less',
-                  moreStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: TColors.primary),
-                  lessStyle: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: TColors.primary),
-                ),
-              ],
-            ),
-          ),
-        ),
+
         const SizedBox(height: TSizes.spaceBtwSections),
       ],
     );

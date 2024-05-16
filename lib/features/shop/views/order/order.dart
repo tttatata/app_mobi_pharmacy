@@ -17,23 +17,6 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  List<Order>? productList;
-
-  final OrderController homeServices = OrderController();
-
-  @override
-  void initState() {
-    super.initState();
-    fetchCategoryProducts();
-  }
-
-  fetchCategoryProducts() async {
-    productList = await homeServices.fetchCategoryProducts(context: context);
-    setState(() {});
-  }
-
-  List items = [];
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -68,32 +51,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
             },
             body: TabBarView(
               children: [
-                TCategoryTabs(orderStatus: 'Đơn đã đặt'),
-                TCategoryTabs(orderStatus: 'Đơn chưa xác nhận'),
-                TCategoryTabs(orderStatus: 'Dơn đã xác nhận'),
-                TCategoryTabs(orderStatus: 'Đơn đang vận chuyển'),
-                TCategoryTabs(orderStatus: 'Đơn đã giao'),
+                TOrderTabs(orderStatus: 'Đơn đã đặt'),
+                TOrderTabs(orderStatus: 'Đơn chưa xác nhận'),
+                TOrderTabs(orderStatus: 'Dơn đã xác nhận'),
+                TOrderTabs(orderStatus: 'Đơn đang vận chuyển'),
+                TOrderTabs(orderStatus: 'Đơn đã giao'),
               ],
             )),
       ),
     );
   }
 }
-//   @override
-//   Widget build(BuildContext context) {
-//     final dark = THelperFunctions.isDarkMode(context);
-//     return Scaffold(
-//       appBar: TAppBar(
-//         showBackArrow: true,
-//         title: Text(
-//           'Đơn hàng của tôi',
-//           style: Theme.of(context).textTheme.headlineSmall,
-//         ),
-//       ),
-//       body: const Padding(
-//         padding: EdgeInsets.all(TSizes.defaultSpace),
-//         child: TOrderListItems(),
-//       ),
-//     );
-//   }
-// }

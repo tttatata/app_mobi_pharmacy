@@ -68,10 +68,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const NavigationMenu(),
       );
-    default:
+   default:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const LoginScreen(),
+        builder: (_) => const Scaffold(
+          body: Center(
+            child: Text('Screen does not exist!'),
+          ),
+        ),
       );
   }
 }

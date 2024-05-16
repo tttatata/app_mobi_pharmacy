@@ -12,24 +12,32 @@ import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 class TProductMetaData extends StatelessWidget {
-  const TProductMetaData({super.key, required this.product});
+  const TProductMetaData(
+      {super.key, required this.product, this.isIconSale = false});
   final Product product;
+  final bool isIconSale;
   @override
   Widget build(BuildContext context) {
     final darkMode = THelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TRoundedContainer(
-          radius: TSizes.sm,
-          backgroundColor: TColors.secondary.withOpacity(0.8),
-          padding: const EdgeInsets.symmetric(
-              horizontal: TSizes.sm, vertical: TSizes.xs),
-          child: Text('sale off 25%',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .apply(color: TColors.black)),
+        Positioned(
+          top: -10,
+          left: -10,
+          child: isIconSale == true
+              ? TRoundedContainer(
+                  radius: TSizes.sm,
+                  backgroundColor: TColors.secondary.withOpacity(0.8),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: TSizes.sm, vertical: TSizes.xs),
+                  child: Text('sale off 25%',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .apply(color: TColors.black)),
+                )
+              : Text(''),
         ),
         const SizedBox(
           width: TSizes.spaceBtwItems,
@@ -67,13 +75,6 @@ class TProductMetaData extends StatelessWidget {
             ),
             const SizedBox(
               width: TSizes.spaceBtwItems,
-            ),
-            Text(
-              product.originalPrice.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .apply(decoration: TextDecoration.lineThrough),
             ),
             const SizedBox(
               width: TSizes.spaceBtwItems / 1.5,

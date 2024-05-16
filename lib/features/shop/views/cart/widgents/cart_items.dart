@@ -23,7 +23,7 @@ class TCartItems extends StatelessWidget {
     user.cart?.forEach((e) {
       final price = e['product']['sellPrice'];
       if (price != null) {
-        sum += e['quantity'] * price as int;
+        sum += e['quantity'] * (price as int) as int; // Convert to double
       }
     });
     // Tính toán và lấy thông tin giỏ hàng...

@@ -71,14 +71,6 @@ class TProductCardHorizontal extends StatelessWidget {
                         isNetworkImage: true,
                       ),
                     ),
-                    const Positioned(
-                      top: -10,
-                      right: 0,
-                      child: TCircularIcon(
-                        icon: Iconsax.heart5,
-                        color: Colors.red,
-                      ),
-                    )
                   ],
                 ),
               ),

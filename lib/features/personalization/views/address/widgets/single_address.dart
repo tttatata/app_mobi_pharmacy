@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_mobi_pharmacy/features/personalization/controllers/address_controller.dart';
+import 'package:app_mobi_pharmacy/features/personalization/views/address/edit_addressform.dart.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/widgets/addressform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,41 @@ class TSingleAddress extends StatelessWidget {
   }) : super(key: key);
   final bool selectedAddress;
   final dynamic address;
+  void confirmDeleteAddress(BuildContext context, dynamic address) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text('Xác nhận xóa địa chỉ'),
+          content: Text('Bạn có chắc chắn muốn xóa địa chỉ này không?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Hủy'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Đóng hộp thoại
+              },
+            ),
+            TextButton(
+              child: Text('Xác nhận'),
+              onPressed: () {
+                // Gọi hàm deleteAddress từ AddressServices
+                AddressServices().deleteAddress(
+                  context: context,
+                  addressId: address[
+                      '_id'], // Giả sử 'id' là trường chứa ID của địa chỉ
+                  onSuccessfulDelete: () {
+                    // Hành động sau khi xóa thành công
+                    Navigator.of(dialogContext).pop(); // Đóng hộp thoại
+                    // Cập nhật UI hoặc hiển thị thông báo tại đây nếu cần
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +94,15 @@ class TSingleAddress extends StatelessWidget {
               children: [
                 // Trong TSingleAddress
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            EditAddressScreen(currentAddress: address),
+                      ),
+                    );
+                  },
                   child: Icon(Iconsax.edit,
                       color: dark
                           ? TColors.light
@@ -67,10 +112,15 @@ class TSingleAddress extends StatelessWidget {
                 const SizedBox(
                   width: TSizes.sm / 2,
                 ),
-                Icon(Iconsax.trash,
-                    color: dark
-                        ? TColors.light
-                        : Color.fromARGB(255, 255, 40, 40)),
+                GestureDetector(
+                  onTap: () {
+                    confirmDeleteAddress(context, address);
+                  },
+                  child: Icon(Iconsax.trash,
+                      color: dark
+                          ? TColors.light
+                          : Color.fromARGB(255, 255, 40, 40)),
+                ),
               ],
             ),
           ),

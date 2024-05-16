@@ -66,19 +66,23 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final user = context.watch<UserProvider>().user;
-    int sum = 0;
+    double sum = 0;
     widget.order!.cart?.forEach((e) {
       final price = e['sellPrice'];
       final qty = e['qty'];
       if (price != null && qty != null) {
-        sum += int.parse(price.toString()) * int.parse(qty.toString());
+        sum += double.parse(price.toString()) * double.parse(qty.toString());
       }
     });
     Color _getStatusColor(String status) {
       switch (status) {
         case 'Đang chờ xác nhận':
-          return Color.fromARGB(255, 212, 89, 17);
-        case 'Đã giao':
+          return Color.fromARGB(255, 255, 187, 0);
+        case 'Đã xác nhận':
+          return Color.fromARGB(255, 255, 187, 0);
+        case 'Đang giao hàng':
+          return Color.fromARGB(255, 255, 187, 0);
+        case 'Đã giao hàng':
           return Colors.green;
         case 'Hủy đơn hàng':
           return Color.fromARGB(255, 252, 0, 0);
@@ -102,19 +106,22 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             children: [
               TRoundedContainer(
                 padding: const EdgeInsets.all(TSizes.md),
-                showBorder: true,
-                backgroundColor: _getStatusColor(widget.order!.status),
-                child: Column(
-                  children: [
-                    Text(
-                      'Trạng thái: ${widget.order!.status}',
-                      style: TextStyle(
-                        color: Colors.white, // Màu chữ trắng
-                        fontSize: 16, // Kích thước chữ
-                        // Thêm các thuộc tính khác cho TextStyle nếu cần
+                showBorder: false,
+                backgroundColor: Colors.white,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Trạng thái: ${widget.order!.status}',
+                        style: TextStyle(
+                          color: _getStatusColor(
+                              widget.order!.status), // Màu chữ trắng
+                          fontSize: 16, // Kích thước chữ
+                          // Thêm các thuộc tính khác cho TextStyle nếu cần
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: TSizes.spaceBtwSections / 2),
@@ -590,33 +597,40 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: widget.order!.status == 'Đang chờ xác nhận'
-              ? () {
-                  addToWishlist();
-                }
-              : widget.order!.status == 'Đã giao'
-                  ? () {
-                      // Hành động mua lại
-                    }
-                  : null, // Nếu đã xác nhận, không cho phép nhấn
+          onPressed: widget.order!.status == 'Đang giao hàng' ||
+                  widget.order!.status == 'Đã xác nhận'
+              ? null // Không cho phép nhấn nút nếu trạng thái là 'Đang chờ xác nhận' hoặc 'Đã xác nhận'
+              : () {
+                  // Hành động cho các trạng thái khác
+                  if (widget.order!.status == 'Đã giao hàng' ||
+                      widget.order!.status == 'Hủy đơn hàng') {
+                    // Hành động mua lại
+                  } else {
+                    addToWishlist();
+                  }
+                },
           child: Text(
-            widget.order!.status == 'Đã giao'
-                ? 'Mua lại'
-                : widget.order!.status == 'Hủy đơn hàng'
-                    ? 'Mua lại'
-                    : 'Hủy đơn',
+            widget.order!.status == 'Đang chờ xác nhận'
+                ? 'Hủy đơn hàng'
+                : widget.order!.status == 'Đã xác nhận' ||
+                        widget.order!.status == 'Đang giao hàng'
+                    ? 'Bạn không thể hủy đơn hàng'
+                    : widget.order!.status == 'Đã giao hàng' ||
+                            widget.order!.status == 'Hủy đơn hàng'
+                        ? 'Mua lại đơn hàng'
+                        : '', // Thêm văn bản mặc định hoặc xử lý cho trạng thái không xác định
             style: TextStyle(
               color: Colors.white,
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: widget.order!.status == 'Đang chờ xác nhận'
-                ? Color.fromARGB(255, 250, 8, 0)
-                : widget.order!.status == 'Đã giao'
-                    ? Colors.green
-                    : widget.order!.status == 'Hủy đơn hàng'
-                        ? Color.fromARGB(255, 255, 0, 0)
-                        : Colors.grey, // Màu nền cho nút dựa trên trạng thái
+            backgroundColor: widget.order!.status == 'Đang chờ xác nhận' ||
+                    widget.order!.status == 'Hủy đơn hàng' ||
+                    widget.order!.status == 'Đã giao hàng'
+                ? Colors
+                    .red // Màu đỏ cho trạng thái 'Đang chờ xác nhận', 'Hủy đơn hàng', và 'Đã giao hàng'
+                : Colors
+                    .amber, // Màu vàng cho trạng thái 'Đã xác nhận' và 'Đang giao hàng'
           ),
         ),
       ),

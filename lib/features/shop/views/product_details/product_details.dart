@@ -7,7 +7,7 @@ import 'package:app_mobi_pharmacy/features/authentication/models/Product.dart';
 import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
 import 'package:app_mobi_pharmacy/features/shop/controllers/product_details.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/bottom_add_to_cart.dart';
-import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/product_attributes.dart';
+
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/product_detail_image_slider.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/product_meta_data.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/product_details/widgets/rating_share_widget.dart';
@@ -67,7 +67,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       appBar: TAppBar(
         showBackArrow: true,
         title: Text(
-          'Cart',
+          'Thông tin sản phẩm',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -172,19 +172,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),
-                  //Attribute
-                  // ProductAttributes(),
-                  // SizedBox(
-                  //   height: TSizes.spaceBtwSections,
-                  // ),
-                  TRatingAndShare(),
+
+                  TRatingAndShare(
+                    product: widget.product,
+                  ),
                   SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),
                   //checkout
 
                   TSetionHeading(
-                    title: 'Desription',
+                    title: 'Mô tả',
                     showActionButton: false,
                   ),
                   SizedBox(
@@ -195,7 +193,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     trimMode: TrimMode.Line,
                     trimLines: 2,
                     colorClickableText: Colors.pink,
-                    trimCollapsedText: '...Show more',
+                    trimCollapsedText: '...xem thêm',
                     trimExpandedText: ' show less',
                     moreStyle:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
@@ -211,11 +209,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     children: [
                       TSetionHeading(
                         title:
-                            'Reviews (${widget.product.reviews!.length})', // Cập nhật số lượ
+                            'Đánh giá (${widget.product.reviews!.length})', // Cập nhật số lượ
                         showActionButton: false,
                       ),
                       IconButton(
-                          onPressed: () => Get.to(() => ProductReviewsScreen()),
+                          onPressed: () => Get.to(() => ProductReviewsScreen(
+                              reviews: widget.product.reviews!)),
                           icon: Icon(
                             Iconsax.arrow_right_3,
                             size: 18,

@@ -65,6 +65,8 @@ dependencies:
   flutter_paypal: ^0.0.8
   flutter_bcrypt: ^1.0.8
   flutter_tawkto: ^0.0.3
+  currency_converter: ^0.0.4
+  forex_currency_conversion: ^0.9.0
 
 
   
@@ -83,12 +85,9 @@ flutter:
   #--------------- LOCAL ASSETS ------------------#
   assets:
     - assets/logos/
-    - assets/icons/brands/
     - assets/images/content/
     - assets/images/banners/
-    - assets/images/reviews/
     - assets/images/products/
-    - assets/icons/categories/
     - assets/images/animations/
     - assets/icons/payment_methods/
     - assets/images/on_boarding_images/
@@ -112,3 +111,4 @@ flutter:
           weight: 600
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 800
+       

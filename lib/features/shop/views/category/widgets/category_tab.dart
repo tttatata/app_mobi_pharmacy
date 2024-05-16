@@ -7,9 +7,9 @@ import 'package:app_mobi_pharmacy/util/constans/image_strings.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 
-class TCategoryTabs extends StatelessWidget {
+class TOrderTabs extends StatelessWidget {
   final String orderStatus;
-  const TCategoryTabs({super.key, required this.orderStatus});
+  const TOrderTabs({super.key, required this.orderStatus});
 
   @override
   Widget build(BuildContext context) {

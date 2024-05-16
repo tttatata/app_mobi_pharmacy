@@ -7,9 +7,12 @@ class TRatingProgressIndicator extends StatelessWidget {
     super.key,
     required this.text,
     required this.value,
+    required this.width,
   });
   final String text;
   final double value;
+  final double width;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,9 +27,9 @@ class TRatingProgressIndicator extends StatelessWidget {
         Expanded(
           flex: 11,
           child: SizedBox(
-            width: TDeviceUtils.getScreenWidth(context) * 0.8,
+            width: width,
             child: LinearProgressIndicator(
-              value: value,
+              value: value / 100,
               minHeight: 11,
               backgroundColor: TColors.grey,
               valueColor: const AlwaysStoppedAnimation(TColors.primary),

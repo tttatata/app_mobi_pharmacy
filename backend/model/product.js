@@ -51,9 +51,7 @@ const productSchema = new mongoose.Schema(
     weight: {
       type: String,
     },
-    material: {
-      type: String,
-    },
+
     guarantee: {
       type: String,
     },

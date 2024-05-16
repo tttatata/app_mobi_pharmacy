@@ -1,6 +1,6 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
-import 'package:app_mobi_pharmacy/features/personalization/views/address/addressform.dart';
+import 'package:app_mobi_pharmacy/features/personalization/views/address/add_new_addressform.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/widgets/addressform.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/address/widgets/single_address.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';

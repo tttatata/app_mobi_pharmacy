@@ -35,8 +35,8 @@ class TTexts {
   static const String orSignInWith = "Hoặc đăng nhập với";
   static const String orSignUpWith = "Hoặc đăng ký với";
   static const String iAgreeTo = "Tôi đồng ý";
-  static const String privacyPolicy = "Chính sách bảo mật";
-  static const String termsOfUse = "Điều khoản sử dụng";
+
+  static const String termsOfUse = "Điều khoản, chính sách sử dụng";
   static const String verificationCode = "Mã xác nhận";
   static const String resendEmail = "Gửi lại email";
   static const String resendEmailIn = "Gửi lại email trong";

@@ -59,16 +59,16 @@ class SignUpController {
       Get.to(() => VerifyEmailScreen(
             email: email,
           ));
-      // httpErrorHandle(
-      //   response: res,
-      //   context: context,
-      //   onSuccess: () {
-      //     showSnackBar(
-      //       context,
-      //       'Account created! Login with the same credentials!',
-      //     );
-      //   },
-      // );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Account created! Login with the same credentials!',
+          );
+        },
+      );
     } catch (e) {
       showSnackBar(context, e.toString());
     }

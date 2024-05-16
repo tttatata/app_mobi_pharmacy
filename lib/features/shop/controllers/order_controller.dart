@@ -14,39 +14,7 @@ import 'package:http/http.dart' as http;
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
-  // Future<List<Order>> fetchCategoryProducts({
-  //   required BuildContext context,
-  // }) async {
-  //   final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-  //   List<Order> orderList = [];
-  //   try {
-  //     http.Response res = await http
-  //         .get(Uri.parse('$url/api/v2/auth/get-all-orders'), headers: {
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //       'x-auth-token': userProvider.user.token,
-  //     });
-
-  //     httpErrorHandle(
-  //       response: res,
-  //       context: context,
-  //       onSuccess: () {
-  //         for (int i = 0; i < jsonDecode(res.body)['orders'].length; i++) {
-  //           orderList.add(
-  //             Order.fromJson(
-  //               jsonEncode(
-  //                 jsonDecode(res.body)['orders'][i],
-  //               ),
-  //             ),
-  //           );
-  //         }
-  //       },
-  //     );
-  //   } catch (e) {
-  //     showSnackBar(context, e.toString());
-  //   }
-  //   return orderList;
-  // }
   Future<List<Order>> fetchCategoryProducts({
     required BuildContext context,
     String? filterStatus, // Thêm tham số này để lọc theo trạng thái đơn hàng

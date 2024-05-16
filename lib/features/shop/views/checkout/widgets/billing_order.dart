@@ -11,7 +11,7 @@ class TBillingPaymentSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Subtotal',
+              'Tiền sản phẩm',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
@@ -27,7 +27,7 @@ class TBillingPaymentSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Shipping Fee',
+              'Chi phí giao hàng',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
@@ -43,11 +43,11 @@ class TBillingPaymentSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Tax Fee',
+              'Giảm giá',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '6',
+              '10%',
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
@@ -59,7 +59,7 @@ class TBillingPaymentSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Order Total',
+              'Tổng cộng',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(

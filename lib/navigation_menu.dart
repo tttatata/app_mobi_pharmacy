@@ -40,10 +40,7 @@ class NavigationMenu extends StatelessWidget {
               icon: Icon(Iconsax.category),
               label: 'Category',
             ),
-            NavigationDestination(
-              icon: Icon(Iconsax.heart),
-              label: 'Wishlist',
-            ),
+
             NavigationDestination(
               icon: Icon(Iconsax.user),
               label: 'Profile',
@@ -66,7 +63,7 @@ class NavigationController extends GetxController {
   final screens = [
     const HomeScreen(),
     const StoreScreen(),
-    const FavouriteScreen(),
+
     const SettingsScreen(),
     const ChatScreen(), // Thêm ChatScreen vào danh sách màn hình
   ];
