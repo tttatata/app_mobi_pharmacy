@@ -32,6 +32,7 @@ class Product {
   final String shopId;
   final Shop_Product? shop;
   final num? sold_out;
+
   final DateTime? createdAt;
   Product({
     required this.id,

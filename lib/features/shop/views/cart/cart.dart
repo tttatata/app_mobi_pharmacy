@@ -22,9 +22,9 @@ class CartScreen extends StatelessWidget {
     final darkMode = THelperFunctions.isDarkMode(context);
     double sum = 0.0;
     user.cart?.forEach((e) {
-      final price = e['product']['sellPrice'];
+      final price = e['sellPrice'];
       if (price != null) {
-        sum += e['quantity'] * (price as int).toDouble(); // Convert to double
+        sum += e['qty'] * (price as int).toDouble(); // Convert to double
       }
     });
 

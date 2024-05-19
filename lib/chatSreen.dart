@@ -13,10 +13,10 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Tawk(
         directChatLink:
-            'https://tawk.to/chat/634bde43b0d6371309c9c84f/1gfg5oefe',
+            'http://tawk.to/chat/663b931907f59932ab3d5416/1htcbd7me',
         visitor: TawkVisitor(
-          name: 'John Doe',
-          email: 'johndoe@gmail.com',
+          name: 'Ayoub AMINE',
+          email: 'ayoubamine2a@gmail.com',
         ),
         onLoad: () {
           print('Hello Tawk!');

@@ -46,16 +46,29 @@ class CheckOutServices {
       );
       print(jsonDecode(res.body));
       if (jsonDecode(res.body)['success'] == true)
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SuccesScreen(
-                    image: TImages.successfulPaymentIcon,
-                    title: 'Payment Success!',
-                    subtitle: 'Your item will be shipped soon!',
-                    onPressed: () => Get.offAll(() => const NavigationMenu()),
-                  )),
+        http.Response res = await http.post(
+          Uri.parse(
+              '$url/api/v2/auth/delete-to-cart'), // Điều chỉnh đường dẫn API tại đây
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': userProvider
+                .user.token, // Giả sử token được lưu trong userProvider
+          },
+
+          body: jsonEncode({}),
         );
+      User user = userProvider.user.copyWith(cart: []);
+      userProvider.setUserFromModel(user);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SuccesScreen(
+                  image: TImages.successfulPaymentIcon,
+                  title: 'Payment Success!',
+                  subtitle: 'Your item will be shipped soon!',
+                  onPressed: () => Get.offAll(() => const NavigationMenu()),
+                )),
+      );
     } catch (e) {
       showSnackBar(context, e.toString());
     }

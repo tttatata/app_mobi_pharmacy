@@ -77,12 +77,16 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     Color _getStatusColor(String status) {
       switch (status) {
         case 'Đang chờ xác nhận':
-          return Color.fromARGB(255, 255, 187, 0);
-        case 'Đã xác nhận':
-          return Color.fromARGB(255, 255, 187, 0);
+          return Color.fromARGB(255, 255, 2, 2);
+        case 'Đã bàn giao đơn vị vận chuyển':
+          return Color.fromARGB(255, 255, 1, 1);
         case 'Đang giao hàng':
-          return Color.fromARGB(255, 255, 187, 0);
+          return Color.fromARGB(255, 240, 9, 1);
+        case 'Đang giao đến bạn':
+          return Color.fromARGB(255, 240, 9, 1);
         case 'Đã giao hàng':
+          return Colors.green;
+        case 'Đã nhận tại cửa hàng':
           return Colors.green;
         case 'Hủy đơn hàng':
           return Color.fromARGB(255, 252, 0, 0);
@@ -603,34 +607,31 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               : () {
                   // Hành động cho các trạng thái khác
                   if (widget.order!.status == 'Đã giao hàng' ||
-                      widget.order!.status == 'Hủy đơn hàng') {
+                      widget.order!.status == 'Hoàn trả đơn hàng') {
                     // Hành động mua lại
                   } else {
                     addToWishlist();
                   }
                 },
           child: Text(
-            widget.order!.status == 'Đang chờ xác nhận'
-                ? 'Hủy đơn hàng'
-                : widget.order!.status == 'Đã xác nhận' ||
-                        widget.order!.status == 'Đang giao hàng'
-                    ? 'Bạn không thể hủy đơn hàng'
-                    : widget.order!.status == 'Đã giao hàng' ||
-                            widget.order!.status == 'Hủy đơn hàng'
-                        ? 'Mua lại đơn hàng'
-                        : '', // Thêm văn bản mặc định hoặc xử lý cho trạng thái không xác định
+            widget.order!.status == 'Đang chờ xác nhận' ||
+                    widget.order!.status == 'Đã xác nhận' ||
+                    widget.order!.status == 'Đang giao hàng'
+                ? 'Bạn không thể hoàn trả đơn hàng'
+                : widget.order!.status == 'Đã giao hàng' ||
+                        widget.order!.status == 'Hủy đơn hàng'
+                    ? 'Mua lại đơn hàng'
+                    : '', // Thêm văn bản mặc định hoặc xử lý cho trạng thái không xác định
             style: TextStyle(
               color: Colors.white,
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: widget.order!.status == 'Đang chờ xác nhận' ||
-                    widget.order!.status == 'Hủy đơn hàng' ||
-                    widget.order!.status == 'Đã giao hàng'
+            backgroundColor: widget.order!.status == 'Đã giao hàng'
                 ? Colors
                     .red // Màu đỏ cho trạng thái 'Đang chờ xác nhận', 'Hủy đơn hàng', và 'Đã giao hàng'
-                : Colors
-                    .amber, // Màu vàng cho trạng thái 'Đã xác nhận' và 'Đang giao hàng'
+                : const Color.fromARGB(255, 141, 141,
+                    141), // Màu vàng cho trạng thái 'Đã xác nhận' và 'Đang giao hàng'
           ),
         ),
       ),

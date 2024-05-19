@@ -31,12 +31,12 @@ class Address {
 
   factory Address.fromMap(Map<String, dynamic> map) {
     return Address(
-      country: map['country'] as String,
-      city: map['city'] as String,
-      address1: map['address1'] as String,
-      address2: map['address2'] as String,
-      zipCode: map['zipCode'] as int,
-      addressType: map['addressType'] as String,
+      country: map['country'] ?? '',
+      city: map['city'] ?? '',
+      address1: map['address1'] ?? '',
+      address2: map['address2'] ?? '',
+      zipCode: map['zipCode']?.toInt() ?? 0,
+      addressType: map['addressType'] ?? '',
     );
   }
 

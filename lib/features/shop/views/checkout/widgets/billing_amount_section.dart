@@ -17,9 +17,9 @@ class TBillingAmountSection extends StatelessWidget {
     final user = context.watch<UserProvider>().user;
     int sum = 0;
     user.cart?.forEach((e) {
-      final price = e['product']['sellPrice'];
+      final price = e['sellPrice'];
       if (price != null) {
-        sum += e['quantity'] * price as int;
+        sum += e['qty'] * price as int;
       }
     });
     // Gọi callback khi có tổng tiền

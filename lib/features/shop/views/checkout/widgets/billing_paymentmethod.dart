@@ -60,8 +60,8 @@ class _TBillingPaymentMethodSectionState
                     children: [
                       Row(
                         children: [
-                          Icon(IconData(paymentMethodselect?['iconCodePoint'],
-                              fontFamily: 'MaterialIcons')),
+                          // IconData(paymentMethodselect?['iconCodePoint'],
+                          //     fontFamily: 'MaterialIcons'),
                           const SizedBox(
                             width: TSizes.spaceBtwItems,
                           ),

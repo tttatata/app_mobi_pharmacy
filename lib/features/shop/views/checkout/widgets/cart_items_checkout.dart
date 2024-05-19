@@ -6,14 +6,12 @@ import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TCartItems extends StatelessWidget {
-  const TCartItems(
-      {super.key,
-      this.showAddRemoveButtons = true,
-      required this.onCartItemsChanged});
+class TCartItemsCheckout extends StatelessWidget {
+  const TCartItemsCheckout({
+    super.key,
+    this.showAddRemoveButtons = false,
+  });
   final bool showAddRemoveButtons;
-  final Function(List<Map<String, dynamic>>)
-      onCartItemsChanged; // Thêm callback này
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +19,16 @@ class TCartItems extends StatelessWidget {
     List<Map<String, dynamic>> cartItems = [];
     int sum = 0;
     user.cart?.forEach((e) {
-      final price = e['sellPrice'].toInt();
+      final price = e['sellPrice'];
       if (price != null) {
         sum += e['qty'] * (price as int) as int; // Convert to double
       }
     });
-    // Tính toán và lấy thông tin giỏ hàng...
-    user.cart?.forEach((e) {
-      // Cập nhật thông tin sản phẩm với quantity mới
-      e['qty'] = e['qty'].toInt();
-      // Thêm thông tin sản phẩm vào danh sách
-    });
-    // // Gọi callback với thông tin giỏ hàng đã cập nhật
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   onCartItemsChanged(cartItems);
+    // // Tính toán và lấy thông tin giỏ hàng...
+    // user.cart?.forEach((e) {
+    //   // Cập nhật thông tin sản phẩm với quantity mới
+    //   e['qty'] = e['qty'];
+    //   cartItems.add(e); // Thêm thông tin sản phẩm vào danh sách
     // });
 
     return ListView.separated(
@@ -45,10 +39,6 @@ class TCartItems extends StatelessWidget {
         itemBuilder: (_, index) => Column(
               children: [
                 TCartItem(index: index),
-                if (showAddRemoveButtons)
-                  const SizedBox(height: TSizes.spaceBtwItems),
-
-                ///add remove button
               ],
             ));
   }
