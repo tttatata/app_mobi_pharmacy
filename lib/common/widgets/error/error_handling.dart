@@ -21,6 +21,7 @@ void httpErrorHandle({
       break;
     case 400:
       TLoaders.warningSnackbar(title: jsonDecode(response.body)['message']);
+
       break;
     case 500:
       TLoaders.errorSnackbar(title: jsonDecode(response.body)['error']);

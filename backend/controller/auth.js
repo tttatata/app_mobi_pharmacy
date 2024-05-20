@@ -102,7 +102,7 @@ authRouter.delete("/remove-from-cart/:id", auth, async (req, res) => {
         user = await user.save();
         res.json(user);
     } catch (e) {
-        res.status(500).json({ error: e.message });111
+        res.status(500).json({ error: e.message }); 111
     }
 });
 authRouter.post("/add-to-cart", auth, async (req, res) => {

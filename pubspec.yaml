@@ -67,6 +67,8 @@ dependencies:
   flutter_tawkto: ^0.0.3
   currency_converter: ^0.0.4
   forex_currency_conversion: ^0.9.0
+  address_picker_vn: ^0.3.2
+  webview_flutter: ^2.8.0
 
 
   

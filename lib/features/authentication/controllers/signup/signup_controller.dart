@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_mobi_pharmacy/common/snackbar';
-import 'package:app_mobi_pharmacy/common/widgets/error/error_handling.dart';
-import 'package:app_mobi_pharmacy/features/authentication/models/User.dart';
-import 'package:app_mobi_pharmacy/features/authentication/views/signup/verify_email.dart';
-import 'package:app_mobi_pharmacy/util/constans/api_constants.dart';
+import 'package:app_mobi_pharmacy/common/widgets/loaders/loader.dart';
+
+import '../../../../common/snackbar';
+import '../../../../common/widgets/error/error_handling.dart';
+import '../../models/User.dart';
+import '../../views/signup/verify_email.dart';
+import '../../../../util/constans/api_constants.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,7 +43,7 @@ class SignUpController {
           wishList: []);
 
       http.Response res = await http.post(
-        Uri.parse('$url/api/v2/user/create-user'),
+        Uri.parse('$url/api/v2/user/create-user-m'),
         // body: user.toJson(),
         body: jsonEncode(<String, String>{
           'id': '',
@@ -56,9 +58,10 @@ class SignUpController {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      Get.to(() => VerifyEmailScreen(
-            email: email,
-          ));
+      print(res);
+      // Get.to(() => VerifyEmailScreen(
+      //       email: email,
+      //     ));
       httpErrorHandle(
         response: res,
         context: context,
@@ -70,7 +73,10 @@ class SignUpController {
         },
       );
     } catch (e) {
-      showSnackBar(context, e.toString());
+      TLoaders.errorSnackbar(
+        title: 'Đặt hàng không thành công',
+        message: e,
+      );
     }
   }
 }

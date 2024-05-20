@@ -1,12 +1,24 @@
-import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
-import 'package:app_mobi_pharmacy/common/widgets/products/cart/cart_item.dart';
-import 'package:app_mobi_pharmacy/common/widgets/provider/user_provider.dart';
-import 'package:app_mobi_pharmacy/features/authentication/views/login/login.dart';
-import 'package:app_mobi_pharmacy/features/shop/views/checkout/checkout.dart';
-import 'package:app_mobi_pharmacy/util/constans/colors.dart';
-import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
-import 'package:app_mobi_pharmacy/util/formatters/formatter.dart';
-import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
+import '../../../../common/widgets/appbar/appbar.dart';
+import '../../../../common/widgets/products/cart/cart_item.dart';
+import '../../../../common/widgets/provider/user_provider.dart';
+import '../../../../features/authentication/views/login/login.dart';
+import '../../../../features/shop/views/checkout/checkout.dart';
+import '../../../../util/constans/colors.dart';
+import '../../../../util/constans/sizes.dart';
+import '../../../../util/formatters/formatter.dart';
+import '../../../../util/helpers/helper_functions.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import '../../../../common/widgets/appbar/appbar.dart';
+import '../../../../common/widgets/products/cart/cart_item.dart';
+import '../../../../common/widgets/provider/user_provider.dart';
+import '../../../../features/authentication/views/login/login.dart';
+import '../../../../features/shop/views/checkout/checkout.dart';
+import '../../../../util/constans/colors.dart';
+import '../../../../util/constans/sizes.dart';
+import '../../../../util/formatters/formatter.dart';
+import '../../../../util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +34,9 @@ class CartScreen extends StatelessWidget {
     final darkMode = THelperFunctions.isDarkMode(context);
     double sum = 0.0;
     user.cart?.forEach((e) {
-      final price = e['sellPrice'];
+      final price = e['product']['sellPrice'];
       if (price != null) {
-        sum += e['qty'] * (price as int).toDouble(); // Convert to double
+        sum += e['quantity'] * (price as int).toDouble(); // Convert to double
       }
     });
 

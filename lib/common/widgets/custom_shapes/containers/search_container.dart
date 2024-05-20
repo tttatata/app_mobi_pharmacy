@@ -2,6 +2,7 @@ import 'package:app_mobi_pharmacy/features/shop/views/search/search_product.dart
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/device/device_utility.dart';
+
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';

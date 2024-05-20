@@ -1,5 +1,6 @@
 import 'package:app_mobi_pharmacy/common/widgets/appbar/appbar.dart';
 import 'package:app_mobi_pharmacy/features/personalization/controllers/address_controller.dart';
+import 'package:app_mobi_pharmacy/util/constans/province.dart';
 import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -10,12 +11,12 @@ class AddNewAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController countryController = TextEditingController();
+
     final TextEditingController cityController = TextEditingController();
     final TextEditingController zipCodeController = TextEditingController();
     final TextEditingController address1Controller = TextEditingController();
     final TextEditingController address2Controller = TextEditingController();
-
+    String? selectedCity; // Thêm biến selectedCity
     final List<String> addressTypes = [
       'Default',
       'Địa chỉ nhà',
@@ -25,15 +26,15 @@ class AddNewAddressScreen extends StatelessWidget {
     void _addAddress() {
       if (_formKey.currentState!.validate()) {
         // Lấy dữ liệu từ các trường nhập liệu
-        String country = countryController.text;
-        String city = cityController.text;
+        String country = "Việt nam";
+        String city = selectedCity.toString();
         String zipCode = zipCodeController.text;
         String address1 = address1Controller.text;
         String address2 = address2Controller.text;
 
         // Tạo một map với dữ liệu địa chỉ
         Map<String, dynamic> addressData = {
-          'country': country,
+          'country': "Việt nam",
           'city': city,
           'zipCode': zipCode,
           'address1': address1,
@@ -47,7 +48,7 @@ class AddNewAddressScreen extends StatelessWidget {
           addressData: addressData,
           onSuccessfulUpdate: () {
             // Clear các trường nhập liệu sau khi thêm địa chỉ thành công
-            countryController.clear();
+
             cityController.clear();
             zipCodeController.clear();
             address1Controller.clear();
@@ -82,33 +83,35 @@ class AddNewAddressScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: TSizes.spaceBtwInputFields),
                 TextFormField(
-                  controller: countryController,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Iconsax.global), labelText: 'Quốc gia'),
+                  initialValue: 'Việt Nam', readOnly: true, // Gắn giá trị mặc
                 ),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: cityController,
-                        decoration: const InputDecoration(
-                            prefixIcon: Icon(Iconsax.building),
-                            labelText: 'Thành phố'),
-                      ),
-                    ),
-                    const SizedBox(width: TSizes.spaceBtwInputFields),
-                    Expanded(
-                      child: TextFormField(
-                        controller: zipCodeController,
-                        decoration: const InputDecoration(
-                            prefixIcon: Icon(Iconsax.code),
-                            labelText: 'Zip Code'),
-                      ),
-                    ),
-                  ],
+                DropdownButtonFormField<String>(
+                  value: selectedCity,
+                  onChanged: (newValue) {
+                    // Xử lý sự kiện khi người dùng thay đổi giá trị
+                    selectedCity = newValue;
+                  },
+                  items: ProvinceList.provinces
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  decoration: InputDecoration(
+                    labelText: 'Chọn thành phố',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
+                TextFormField(
+                  controller: zipCodeController,
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(Iconsax.code), labelText: 'Zip Code'),
+                ),
                 const SizedBox(height: TSizes.spaceBtwInputFields),
                 TextFormField(
                   controller: address1Controller,

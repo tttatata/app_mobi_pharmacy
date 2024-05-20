@@ -21,21 +21,21 @@ class TCartItems extends StatelessWidget {
     List<Map<String, dynamic>> cartItems = [];
     int sum = 0;
     user.cart?.forEach((e) {
-      final price = e['sellPrice'].toInt();
+      final price = e['product']['sellPrice'];
       if (price != null) {
-        sum += e['qty'] * (price as int) as int; // Convert to double
+        sum += e['quantity'] * (price as int) as int; // Convert to double
       }
     });
     // Tính toán và lấy thông tin giỏ hàng...
     user.cart?.forEach((e) {
       // Cập nhật thông tin sản phẩm với quantity mới
-      e['qty'] = e['qty'].toInt();
-      // Thêm thông tin sản phẩm vào danh sách
+      e['product']['qty'] = e['quantity'];
+      cartItems.add(e['product']); // Thêm thông tin sản phẩm vào danh sách
     });
-    // // Gọi callback với thông tin giỏ hàng đã cập nhật
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   onCartItemsChanged(cartItems);
-    // });
+    // Gọi callback với thông tin giỏ hàng đã cập nhật
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      onCartItemsChanged(cartItems);
+    });
 
     return ListView.separated(
         shrinkWrap: true,
@@ -49,6 +49,18 @@ class TCartItems extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                 ///add remove button
+                if (showAddRemoveButtons)
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          TProductQuantityWithAddRemoveButton(),
+                        ],
+                      ),
+                      TProductPriceText(price: '222')
+                    ],
+                  )
               ],
             ));
   }
