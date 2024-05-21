@@ -38,8 +38,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         'iconCodePoint': iconCodePoint, // Lưu trữ mã codepoint
       });
 
-      // // Quay lại màn hình trước đó với dữ liệu được chọn
-      // Navigator.pop(context);
+
     }
 
     return Scaffold(

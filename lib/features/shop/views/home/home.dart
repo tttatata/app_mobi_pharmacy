@@ -48,14 +48,20 @@ class _HomeScreenState extends State<HomeScreen> {
     fetchSaleProducts();
   }
 
-  fetchCategoryProducts() async {
-    productList = await homeServices.fetchCategoryProducts(context: context);
-    setState(() {});
+  void fetchCategoryProducts() async {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 1));
+      productList = await homeServices.fetchCategoryProducts(context: context);
+      setState(() {});
+    }
   }
 
-  fetchSaleProducts() async {
-    productSaleList = await homeServices.fetchSaleProducts(context: context);
-    setState(() {});
+  void fetchSaleProducts() async {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 5));
+      productSaleList = await homeServices.fetchSaleProducts(context: context);
+      setState(() {});
+    }
   }
 
   void navigateToSearchScreen(String query) {
@@ -137,27 +143,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             Padding(
                               padding: const EdgeInsets.all(2),
                               child: SizedBox(
-                                  height: 220,
-                                  child: productSaleList!.length != 0
-                                      ? ListView.separated(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          itemCount: productSaleList!.length,
-                                          scrollDirection: Axis.horizontal,
-                                          separatorBuilder: (context, index) =>
-                                              SizedBox(
-                                                  width: TSizes.spaceBtwItems),
-                                          itemBuilder: (context, index) {
-                                            final product =
-                                                productSaleList?[index];
-                                            return TProductEventCardHorizontal(
-                                              productEvent: product,
-                                              isIconSale: true,
-                                            );
-                                          })
-                                      : Text(
-                                          'Không có sản phẩm nào thuộc loại này')),
+                                height: 220,
+                                child: productSaleList != null &&
+                                        productSaleList!.length != 0
+                                    ? ListView.separated(
+                                        shrinkWrap: true,
+                                        physics: const BouncingScrollPhysics(),
+                                        itemCount: productSaleList!.length,
+                                        scrollDirection: Axis.horizontal,
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(
+                                                width: TSizes.spaceBtwItems),
+                                        itemBuilder: (context, index) {
+                                          final product =
+                                              productSaleList![index];
+                                          return TProductEventCardHorizontal(
+                                            productEvent: product,
+                                            isIconSale: true,
+                                          );
+                                        },
+                                      )
+                                    : Text(
+                                        'Không có sản phẩm nào thuộc loại này'),
+                              ),
                             ),
                             const SizedBox(
                               height: TSizes.spaceBtwSections,

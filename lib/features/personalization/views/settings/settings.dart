@@ -65,27 +65,51 @@ class SettingsScreen extends StatelessWidget {
                           icon: Iconsax.safe_home,
                           title: 'Danh sách địa chỉ của bạn',
                           subTitle: 'Địa chỉ giao hàng để giao hàng',
-                          onTap: () => Get.to(() => UserAddressScreen()),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const UserAddressScreen()),
+                            );
+                          },
                         ),
                         TSettingsMenuTitle(
                           icon: Iconsax.shopping_cart,
                           title: 'Giỏ hàng',
                           subTitle:
                               'Danh sách sản phẩm bạn đã thêm vào giỏ hàng ',
-                          onTap: () => Get.to(() => const CartScreen()),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CartScreen()),
+                            );
+                          },
                         ),
                         TSettingsMenuTitle(
                           icon: Iconsax.bag_tick,
                           title: 'Đơn mua',
                           subTitle: 'Tất cả đơn hàng đã đặt',
-                          onTap: () => Get.to(() => const OrdersScreen()),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const OrdersScreen()),
+                            );
+                          },
                         ),
-
                         TSettingsMenuTitle(
                           icon: Iconsax.star,
                           title: 'Đánh giá sản phẩm',
                           subTitle: 'List of all the discounted coupons',
-                          onTap: () => Get.to(() => const ReviewsScreen()),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ReviewsScreen()),
+                            );
+                          },
                         ),
                         TSettingsMenuTitle(
                           icon: Iconsax.notification,
@@ -98,7 +122,14 @@ class SettingsScreen extends StatelessWidget {
                           title: 'Danh sách yêu thích',
                           subTitle:
                               'Sản phẩm bạn đã thêm vào danh sách yêu thích',
-                          onTap: () => Get.to(() => const FavouriteScreen()),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const FavouriteScreen()),
+                            );
+                          },
                         ),
                         TSettingsMenuTitle(
                           icon: Iconsax.security_card,
@@ -122,7 +153,13 @@ class SettingsScreen extends StatelessWidget {
                     )
                   : Center(
                       child: ElevatedButton(
-                          onPressed: () => Get.to(() => const LoginScreen()),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                            );
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(TTexts.signIn),

@@ -11,15 +11,15 @@ class TBillingAmountSection extends StatelessWidget {
     Key? key,
     required this.onTotalAmountChanged,
   }) : super(key: key);
-  final Function(int) onTotalAmountChanged;
+  final Function(double) onTotalAmountChanged;
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
-    int sum = 0;
+    double sum = 0.0;
     user.cart?.forEach((e) {
-      final price = e['sellPrice'];
+      final price = e['product']['sellPrice'];
       if (price != null) {
-        sum += e['qty'] * price as int;
+        sum += e['quantity'] * (price as int).toDouble(); // Convert to double
       }
     });
     // Gọi callback khi có tổng tiền
@@ -36,7 +36,7 @@ class TBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              TFormatter.formatCurrency(sum.toDouble()),
+              TFormatter.formatCurrency(sum),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],

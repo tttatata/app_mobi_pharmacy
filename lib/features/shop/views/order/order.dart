@@ -38,7 +38,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     floating: true,
                     backgroundColor: THelperFunctions.isDarkMode(context)
                         ? TColors.black
-                        : const Color.fromARGB(255, 230, 0, 0),
+                        : Color.fromARGB(255, 255, 255, 255),
                     expandedHeight: 0,
                     bottom: const TTabBar(tabs: [
                       Tab(child: Text('Đơn đã đặt')),
@@ -53,7 +53,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               children: [
                 TOrderTabs(orderStatus: 'Đơn đã đặt'),
                 TOrderTabs(orderStatus: 'Đơn chưa xác nhận'),
-                TOrderTabs(orderStatus: 'Dơn đã xác nhận'),
+                TOrderTabs(orderStatus: 'Đơn đã xác nhận'),
                 TOrderTabs(orderStatus: 'Đơn đang vận chuyển'),
                 TOrderTabs(orderStatus: 'Đơn đã giao'),
               ],

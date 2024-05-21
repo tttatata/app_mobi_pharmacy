@@ -18,7 +18,7 @@ class RowProductCateggory extends StatefulWidget {
 
 class _RowProductCateggoryscreenState extends State<RowProductCateggory> {
   List<Product>? productList;
-  final StoreController storeController = StoreController();
+  final CategoryController cateroryController = CategoryController();
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _RowProductCateggoryscreenState extends State<RowProductCateggory> {
   }
 
   fetchCategoryProducts() async {
-    productList = await storeController.fetchCategoryProducts(
+    productList = await cateroryController.fetchCategoryProducts(
       context: context,
       category: widget.category!,
     );

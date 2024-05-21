@@ -302,7 +302,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                         child: Row(
                                       children: [
                                         Text(
-                                          'Thời gian đặt: ${DateFormat('HH:mm dd/MM/yyyy').format(widget.order!.createdAt!)}',
+                                          'Thời gian đặt: ${DateFormat('HH:mm dd-MM-yyyy').format(widget.order!.createdAt!.toUtc().add(Duration(hours: 7)))}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelLarge,
@@ -320,7 +320,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                         child: Row(
                                       children: [
                                         Text(
-                                          'Thời gian giao: ${widget.order != null && widget.order!.paidAt != null ? DateFormat('HH:mm dd/MM/yyyy').format(widget.order!.paidAt!) : 'Đang xử lý'}',
+                                          'Thời gian giao: ${widget.order != null && widget.order!.paidAt != null ? DateFormat('HH:mm dd-MM-yyyy').format(widget.order!.paidAt!.toUtc().add(Duration(hours: 7))) : 'Đang xử lý'}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelLarge,
@@ -338,7 +338,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                         child: Row(
                                       children: [
                                         Text(
-                                          'Thời gian giao: ${widget.order != null && widget.order!.deliveredAt != null ? DateFormat('HH:mm dd/MM/yyyy').format(widget.order!.deliveredAt!) : 'Đang xử lý'}',
+                                          'Thời gian giao: ${widget.order != null && widget.order!.deliveredAt != null ? DateFormat('HH:mm dd-MM-yyyy').format(widget.order!.deliveredAt!.toUtc().add(Duration(hours: 7))) : 'Đang xử lý'}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelLarge,
@@ -601,37 +601,36 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(TSizes.defaultSpace),
         child: ElevatedButton(
-          onPressed: widget.order!.status == 'Đang giao hàng' ||
-                  widget.order!.status == 'Đã xác nhận'
-              ? null // Không cho phép nhấn nút nếu trạng thái là 'Đang chờ xác nhận' hoặc 'Đã xác nhận'
-              : () {
-                  // Hành động cho các trạng thái khác
-                  if (widget.order!.status == 'Đã giao hàng' ||
-                      widget.order!.status == 'Hoàn trả đơn hàng') {
-                    // Hành động mua lại
-                  } else {
-                    addToWishlist();
-                  }
-                },
+          onPressed: () {
+            // Hành động cho các trạng thái khác
+            if (widget.order!.status == 'Đang chờ xác nhận') {
+              // Hành động mua lại
+
+              addToWishlist();
+            }
+          },
           child: Text(
-            widget.order!.status == 'Đang chờ xác nhận' ||
-                    widget.order!.status == 'Đã xác nhận' ||
-                    widget.order!.status == 'Đang giao hàng'
-                ? 'Bạn không thể hoàn trả đơn hàng'
-                : widget.order!.status == 'Đã giao hàng' ||
-                        widget.order!.status == 'Hủy đơn hàng'
-                    ? 'Mua lại đơn hàng'
-                    : '', // Thêm văn bản mặc định hoặc xử lý cho trạng thái không xác định
+            widget.order!.status == 'Đang chờ xác nhận'
+                ? 'Hủy đơn hàng'
+                : widget.order!.status == 'Đã giao hàng'
+                    ? 'Hoàn trả đơn hàng'
+                    : widget.order!.status == 'Hủy đơn hàng'
+                        ? 'Mua lại đơn hàng'
+                        : '', // Thêm văn bản mặc định hoặc xử lý cho trạng thái không xác định
             style: TextStyle(
               color: Colors.white,
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: widget.order!.status == 'Đã giao hàng'
+            backgroundColor: widget.order!.status == 'Đang chờ xác nhận'
                 ? Colors
                     .red // Màu đỏ cho trạng thái 'Đang chờ xác nhận', 'Hủy đơn hàng', và 'Đã giao hàng'
-                : const Color.fromARGB(255, 141, 141,
-                    141), // Màu vàng cho trạng thái 'Đã xác nhận' và 'Đang giao hàng'
+                : widget.order!.status == 'Đã giao hàng'
+                    ? Colors.red
+                    : widget.order!.status == 'Hủy đơn hàng'
+                        ? Color.fromARGB(255, 24, 179, 3)
+                        : Color.fromARGB(255, 179, 179,
+                            179), // Màu vàng cho trạng thái 'Đã xác nhận' và 'Đang giao hàng'
           ),
         ),
       ),

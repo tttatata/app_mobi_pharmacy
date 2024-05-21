@@ -56,7 +56,13 @@ class TUSerProfileTitle extends StatelessWidget {
       ),
       trailing: userchecked
           ? IconButton(
-              onPressed: () => Get.to(() => const ProfileScreen()),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()),
+                );
+              },
               icon: const Icon(
                 Iconsax.edit,
                 color: TColors.white,

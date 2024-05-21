@@ -75,7 +75,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       int newTotalAmount = _totalAmount - discountValue.floor();
       print(newTotalAmount);
       // Cập nhật tổng tiền mới
-      _updateTotalAmount(newTotalAmount);
+      _updateTotalAmount(newTotalAmount.toDouble());
 
       // Cập nhật coupon đã áp dụng
       setState(() {
@@ -92,10 +92,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     }
   }
 
-  void _updateTotalAmount(int newAmount) {
-    print(_salelAmount);
+  void _updateTotalAmount(double newAmount) {
     setState(() {
-      _totalAmount = newAmount + 15000;
+      _totalAmount = newAmount.toInt() + 15000;
     });
   }
 

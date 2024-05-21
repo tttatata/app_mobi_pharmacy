@@ -49,6 +49,7 @@ class _TOrderListItemsState extends State<TOrderListItems> {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+
     // Nếu đang tải, hiển thị loader
     if (isLoading) {
       return Center(
@@ -116,8 +117,11 @@ class _TOrderListItemsState extends State<TOrderListItems> {
                             .apply(color: TColors.primary, fontWeightDelta: 1),
                       ),
                       Text(
-                        DateFormat('HH:mm dd-MM-yyyy')
-                            .format(productList![index].createdAt!),
+                        DateFormat('HH:mm dd-MM-yyyy').format(
+                            productList![index]
+                                .createdAt!
+                                .toUtc()
+                                .add(Duration(hours: 7))),
                         style: Theme.of(context).textTheme.headlineSmall,
                       )
                     ],

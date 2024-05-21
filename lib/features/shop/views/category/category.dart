@@ -16,8 +16,8 @@ import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class StoreScreen extends StatelessWidget {
-  const StoreScreen({super.key});
+class CatregoryScreen extends StatelessWidget {
+  const CatregoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

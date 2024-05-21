@@ -163,9 +163,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   bottom: TSizes.defaultSpace),
               child: Column(
                 children: [
-                  //ratting and shearing
-
-                  //price title stock brand
                   TProductMetaData(
                     product: widget.product,
                   ),

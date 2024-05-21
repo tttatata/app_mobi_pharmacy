@@ -41,7 +41,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    authService.getUserData(context);
+    _startContinuousUserDataFetch();
+  }
+
+  void _startContinuousUserDataFetch() {
+    Future.delayed(const Duration(seconds: 1), () {
+      authService.getUserData(context);
+      _startContinuousUserDataFetch();
+    });
   }
 
   @override

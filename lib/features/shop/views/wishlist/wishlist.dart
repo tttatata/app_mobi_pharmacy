@@ -16,7 +16,7 @@ class FavouriteScreen extends StatefulWidget {
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
   List<Product>? productList;
-  final StoreController homeServices = StoreController();
+  final CategoryController homeServices = CategoryController();
 
   @override
   void initState() {

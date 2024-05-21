@@ -1,7 +1,7 @@
-import 'package:app_mobi_pharmacy/chatSreen.dart';
 import 'package:app_mobi_pharmacy/features/personalization/views/settings/settings.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/home/home.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/category/category.dart';
+import 'package:app_mobi_pharmacy/features/shop/views/livechat/livechat.dart';
 import 'package:app_mobi_pharmacy/features/shop/views/wishlist/wishlist.dart';
 import 'package:app_mobi_pharmacy/util/constans/colors.dart';
 import 'package:app_mobi_pharmacy/util/helpers/helper_functions.dart';
@@ -62,9 +62,9 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
     const HomeScreen(),
-    const StoreScreen(),
+    const CatregoryScreen(),
 
     const SettingsScreen(),
-    const ChatScreen(), // Thêm ChatScreen vào danh sách màn hình
+    const LiveChat(), // Thêm ChatScreen vào danh sách màn hình
   ];
 }

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-class StoreController extends GetxController {
+class CategoryController extends GetxController {
   Future<List<Product>> fetchCategoryProducts({
     required BuildContext context,
     required String category,
