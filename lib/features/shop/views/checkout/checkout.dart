@@ -50,7 +50,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   List<Map<String, dynamic>> _cartItems = [];
   Map<String, dynamic>? paymentIntent;
   int _totalAmount = 0;
-  int _salelAmount = 0;
+  double _total = 0;
+  double _saleAmount = 0;
   int _totalAmountUSD = 0;
   final CheckOutServices _checkOutServices = CheckOutServices();
   void _handleCartItemsChanged(List<Map<String, dynamic>> cartItems) {
@@ -60,31 +61,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void _applyCoupon(Coupon coupon) {
-    print('Coupon value: ${coupon.value}');
-    if (_totalAmount >= coupon.minAmount) {
-      print('Total amount before discount: $_totalAmount');
-      double discountValue = (_totalAmount * 10.0) / 100;
+    if (_total >= coupon.minAmount) {
+      double discountValue = ((_total + 15000) * coupon.value) / 100;
 
-      print('Calculated discount value: $discountValue');
-      // Kiểm tra giá trị giảm giá tối đa
-      if (coupon.maxAmount != null && discountValue > coupon.maxAmount) {
-        discountValue = coupon.maxAmount;
-      }
-      print('Discount value after checking max amount: $discountValue');
-      // Tính toán tổng tiền mới sau khi áp dụng giảm giá
-      int newTotalAmount = _totalAmount - discountValue.floor();
-      print(newTotalAmount);
-      // Cập nhật tổng tiền mới
-      _updateTotalAmount(newTotalAmount.toDouble());
-
-      // Cập nhật coupon đã áp dụng
       setState(() {
+        _saleAmount = discountValue;
         appliedCoupon = coupon;
       });
 
       // Hiển thị thông báo áp dụng coupon thành công
-      showSnackBar(
-          context, 'Coupon applied successfully! New total: $newTotalAmount');
     } else {
       // Hiển thị thông báo nếu không đủ điều kiện
       showSnackBar(context,
@@ -93,8 +78,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void _updateTotalAmount(double newAmount) {
+    _total = newAmount;
     setState(() {
-      _totalAmount = newAmount.toInt() + 15000;
+      _totalAmount = newAmount.toInt() + 15000 - _saleAmount.toInt();
     });
   }
 
@@ -103,12 +89,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     double exchangeRate = await fx.getCurrencyConverted(
         sourceCurrency: 'VND',
         destinationCurrency: 'USD',
-        sourceAmount: _totalAmount.toDouble());
-    print(exchangeRate);
+        sourceAmount: (_totalAmount.toDouble() - _saleAmount));
+
     setState(() {
-      _totalAmountUSD = exchangeRate.toInt(); // Sửa đổi ở đây
+      _totalAmountUSD = exchangeRate.toInt();
     });
-    print(_totalAmountUSD);
   }
 
   void _handleCheckoutButtonPressed(BuildContext context) async {
@@ -273,7 +258,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       appBar: TAppBar(
         showBackArrow: true,
         title: Text(
-          'Đặt hàng',
+          _saleAmount.toString(),
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -298,7 +283,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: Column(
                   children: [
                     TBillingAmountSection(
-                        onTotalAmountChanged: _updateTotalAmount),
+                      onTotalAmountChanged: _updateTotalAmount,
+                      salelAmount: _saleAmount,
+                    ),
                   ],
                 ),
               ),

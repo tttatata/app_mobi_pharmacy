@@ -32,7 +32,6 @@ class HomeController extends GetxController {
         response: res,
         context: context,
         onSuccess: () {
-          print(productList);
           for (int i = 0; i < jsonDecode(res.body)['products'].length; i++) {
             productList.add(
               Product.fromJson(

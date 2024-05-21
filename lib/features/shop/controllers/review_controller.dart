@@ -44,7 +44,7 @@ class ReviewController extends GetxController {
           }
         },
       );
-      print(unreviewedProducts);
+     
     } catch (e) {
       showSnackBar(context, e.toString());
     }

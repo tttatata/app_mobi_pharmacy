@@ -41,10 +41,10 @@ class TProductEventCardHorizontal extends StatelessWidget {
 // Ví dụ:
     if (selectedProduct is Product) {
       // Xử lý khi selectedProduct là sản phẩm chính
-      print('Đây là sản phẩm chính: ${selectedProduct.name}');
+     
     } else if (selectedProduct is Event) {
       // Xử lý khi selectedProduct là sản phẩm khuyến mãi
-      print('Đây là sản phẩm khuyến mãi: ${selectedProduct.name}');
+
     }
     final dark = THelperFunctions.isDarkMode(context);
 

@@ -7,11 +7,14 @@ import 'package:app_mobi_pharmacy/util/constans/sizes.dart';
 import 'package:app_mobi_pharmacy/util/formatters/formatter.dart';
 
 class TBillingAmountSection extends StatelessWidget {
+  final double salelAmount; // Thêm thuộc tính này
   const TBillingAmountSection({
     Key? key,
     required this.onTotalAmountChanged,
+    required this.salelAmount,
   }) : super(key: key);
   final Function(double) onTotalAmountChanged;
+
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
@@ -71,7 +74,7 @@ class TBillingAmountSection extends StatelessWidget {
                   .apply(color: Colors.red),
             ),
             Text(
-              '-',
+              TFormatter.formatCurrency(salelAmount),
               style: Theme.of(context)
                   .textTheme
                   .labelLarge!
@@ -90,7 +93,7 @@ class TBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              TFormatter.formatCurrency(sum.toDouble() + 15000),
+              TFormatter.formatCurrency(sum.toDouble() + 15000 - salelAmount),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
